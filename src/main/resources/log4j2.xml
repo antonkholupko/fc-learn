@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p] %c - %m%n"/>
+        </Console>
+        <File name="FILE" fileName="logs/logfile.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p] %c - %m%n"/>
+        </File>
+    </appenders>
+    <loggers>
+        <root level="debug">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </loggers>
+</configuration>
