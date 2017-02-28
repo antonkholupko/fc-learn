@@ -18,7 +18,7 @@ import java.util.List;
 @Repository("userDAO")
 public class UserDAOImpl implements UserDAO{
 
-    private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class.getName());
+    private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
 
     private static final String PK_COLUMN = "id";
     private static final String QUERY_INSERT_USER = "INSERT INTO users (login, email, password, photo) " +
