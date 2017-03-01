@@ -41,7 +41,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Long create(Category entity) {
-        LOG.debug("CategoryDAO - create - login = {}, email= {}", entity.getName());
+        LOG.debug("CategoryDAO - create - name = {}", entity.getName());
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CATEGORY, new String[]{PK_COLUMN});
@@ -60,16 +60,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Long update(Category entity) {
-        return null;
+        LOG.debug("CategoryDAO - update - id = {}", entity.getId());
+        jdbcTemplate.update(QUERY_UPDATE_CATEGORY, entity.getName(), entity.getId());
+        return entity.getId();
     }
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("CategoryDAO - delete - id = {}", id);
+        jdbcTemplate.update(QUERY_DELETE_CATEGORY, id);
     }
 
     @Override
     public List<Category> readAll() {
-        return null;
+        LOG.debug("CategoryDAO - read all");
+        return jdbcTemplate.query(QUERY_SELECT_ALL_CATEGOTIES,
+                new BeanPropertyRowMapper<>(Category.class));
     }
 }

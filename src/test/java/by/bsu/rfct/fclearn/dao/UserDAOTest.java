@@ -22,7 +22,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DAOTestConfig.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = {"/user/user-dataset.xml"}, type = DatabaseOperation.CLEAN_INSERT)
 @DatabaseTearDown(value = {"/user/user-dataset.xml"}, type = DatabaseOperation.DELETE)
 public class UserDAOTest {

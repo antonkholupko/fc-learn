@@ -64,7 +64,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public Long update(User entity) {
-        LOG.debug("UserDAO - update - login = {}, email= {}", entity.getLogin(), entity.getEmail());
+        LOG.debug("UserDAO - update - id = {}, email= {}", entity.getId(), entity.getEmail());
         jdbcTemplate.update(QUERY_UPDATE_USER, entity.getLogin(), entity.getEmail(),
                 entity.getPassword(), entity.getPhoto(), entity.getId());
         return entity.getId();
