@@ -26,14 +26,11 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`users` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `photo` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `u_login_UNIQUE` (`login` ASC),
+  UNIQUE INDEX `u_id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `u_email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `u_login_UNIQUE` ON `fc_learn_db_schema`.`users` (`login` ASC);
-
-CREATE UNIQUE INDEX `u_id_UNIQUE` ON `fc_learn_db_schema`.`users` (`id` ASC);
-
-CREATE UNIQUE INDEX `u_email_UNIQUE` ON `fc_learn_db_schema`.`users` (`email` ASC);
 
 
 -- -----------------------------------------------------
@@ -44,10 +41,9 @@ DROP TABLE IF EXISTS `fc_learn_db_schema`.`categories` ;
 CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`categories` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `name_UNIQUE` ON `fc_learn_db_schema`.`categories` (`name` ASC);
 
 
 -- -----------------------------------------------------
@@ -59,17 +55,16 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`courses` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `category_id` BIGINT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
+  `image` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
+  INDEX `fk_course_category1_idx` (`category_id` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_course_category1`
     FOREIGN KEY (`category_id`)
     REFERENCES `fc_learn_db_schema`.`categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE INDEX `fk_course_category1_idx` ON `fc_learn_db_schema`.`courses` (`category_id` ASC);
-
-CREATE UNIQUE INDEX `name_UNIQUE` ON `fc_learn_db_schema`.`courses` (`name` ASC);
 
 
 -- -----------------------------------------------------
@@ -84,18 +79,15 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`topics` (
   `description` VARCHAR(200) NOT NULL,
   `image` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
+  UNIQUE INDEX `t_id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `t_name_UNIQUE` (`name` ASC),
+  INDEX `fk_topics_course1_idx` (`course_id` ASC),
   CONSTRAINT `fk_topics_course1`
     FOREIGN KEY (`course_id`)
     REFERENCES `fc_learn_db_schema`.`courses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `t_id_UNIQUE` ON `fc_learn_db_schema`.`topics` (`id` ASC);
-
-CREATE UNIQUE INDEX `t_name_UNIQUE` ON `fc_learn_db_schema`.`topics` (`name` ASC);
-
-CREATE INDEX `fk_topics_course1_idx` ON `fc_learn_db_schema`.`topics` (`course_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -109,16 +101,14 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`cards` (
   `question` VARCHAR(300) NOT NULL,
   `answer` VARCHAR(4000) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE INDEX `c_id_UNIQUE` (`id` ASC),
+  INDEX `fk_cards_topics_idx` (`topic_id` ASC),
   CONSTRAINT `fk_cards_topics`
     FOREIGN KEY (`topic_id`)
     REFERENCES `fc_learn_db_schema`.`topics` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `c_id_UNIQUE` ON `fc_learn_db_schema`.`cards` (`id` ASC);
-
-CREATE INDEX `fk_cards_topics_idx` ON `fc_learn_db_schema`.`cards` (`topic_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -130,6 +120,8 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`users_topics` (
   `topic_id` BIGINT NOT NULL,
   `user_id` BIGINT NOT NULL,
   PRIMARY KEY (`topic_id`, `user_id`),
+  INDEX `fk_topics_has_users_users1_idx` (`user_id` ASC),
+  INDEX `fk_topics_has_users_topics1_idx` (`topic_id` ASC),
   CONSTRAINT `fk_topics_has_users_topics1`
     FOREIGN KEY (`topic_id`)
     REFERENCES `fc_learn_db_schema`.`topics` (`id`)
@@ -142,10 +134,6 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`users_topics` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_topics_has_users_users1_idx` ON `fc_learn_db_schema`.`users_topics` (`user_id` ASC);
-
-CREATE INDEX `fk_topics_has_users_topics1_idx` ON `fc_learn_db_schema`.`users_topics` (`topic_id` ASC);
-
 
 -- -----------------------------------------------------
 -- Table `fc_learn_db_schema`.`users_cards`
@@ -157,6 +145,8 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`users_cards` (
   `cards_id` BIGINT NOT NULL,
   `card_status` ENUM('new', 'low', 'medium', 'high') NULL,
   PRIMARY KEY (`users_id`, `cards_id`),
+  INDEX `fk_users_has_cards_cards1_idx` (`cards_id` ASC),
+  INDEX `fk_users_has_cards_users1_idx` (`users_id` ASC),
   CONSTRAINT `fk_users_has_cards_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `fc_learn_db_schema`.`users` (`id`)
@@ -168,10 +158,6 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`users_cards` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE INDEX `fk_users_has_cards_cards1_idx` ON `fc_learn_db_schema`.`users_cards` (`cards_id` ASC);
-
-CREATE INDEX `fk_users_has_cards_users1_idx` ON `fc_learn_db_schema`.`users_cards` (`users_id` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

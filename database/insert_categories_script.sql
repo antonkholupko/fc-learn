@@ -1,3 +1,4 @@
+delete from categories;
 insert into categories (id, name) values (1, 'consectetuer');
 insert into categories (id, name) values (2, 'vitae');
 insert into categories (id, name) values (3, 'ut');

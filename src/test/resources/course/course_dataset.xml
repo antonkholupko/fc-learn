@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <categories id="1" name="vulputate"/>
+    <categories id="2" name="congue"/>
+    <categories id="3" name="tellus"/>
+    <categories id="4" name="eu"/>
+    <categories id="5" name="volutpat"/>
+    <categories id="6" name="consectetuer"/>
+    <categories id="7" name="adipiscing"/>
+    <courses id="1" category_id="1" name="Enterprise-wide" image="http://dummyimage.com/167x108.png/ff4444/ffffff"/>
+    <courses id="2" category_id="2" name="Networked" image="http://dummyimage.com/205x149.bmp/cc0000/ffffff"/>
+    <courses id="3" category_id="3" name="Multi-channelled" image="http://dummyimage.com/159x228.bmp/5fa2dd/ffffff"/>
+    <courses id="4" category_id="4" name="Devolved" image="http://dummyimage.com/235x140.bmp/dddddd/000000"/>
+    <courses id="5" category_id="5" name="flexibility" image="http://dummyimage.com/223x119.bmp/dddddd/000000"/>
+    <courses id="6" category_id="6" name="framework" image="http://dummyimage.com/166x145.png/dddddd/000000"/>
+    <courses id="7" category_id="7" name="didactic" image="http://dummyimage.com/178x240.png/ff4444/ffffff"/>
+    <courses id="8" category_id="1" name="Multi-layered" image="http://dummyimage.com/136x216.png/ff4444/ffffff"/>
+    <courses id="9" category_id="1" name="Right-sized" image="http://dummyimage.com/169x147.jpg/ff4444/ffffff"/>
+    <courses id="10" category_id="1" name="Robust" image="http://dummyimage.com/184x168.png/5fa2dd/ffffff"/>
+    <courses id="11" category_id="1" name="encoding" image="http://dummyimage.com/181x135.jpg/5fa2dd/ffffff"/>
+    <courses id="12" category_id="2" name="Versatile" image="http://dummyimage.com/212x155.png/dddddd/000000"/>
+    <courses id="13" category_id="3" name="policy" image="http://dummyimage.com/219x135.jpg/dddddd/000000"/>
+    <courses id="14" category_id="4" name="systematic" image="http://dummyimage.com/105x150.jpg/5fa2dd/ffffff"/>
+    <courses id="15" category_id="5" name="Universal" image="http://dummyimage.com/150x214.bmp/dddddd/000000"/>
+    <courses id="16" category_id="6" name="real-time" image="http://dummyimage.com/123x129.bmp/ff4444/ffffff"/>
+    <courses id="17" category_id="7" name="infrastructure" image="http://dummyimage.com/225x181.jpg/cc0000/ffffff"/>
+    <courses id="18" category_id="2" name="polic" image="http://dummyimage.com/230x121.jpg/cc0000/ffffff"/>
+    <courses id="19" category_id="7" name="help-desk" image="http://dummyimage.com/188x207.bmp/5fa2dd/ffffff"/>
+    <courses id="20" category_id="7" name="Innovative" image="http://dummyimage.com/187x193.bmp/ff4444/ffffff"/>
+</dataset>

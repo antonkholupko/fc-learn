@@ -19,7 +19,7 @@ import java.util.List;
 @Repository("categoryDAO")
 public class CategoryDAOImpl implements CategoryDAO {
 
-    private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CategoryDAOImpl.class);
 
     private static final String PK_COLUMN = "id";
     private static final String QUERY_INSERT_CATEGORY = "INSERT INTO categories (name) " +
