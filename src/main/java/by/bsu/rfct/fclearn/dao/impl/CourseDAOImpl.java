@@ -1,6 +1,7 @@
 package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.CourseDAO;
+import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.entity.Course;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,10 @@ public class CourseDAOImpl implements CourseDAO{
             "VALUES (?,?,?);";
     private static final String QUERY_SELECT_COURSE = "SELECT id, category_id, name, image FROM courses " +
             "WHERE id=?;";
+    private static final String QUERY_UPDATE_COURSE = "UPDATE courses SET category_id=?, name=?, image=? " +
+            "WHERE id=?;";
+    private static final String QUERY_DELETE_COURSE = "DELETE FROM courses WHERE id=?;";
+    private static final String QUERY_SELECT_ALL_COURSES = "SELECT id, category_id, name, image FROM courses;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -58,16 +63,22 @@ public class CourseDAOImpl implements CourseDAO{
 
     @Override
     public Long update(Course entity) {
-        return null;
+        LOG.debug("CourseDAO - update - id = {}", entity.getId());
+        jdbcTemplate.update(QUERY_UPDATE_COURSE, entity.getCategoryId(), entity.getName(),
+                entity.getImage(), entity.getId());
+        return entity.getId();
     }
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("CourseDAO - delete - id = {}", id);
+        jdbcTemplate.update(QUERY_DELETE_COURSE, id);
     }
 
     @Override
     public List<Course> readAll() {
-        return null;
+        LOG.debug("CourseDAO - read all");
+        return jdbcTemplate.query(QUERY_SELECT_ALL_COURSES,
+                new BeanPropertyRowMapper<>(Course.class));
     }
 }
