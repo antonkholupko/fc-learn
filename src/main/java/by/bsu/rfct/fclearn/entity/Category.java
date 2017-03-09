@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Category extends AbstractEntity {
 
     private String name;
+    private String image;
 
     public String getName() {
         return name;
@@ -14,23 +15,32 @@ public class Category extends AbstractEntity {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o){
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass()){
             return false;
         }
-        if (!super.equals(o)) {
+        if (!super.equals(o)){
             return false;
         }
         Category category = (Category) o;
-        return Objects.equals(name, category.name);
+        return Objects.equals(name, category.name) &&
+                Objects.equals(image, category.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name);
+        return Objects.hash(super.hashCode(), name, image);
     }
 }

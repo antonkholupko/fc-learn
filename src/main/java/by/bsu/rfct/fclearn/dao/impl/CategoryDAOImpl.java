@@ -22,13 +22,13 @@ public class CategoryDAOImpl implements CategoryDAO {
     private static final Logger LOG = LogManager.getLogger(CategoryDAOImpl.class);
 
     private static final String PK_COLUMN = "id";
-    private static final String QUERY_INSERT_CATEGORY = "INSERT INTO categories (name) " +
-            "VALUES(?);";
-    private static final String QUERY_SELECT_CATEGORY = "SELECT id, name FROM categories " +
+    private static final String QUERY_INSERT_CATEGORY = "INSERT INTO categories (name, image) " +
+            "VALUES(?, ?);";
+    private static final String QUERY_SELECT_CATEGORY = "SELECT id, name, image FROM categories " +
             "WHERE id=?;";
-    private static final String QUERY_UPDATE_CATEGORY = "UPDATE categories SET name=? WHERE id=?;";
+    private static final String QUERY_UPDATE_CATEGORY = "UPDATE categories SET name=?, image=? WHERE id=?;";
     private static final String QUERY_DELETE_CATEGORY = "DELETE FROM categories WHERE id=?;";
-    private static final String QUERY_SELECT_ALL_CATEGOTIES = "SELECT id, name FROM categories;";
+    private static final String QUERY_SELECT_ALL_CATEGOTIES = "SELECT id, name, image FROM categories;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -46,6 +46,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CATEGORY, new String[]{PK_COLUMN});
             ps.setString(1, entity.getName());
+            ps.setString(2,entity.getImage());
             return ps;
         }, holder);
         return holder.getKey().longValue();
@@ -61,7 +62,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Long update(Category entity) {
         LOG.debug("CategoryDAO - update - id = {}", entity.getId());
-        jdbcTemplate.update(QUERY_UPDATE_CATEGORY, entity.getName(), entity.getId());
+        jdbcTemplate.update(QUERY_UPDATE_CATEGORY, entity.getName(), entity.getImage(), entity.getId());
         return entity.getId();
     }
 

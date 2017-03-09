@@ -34,6 +34,7 @@ public class CategoryDAOTest {
     public void testCreate() {
         Category expectedCategory = new Category();
         expectedCategory.setName("Java");
+        expectedCategory.setImage("http://google.com/images/first");
         Long id = categoryDAO.create(expectedCategory);
         expectedCategory.setId(id);
         Category category = categoryDAO.read(id);
@@ -45,7 +46,8 @@ public class CategoryDAOTest {
         Long categoryId = 2L;
         Category expectedCategory = new Category();
         expectedCategory.setId(categoryId);
-        expectedCategory.setName("congue");
+        expectedCategory.setName("Balanced");
+        expectedCategory.setImage("http://dummyimage.com/136x111.jpg/dddddd/000000");
         Category category = categoryDAO.read(categoryId);
         Assert.assertEquals(expectedCategory, category);
     }
@@ -57,6 +59,7 @@ public class CategoryDAOTest {
         Long categoryId = 5L;
         Category category = categoryDAO.read(categoryId);
         category.setName("TestTest");
+        category.setImage("TestImage");
         Long updatedCategoryId = categoryDAO.update(category);
         Category updatedCategory = categoryDAO.read(updatedCategoryId);
         Assert.assertEquals(category, updatedCategory);
@@ -74,7 +77,7 @@ public class CategoryDAOTest {
 
     @Test
     public void testReadAll() {
-        int expectedCategoriesAmount = 7;
+        int expectedCategoriesAmount = 8;
         List<Category> categories = categoryDAO.readAll();
         Assert.assertEquals(expectedCategoriesAmount, categories.size());
     }

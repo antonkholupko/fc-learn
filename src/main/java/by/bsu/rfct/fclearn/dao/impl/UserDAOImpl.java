@@ -21,14 +21,14 @@ public class UserDAOImpl implements UserDAO{
     private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
 
     private static final String PK_COLUMN = "id";
-    private static final String QUERY_INSERT_USER = "INSERT INTO users (login, email, password, photo) " +
-            "VALUES(?,?,?,?);";
-    private static final String QUERY_UPDATE_USER = "UPDATE users SET login=?, email=?, password=?, photo=? " +
+    private static final String QUERY_INSERT_USER = "INSERT INTO users (login, email, password, photo, status) " +
+            "VALUES(?,?,?,?,?);";
+    private static final String QUERY_UPDATE_USER = "UPDATE users SET login=?, email=?, password=?, photo=?, status=? " +
             "WHERE id=?;";
     private static final String QUERY_DELETE_USER = "DELETE FROM users WHERE id=?;";
-    private static final String QUERY_SELECT_USER = "SELECT id, login, email, password, photo FROM users " +
+    private static final String QUERY_SELECT_USER = "SELECT id, login, email, password, photo, status AS statusString FROM users " +
             "WHERE id=?;";
-    private static final String QUERY_SELECT_ALL_USERS = "SELECT id, login, email, password, photo " +
+    private static final String QUERY_SELECT_ALL_USERS = "SELECT id, login, email, password, photo, status AS statusString " +
             "FROM users;";
 
     private DataSource dataSource;
@@ -50,6 +50,7 @@ public class UserDAOImpl implements UserDAO{
             ps.setString(2, entity.getEmail());
             ps.setString(3, entity.getPassword());
             ps.setString(4, entity.getPhoto());
+            ps.setString(5, entity.getStatus().toString());
             return ps;
         }, holder);
         return holder.getKey().longValue();
@@ -66,7 +67,7 @@ public class UserDAOImpl implements UserDAO{
     public Long update(User entity) {
         LOG.debug("UserDAO - update - id = {}, email= {}", entity.getId(), entity.getEmail());
         jdbcTemplate.update(QUERY_UPDATE_USER, entity.getLogin(), entity.getEmail(),
-                entity.getPassword(), entity.getPhoto(), entity.getId());
+                entity.getPassword(), entity.getPhoto(), entity.getStatus().toString(), entity.getId());
         return entity.getId();
     }
 
