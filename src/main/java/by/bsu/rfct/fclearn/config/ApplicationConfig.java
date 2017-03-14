@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "by.bsu.rfct.fclearn.dao")
 @PropertySource("classpath:db.properties")
-public class DAOConfig {
+public class ApplicationConfig {
 
     @Value("${db.driverName}")
     private String driverName;
