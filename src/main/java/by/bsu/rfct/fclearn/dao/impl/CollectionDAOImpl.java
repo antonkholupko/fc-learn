@@ -5,6 +5,7 @@ import by.bsu.rfct.fclearn.entity.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -32,6 +33,8 @@ public class CollectionDAOImpl implements CollectionDAO{
     private static final String QUERY_DELETE_COLLECTION = "DELETE FROM collections WHERE id=?;";
     private static final String QUERY_SELECT_ALL_COLLECTIONS = "SELECT id, author_id, topic_id, name, description, " +
             "created, modified, image, status AS statusString, rating FROM collections;";
+    private static final String QUERY_SELECT_COLLECTION_BY_NAME = "SELECT id, author_id, topic_id, name, description, " +
+            "created, modified, image, status AS statusString, rating FROM collections WHERE name=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -101,6 +104,15 @@ public class CollectionDAOImpl implements CollectionDAO{
 
     @Override
     public Boolean checkIfExist(Collection entity) {
-        return null;
+        LOG.debug("CollectionDAO - check if exists - name = {}", entity.getName());
+        try {
+            jdbcTemplate.queryForObject(QUERY_SELECT_COLLECTION_BY_NAME, new Object[]{entity.getName()},
+                    new BeanPropertyRowMapper<>(Collection.class));
+            LOG.debug("CollectionDAO - check if exists - name = {} exists", entity.getName());
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("CollectionDAO - check if exists - name = {} doesn't exist", entity.getName());
+            return false;
+        }
     }
 }
