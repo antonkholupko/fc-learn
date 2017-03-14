@@ -98,4 +98,9 @@ public class CollectionDAOImpl implements CollectionDAO{
         return jdbcTemplate.query(QUERY_SELECT_ALL_COLLECTIONS,
                 new BeanPropertyRowMapper<>(Collection.class));
     }
+
+    @Override
+    public Boolean checkIfExist(Collection entity) {
+        return null;
+    }
 }

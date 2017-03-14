@@ -91,4 +91,9 @@ public class CardDAOImpl implements CardDAO{
         return jdbcTemplate.query(QUERY_SELECT_ALL_CARDS,
                 new BeanPropertyRowMapper<>(Card.class));
     }
+
+    @Override
+    public Boolean checkIfExist(Card entity) {
+        return null;
+    }
 }

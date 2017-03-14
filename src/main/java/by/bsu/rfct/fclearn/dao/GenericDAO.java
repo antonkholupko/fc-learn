@@ -49,4 +49,12 @@ public interface GenericDAO <T extends AbstractEntity, K> {
      */
     List<T> readAll();
 
+    /**
+     * Checks if this object exists in database
+     * @param entity
+     * @return true if object exists
+     *          false if object doesn't exist
+     */
+    Boolean checkIfExist(T entity);
+
 }

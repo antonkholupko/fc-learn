@@ -83,4 +83,9 @@ public class UserDAOImpl implements UserDAO{
         return jdbcTemplate.query(QUERY_SELECT_ALL_USERS,
                 new BeanPropertyRowMapper<>(User.class));
     }
+
+    @Override
+    public Boolean checkIfExist(User entity) {
+        return null;
+    }
 }

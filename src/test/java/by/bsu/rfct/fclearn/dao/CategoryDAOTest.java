@@ -82,4 +82,22 @@ public class CategoryDAOTest {
         Assert.assertEquals(expectedCategoriesAmount, categories.size());
     }
 
+    @Test
+    public void testCheckIfExist_categoryExists() {
+        String name = "structure";
+        Category category = new Category();
+        category.setName(name);
+        Boolean check = categoryDAO.checkIfExist(category);
+        Assert.assertEquals(true, check);
+    }
+
+    @Test
+    public void testCheckIfExist_categoryNotExists() {
+        String name = "noSuchCategory";
+        Category category = new Category();
+        category.setName(name);
+        Boolean check = categoryDAO.checkIfExist(category);
+        Assert.assertEquals(false, check);
+    }
+
 }

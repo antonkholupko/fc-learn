@@ -83,4 +83,22 @@ public class TopicDAOTest {
         Assert.assertEquals(expectedTopicsAmount, topics.size());
     }
 
+    @Test
+    public void testCheckIfExist_topicExists() {
+        String name = "Axure RP";
+        Topic topic = new Topic();
+        topic.setName(name);
+        Boolean check = topicDAO.checkIfExist(topic);
+        Assert.assertEquals(true, check);
+    }
+
+    @Test
+    public void testCheckIfExist_topicNotExists() {
+        String name = "Axure RP non exist";
+        Topic topic = new Topic();
+        topic.setName(name);
+        Boolean check = topicDAO.checkIfExist(topic);
+        Assert.assertEquals(false, check);
+    }
+
 }
