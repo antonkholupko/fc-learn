@@ -5,6 +5,7 @@ import by.bsu.rfct.fclearn.entity.Card;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -30,6 +31,8 @@ public class CardDAOImpl implements CardDAO{
     private static final String QUERY_DELETE_CARD = "DELETE FROM cards WHERE id=?;";
     private static final String QUERY_SELECT_ALL_CARDS = "SELECT id, collection_id, question, answer, " +
             "question_image, answer_image FROM cards;";
+    private static final String QUERY_SELECT_CARD_BY_QUESTION = "SELECT id, collection_id, question, answer, " +
+            "question_image, answer_image FROM cards WHERE question=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -94,6 +97,14 @@ public class CardDAOImpl implements CardDAO{
 
     @Override
     public Boolean checkIfExist(Card entity) {
-        return null;
+        LOG.debug("CardDAO - check if exists - question = {}", entity.getQuestion());
+        try {
+            jdbcTemplate.queryForObject(QUERY_SELECT_CARD_BY_QUESTION, new Object[]{entity.getQuestion()},
+                    new BeanPropertyRowMapper<>(Card.class));
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("CardDAO - check if exists - question = {} doesn't exist", entity.getQuestion());
+            return false;
+        }
     }
 }

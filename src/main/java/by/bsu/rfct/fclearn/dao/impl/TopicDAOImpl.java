@@ -87,7 +87,6 @@ public class TopicDAOImpl implements TopicDAO{
         try {
             jdbcTemplate.queryForObject(QUERY_SELECT_TOPIC_BY_NAME, new Object[]{entity.getName()},
                     new BeanPropertyRowMapper<>(Topic.class));
-            LOG.debug("TopicDAO - check if exists - name = {} exists", entity.getName());
             return true;
         } catch (EmptyResultDataAccessException exc) {
             LOG.debug("TopicDAO - check if exists - name = {} doesn't exist", entity.getName());

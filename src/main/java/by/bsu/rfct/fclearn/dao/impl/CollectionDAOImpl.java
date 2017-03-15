@@ -108,7 +108,6 @@ public class CollectionDAOImpl implements CollectionDAO{
         try {
             jdbcTemplate.queryForObject(QUERY_SELECT_COLLECTION_BY_NAME, new Object[]{entity.getName()},
                     new BeanPropertyRowMapper<>(Collection.class));
-            LOG.debug("CollectionDAO - check if exists - name = {} exists", entity.getName());
             return true;
         } catch (EmptyResultDataAccessException exc) {
             LOG.debug("CollectionDAO - check if exists - name = {} doesn't exist", entity.getName());

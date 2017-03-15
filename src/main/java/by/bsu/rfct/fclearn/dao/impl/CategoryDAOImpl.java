@@ -88,7 +88,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         try {
             jdbcTemplate.queryForObject(QUERY_SELECT_CATEGORY_BY_NAME, new Object[]{entity.getName()},
                     new BeanPropertyRowMapper<>(Category.class));
-            LOG.debug("CategoryDAO - check if exists - name = {} exists", entity.getName());
             return true;
         } catch (EmptyResultDataAccessException exc) {
             LOG.debug("CategoryDAO - check if exists - name = {} doesn't exist", entity.getName());

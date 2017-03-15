@@ -91,4 +91,22 @@ public class CardDAOTest {
         Assert.assertEquals(expectedCardsAmount, cards.size());
     }
 
+    @Test
+    public void checkIfExist_cardExists() {
+        String question = "In sagittis dui vel nisl.";
+        Card card = new Card();
+        card.setQuestion(question);
+        Boolean check = cardDAO.checkIfExist(card);
+        Assert.assertEquals(true, check);
+    }
+
+    @Test
+    public void checkIfExists_cardNotExists() {
+        String question = "Test question for not existing card";
+        Card card = new Card();
+        card.setQuestion(question);
+        Boolean check = cardDAO.checkIfExist(card);
+        Assert.assertEquals(false, check);
+    }
+
 }
