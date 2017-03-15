@@ -5,11 +5,13 @@ import by.bsu.rfct.fclearn.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -30,6 +32,10 @@ public class UserDAOImpl implements UserDAO{
             "WHERE id=?;";
     private static final String QUERY_SELECT_ALL_USERS = "SELECT id, login, email, password, photo, status AS statusString " +
             "FROM users;";
+    private static final String QUERY_SELECT_USER_BY_LOGIN = "SELECT id, login, email, password, photo, " +
+            "status AS statusString FROM users WHERE login=?;";
+    private static final String QUERY_SELECT_USER_BY_EMAIL = "SELECT id, login, email, password, photo, " +
+            "status AS statusString FROM users WHERE email=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -86,6 +92,22 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public Boolean checkIfExist(User entity) {
-        return null;
+        try {
+            if (!StringUtils.isEmpty(entity.getLogin())) {
+                LOG.debug("UserDAO - check if exists - login = {}", entity.getLogin());
+                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_LOGIN, new Object[]{entity.getLogin()},
+                        new BeanPropertyRowMapper<>(User.class));
+                return true;
+            } else if (!StringUtils.isEmpty(entity.getEmail())) {
+                LOG.debug("UserDAO - check if exists - email = {}", entity.getEmail());
+                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_EMAIL, new Object[]{entity.getEmail()},
+                        new BeanPropertyRowMapper<>(User.class));
+                return true;
+            }
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("UserDAO - check if exists - login = {}; email = {} doesn't exist", entity.getLogin(),
+                    entity.getEmail());
+        }
+        return false;
     }
 }

@@ -91,4 +91,34 @@ public class UserDAOTest {
         Assert.assertEquals(expectedUsersAmount, users.size());
     }
 
+    @Test
+    public void testCheckIfExist_userExists() {
+        String login = "ntuckerm";
+        String email = "ltorresm@opera.com";
+        User user1 = new User();
+        User user2 = new User();
+        User user3 = new User();
+        user1.setLogin(login);
+        user2.setEmail(email);
+        user3.setLogin(login);
+        user3.setEmail(email);
+        Boolean check1 = userDAO.checkIfExist(user1);
+        Boolean check2 = userDAO.checkIfExist(user2);
+        Boolean check3 = userDAO.checkIfExist(user3);
+        Assert.assertEquals(true, check1);
+        Assert.assertEquals(true, check2);
+        Assert.assertEquals(true, check3);
+    }
+
+    @Test
+    public void testCheckIfExist_userNotExists() {
+        String login = "Anton";
+        String email = "aaaa@gmail.com";
+        User user = new User();
+        user.setLogin(login);
+        user.setEmail(email);
+        Boolean check = userDAO.checkIfExist(user);
+        Assert.assertEquals(false, check);
+    }
+
 }
