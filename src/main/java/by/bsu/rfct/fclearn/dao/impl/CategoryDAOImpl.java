@@ -6,6 +6,7 @@ import by.bsu.rfct.fclearn.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -29,6 +30,8 @@ public class CategoryDAOImpl implements CategoryDAO {
     private static final String QUERY_UPDATE_CATEGORY = "UPDATE categories SET name=?, image=? WHERE id=?;";
     private static final String QUERY_DELETE_CATEGORY = "DELETE FROM categories WHERE id=?;";
     private static final String QUERY_SELECT_ALL_CATEGOTIES = "SELECT id, name, image FROM categories;";
+    private static final String QUERY_SELECT_CATEGORY_BY_NAME = "SELECT id, name, image FROM categories " +
+            "WHERE name=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -78,4 +81,18 @@ public class CategoryDAOImpl implements CategoryDAO {
         return jdbcTemplate.query(QUERY_SELECT_ALL_CATEGOTIES,
                 new BeanPropertyRowMapper<>(Category.class));
     }
+
+    @Override
+    public Boolean checkIfExist(Category entity) {
+        LOG.debug("CategoryDAO - check if exists - name = {}", entity.getName());
+        try {
+            jdbcTemplate.queryForObject(QUERY_SELECT_CATEGORY_BY_NAME, new Object[]{entity.getName()},
+                    new BeanPropertyRowMapper<>(Category.class));
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("CategoryDAO - check if exists - name = {} doesn't exist", entity.getName());
+            return false;
+        }
+    }
+
 }

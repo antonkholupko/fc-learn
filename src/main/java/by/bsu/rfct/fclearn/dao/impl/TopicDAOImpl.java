@@ -5,6 +5,7 @@ import by.bsu.rfct.fclearn.entity.Topic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,6 +29,8 @@ public class TopicDAOImpl implements TopicDAO{
     private static final String QUERY_UPDATE_TOPIC = "UPDATE topics SET name=?, image=? WHERE id=?;";
     private static final String QUERY_DELETE_TOPIC = "DELETE FROM topics WHERE id=?;";
     private static final String QUERY_SELECT_ALL_TOPICS = "SELECT id, name, image FROM topics;";
+    private static final String QUERY_SELECT_TOPIC_BY_NAME = "SELECT id, name, image FROM topics " +
+            "WHERE name=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -76,5 +79,18 @@ public class TopicDAOImpl implements TopicDAO{
         LOG.debug("TopicDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS,
                 new BeanPropertyRowMapper<>(Topic.class));
+    }
+
+    @Override
+    public Boolean checkIfExist(Topic entity) {
+        LOG.debug("TopicDAO - check if exists - name = {}", entity.getName());
+        try {
+            jdbcTemplate.queryForObject(QUERY_SELECT_TOPIC_BY_NAME, new Object[]{entity.getName()},
+                    new BeanPropertyRowMapper<>(Topic.class));
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("TopicDAO - check if exists - name = {} doesn't exist", entity.getName());
+            return false;
+        }
     }
 }

@@ -104,4 +104,22 @@ public class CollectionDAOTest {
         Assert.assertEquals(expectedColletionsAmount, collections.size());
     }
 
+    @Test
+    public void testCheckIfExist_collectionExists() {
+        String name = "Dabfeed";
+        Collection collection = new Collection();
+        collection.setName(name);
+        Boolean check = collectionDAO.checkIfExist(collection);
+        Assert.assertEquals(true, check);
+    }
+
+    @Test
+    public void testCheckIfExist_collectionNotExists() {
+        String name = "DabfeedNotexistedTest";
+        Collection collection = new Collection();
+        collection.setName(name);
+        Boolean check = collectionDAO.checkIfExist(collection);
+        Assert.assertEquals(false, check);
+    }
+
 }
