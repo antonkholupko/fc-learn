@@ -167,13 +167,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`user_cards` (
   CONSTRAINT `fk_users_has_cards_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `fc_learn_db_schema`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_users_has_cards_cards1`
     FOREIGN KEY (`cards_id`)
     REFERENCES `fc_learn_db_schema`.`cards` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE )
 ENGINE = InnoDB;
 
 
@@ -381,13 +381,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_test`.`user_collections` (
   CONSTRAINT `fk_topics_has_users_topics1`
     FOREIGN KEY (`collection_id`)
     REFERENCES `fc_learn_db_test`.`collections` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE ,
   CONSTRAINT `fk_topics_has_users_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `fc_learn_db_test`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE NO CASCADE
+    ON UPDATE NO CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

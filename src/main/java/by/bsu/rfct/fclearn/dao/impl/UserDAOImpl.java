@@ -36,6 +36,8 @@ public class UserDAOImpl implements UserDAO{
             "status AS statusString FROM users WHERE login=?;";
     private static final String QUERY_SELECT_USER_BY_EMAIL = "SELECT id, login, email, password, photo, " +
             "status AS statusString FROM users WHERE email=?;";
+    private static final String QUERY_INSERT_COLLECTION_INTO_USER = "INSERT INTO user_collections (user_id, " +
+            "collection_id) VALUES(?,?);";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -109,5 +111,17 @@ public class UserDAOImpl implements UserDAO{
                     entity.getEmail());
         }
         return false;
+    }
+
+    @Override
+    public void addCollection(Long userId, Long collectionId) {
+        LOG.debug("UserDAO - add collection - id = {}", collectionId);
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_COLLECTION_INTO_USER);
+            ps.setLong(1, userId);
+            ps.setLong(2, collectionId);
+            return ps;
+        }, holder);
     }
 }

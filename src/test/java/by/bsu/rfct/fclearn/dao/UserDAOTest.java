@@ -121,4 +121,11 @@ public class UserDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testAddCollection() {
+        Long userId = 10L;
+        Long collectionId = 15L;
+        userDAO.addCollection(userId, collectionId);
+    }
+
 }
