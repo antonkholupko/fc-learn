@@ -32,6 +32,8 @@ public class CategoryDAOImpl implements CategoryDAO {
     private static final String QUERY_SELECT_ALL_CATEGOTIES = "SELECT id, name, image FROM categories;";
     private static final String QUERY_SELECT_CATEGORY_BY_NAME = "SELECT id, name, image FROM categories " +
             "WHERE name=?;";
+    private static final String QUERY_INSERT_TOPIC_INTO_CATEGORY = "INSERT INTO topic_categories (topic_id, category_id) " +
+            "VALUES(?,?);";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -95,4 +97,15 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+    @Override
+    public void addTopic(Long categoryId, Long topicId) {
+        LOG.debug("CategoryDAO - add topic - id = {}", topicId);
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_TOPIC_INTO_CATEGORY);
+            ps.setLong(1, topicId);
+            ps.setLong(2, categoryId);
+            return ps;
+        }, holder);
+    }
 }

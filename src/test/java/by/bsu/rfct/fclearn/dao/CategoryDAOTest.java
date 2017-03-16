@@ -100,4 +100,9 @@ public class CategoryDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testAddTopic() {
+        categoryDAO.addTopic(4L, 1L);
+    }
+
 }
