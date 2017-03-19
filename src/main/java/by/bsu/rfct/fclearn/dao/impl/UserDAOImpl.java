@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO{
     private static final String QUERY_INSERT_COLLECTION_INTO_USER = "INSERT INTO user_collections (user_id, " +
             "collection_id) VALUES(?,?);";
     private static final String QUERY_INSERT_CARD_INTO_USER = "INSERT INTO user_cards (users_id, cards_id, card_status, low_count) " +
-            "VALUES(?,?,?, 0);";
+            "VALUES(?,?,?,0);";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
