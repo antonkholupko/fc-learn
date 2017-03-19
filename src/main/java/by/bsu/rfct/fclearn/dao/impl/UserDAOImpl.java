@@ -1,6 +1,7 @@
 package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.UserDAO;
+import by.bsu.rfct.fclearn.entity.CardStatus;
 import by.bsu.rfct.fclearn.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,8 @@ public class UserDAOImpl implements UserDAO{
             "status AS statusString FROM users WHERE email=?;";
     private static final String QUERY_INSERT_COLLECTION_INTO_USER = "INSERT INTO user_collections (user_id, " +
             "collection_id) VALUES(?,?);";
+    private static final String QUERY_INSERT_CARD_INTO_USER = "INSERT INTO user_cards (users_id, cards_id, card_status, low_count) " +
+            "VALUES(?,?,?, 0);";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -121,6 +124,19 @@ public class UserDAOImpl implements UserDAO{
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_COLLECTION_INTO_USER);
             ps.setLong(1, userId);
             ps.setLong(2, collectionId);
+            return ps;
+        }, holder);
+    }
+
+    @Override
+    public void addCard(Long userId, Long cardId) {
+        LOG.debug("UserDAO - add card - id = {}", cardId);
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CARD_INTO_USER);
+            ps.setLong(1, userId);
+            ps.setLong(2, cardId);
+            ps.setString(3, CardStatus.NEW.toString());
             return ps;
         }, holder);
     }

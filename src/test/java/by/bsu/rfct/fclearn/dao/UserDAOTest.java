@@ -128,4 +128,11 @@ public class UserDAOTest {
         userDAO.addCollection(userId, collectionId);
     }
 
+    @Test
+    public void testAddCard() {
+        Long userId = 20L;
+        Long cardId = 2L;
+        userDAO.addCard(userId, cardId);
+    }
+
 }
