@@ -151,7 +151,8 @@ DROP TABLE IF EXISTS `fc_learn_db_schema`.`user_cards` ;
 CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`user_cards` (
   `users_id` BIGINT NOT NULL,
   `cards_id` BIGINT NOT NULL,
-  `card_status` ENUM('new', 'low', 'medium', 'high') NULL,
+  `card_status` ENUM('new', 'low', 'medium', 'high', 'never') NULL,
+  `low_count` INT NULL,
   PRIMARY KEY (`users_id`, `cards_id`),
   INDEX `fk_users_has_cards_cards1_idx` (`cards_id` ASC),
   INDEX `fk_users_has_cards_users1_idx` (`users_id` ASC),
