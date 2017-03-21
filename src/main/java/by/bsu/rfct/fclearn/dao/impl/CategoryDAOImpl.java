@@ -34,6 +34,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             "WHERE name=?;";
     private static final String QUERY_INSERT_TOPIC_INTO_CATEGORY = "INSERT INTO topic_categories (topic_id, category_id) " +
             "VALUES(?,?);";
+    private static final String QUERY_COUNT_ALL_CATEGORIES = "SELECT count(id) FROM categories;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -95,6 +96,12 @@ public class CategoryDAOImpl implements CategoryDAO {
             LOG.debug("CategoryDAO - check if exists - name = {} doesn't exist", entity.getName());
             return false;
         }
+    }
+
+    @Override
+    public Long countAll() {
+        LOG.debug("CategoryDAO - count all");
+        return jdbcTemplate.queryForObject(QUERY_COUNT_ALL_CATEGORIES, Long.class);
     }
 
     @Override

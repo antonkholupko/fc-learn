@@ -41,6 +41,7 @@ public class UserDAOImpl implements UserDAO{
             "collection_id) VALUES(?,?);";
     private static final String QUERY_INSERT_CARD_INTO_USER = "INSERT INTO user_cards (users_id, cards_id, card_status, low_count) " +
             "VALUES(?,?,?,0);";
+    private static final String QUERY_COUNT_ALL_USERS = "SELECT count(id) FROM users;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -114,6 +115,12 @@ public class UserDAOImpl implements UserDAO{
                     entity.getEmail());
         }
         return false;
+    }
+
+    @Override
+    public Long countAll() {
+        LOG.debug("UserDAO - count all");
+        return jdbcTemplate.queryForObject(QUERY_COUNT_ALL_USERS, Long.class);
     }
 
     @Override

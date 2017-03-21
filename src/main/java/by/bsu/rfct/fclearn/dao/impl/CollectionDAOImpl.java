@@ -35,6 +35,7 @@ public class CollectionDAOImpl implements CollectionDAO{
             "created, modified, image, status AS statusString, rating FROM collections;";
     private static final String QUERY_SELECT_COLLECTION_BY_NAME = "SELECT id, author_id, topic_id, name, description, " +
             "created, modified, image, status AS statusString, rating FROM collections WHERE name=?;";
+    private static final String QUERY_COUNT_ALL_COLLECTIONS = "SELECT count(id) FROM collections;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -113,5 +114,11 @@ public class CollectionDAOImpl implements CollectionDAO{
             LOG.debug("CollectionDAO - check if exists - name = {} doesn't exist", entity.getName());
             return false;
         }
+    }
+
+    @Override
+    public Long countAll() {
+        LOG.debug("CollectionDAO - count all");
+        return jdbcTemplate.queryForObject(QUERY_COUNT_ALL_COLLECTIONS, Long.class);
     }
 }

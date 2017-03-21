@@ -4,8 +4,8 @@ import by.bsu.rfct.fclearn.entity.User;
 
 public interface UserDAO extends GenericDAO<User, Long>{
 
-    public void addCollection(Long userId, Long collectionId);
+    void addCollection(Long userId, Long collectionId);
 
-    public void addCard(Long userId, Long cardId);
+    void addCard(Long userId, Long cardId);
 
 }

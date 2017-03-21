@@ -101,4 +101,11 @@ public class TopicDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testCountAll() {
+        Long expectedTopicsAmount = 15L;
+        Long topicsAmount = topicDAO.countAll();
+        Assert.assertEquals(expectedTopicsAmount, topicsAmount);
+    }
+
 }

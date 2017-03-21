@@ -135,4 +135,11 @@ public class UserDAOTest {
         userDAO.addCard(userId, cardId);
     }
 
+    @Test
+    public void testCountAll() {
+        Long expectedUsersAmount = 30L;
+        Long usersAmount = userDAO.countAll();
+        Assert.assertEquals(expectedUsersAmount, usersAmount);
+    }
+
 }

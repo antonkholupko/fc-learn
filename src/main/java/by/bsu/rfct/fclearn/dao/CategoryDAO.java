@@ -9,6 +9,6 @@ public interface CategoryDAO extends GenericDAO<Category, Long>{
      * @param topicId topic id
      * @param categoryId category id
      */
-    public void addTopic(Long categoryId, Long topicId);
+    void addTopic(Long categoryId, Long topicId);
 
 }

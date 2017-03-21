@@ -57,4 +57,10 @@ public interface GenericDAO <T extends AbstractEntity, K> {
      */
     Boolean checkIfExist(T entity);
 
+    /**
+     * Counts all objects
+     * @return objects amount
+     */
+    Long countAll();
+
 }
