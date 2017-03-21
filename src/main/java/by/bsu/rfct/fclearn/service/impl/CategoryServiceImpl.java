@@ -47,6 +47,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<CategoryDTO> readAll(Long pageNumber, Long amountOnPage) {
+        LOG.debug("CategoryService - read all");
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         List<Category> categories = categoryDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage),
                 amountOnPage);
