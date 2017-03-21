@@ -39,7 +39,7 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDTO> readAll() {
+    public List<TopicDTO> readAll(Long pageNumber, Long amountOnPage) {
         return null;
     }
 

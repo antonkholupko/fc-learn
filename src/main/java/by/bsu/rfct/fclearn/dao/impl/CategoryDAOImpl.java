@@ -2,7 +2,6 @@ package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
-import by.bsu.rfct.fclearn.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             "WHERE id=?;";
     private static final String QUERY_UPDATE_CATEGORY = "UPDATE categories SET name=?, image=? WHERE id=?;";
     private static final String QUERY_DELETE_CATEGORY = "DELETE FROM categories WHERE id=?;";
-    private static final String QUERY_SELECT_ALL_CATEGOTIES = "SELECT id, name, image FROM categories;";
+    private static final String QUERY_SELECT_ALL_CATEGORIES = "SELECT id, name, image FROM categories LIMIT ?,?;";
     private static final String QUERY_SELECT_CATEGORY_BY_NAME = "SELECT id, name, image FROM categories " +
             "WHERE name=?;";
     private static final String QUERY_INSERT_TOPIC_INTO_CATEGORY = "INSERT INTO topic_categories (topic_id, category_id) " +
@@ -79,9 +78,9 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public List<Category> readAll() {
+    public List<Category> readAll(Long startLimitFrom, Long amountOnPage) {
         LOG.debug("CategoryDAO - read all");
-        return jdbcTemplate.query(QUERY_SELECT_ALL_CATEGOTIES,
+        return jdbcTemplate.query(QUERY_SELECT_ALL_CATEGORIES, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Category.class));
     }
 

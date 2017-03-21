@@ -39,7 +39,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<CollectionDTO> readAll() {
+    public List<CollectionDTO> readAll(Long pageNumber, Long amountOnPage) {
         return null;
     }
 

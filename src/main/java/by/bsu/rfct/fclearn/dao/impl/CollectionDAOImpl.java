@@ -32,7 +32,7 @@ public class CollectionDAOImpl implements CollectionDAO{
             "description=?, created=?, modified=?, image=?, status=?, rating=? WHERE id=?";
     private static final String QUERY_DELETE_COLLECTION = "DELETE FROM collections WHERE id=?;";
     private static final String QUERY_SELECT_ALL_COLLECTIONS = "SELECT id, author_id, topic_id, name, description, " +
-            "created, modified, image, status AS statusString, rating FROM collections;";
+            "created, modified, image, status AS statusString, rating FROM collections LIMIT ?,?;";
     private static final String QUERY_SELECT_COLLECTION_BY_NAME = "SELECT id, author_id, topic_id, name, description, " +
             "created, modified, image, status AS statusString, rating FROM collections WHERE name=?;";
     private static final String QUERY_COUNT_ALL_COLLECTIONS = "SELECT count(id) FROM collections;";
@@ -97,9 +97,9 @@ public class CollectionDAOImpl implements CollectionDAO{
     }
 
     @Override
-    public List<Collection> readAll() {
+    public List<Collection> readAll(Long startLimitFrom, Long amountOnPage) {
         LOG.debug("CollectionDAO - read all");
-        return jdbcTemplate.query(QUERY_SELECT_ALL_COLLECTIONS,
+        return jdbcTemplate.query(QUERY_SELECT_ALL_COLLECTIONS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Collection.class));
     }
 

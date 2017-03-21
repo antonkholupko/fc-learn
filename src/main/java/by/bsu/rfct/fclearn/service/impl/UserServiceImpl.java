@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> readAll() {
+    public List<UserDTO> readAll(Long pageNumber, Long amountOnPage) {
         return null;
     }
 

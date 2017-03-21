@@ -17,10 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = {"/user/user-dataset.xml"}, type = DatabaseOperation.CLEAN_INSERT)
@@ -86,8 +88,8 @@ public class UserDAOTest {
 
     @Test
     public void testReadAll() {
-        int expectedUsersAmount = 30;
-        List<User> users = userDAO.readAll();
+        int expectedUsersAmount = 12;
+        List<User> users = userDAO.readAll(2L, 12L);
         Assert.assertEquals(expectedUsersAmount, users.size());
     }
 

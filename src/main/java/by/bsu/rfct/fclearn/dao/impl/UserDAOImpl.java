@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO{
     private static final String QUERY_SELECT_USER = "SELECT id, login, email, password, photo, status AS statusString FROM users " +
             "WHERE id=?;";
     private static final String QUERY_SELECT_ALL_USERS = "SELECT id, login, email, password, photo, status AS statusString " +
-            "FROM users;";
+            "FROM users LIMIT ?,?;";
     private static final String QUERY_SELECT_USER_BY_LOGIN = "SELECT id, login, email, password, photo, " +
             "status AS statusString FROM users WHERE login=?;";
     private static final String QUERY_SELECT_USER_BY_EMAIL = "SELECT id, login, email, password, photo, " +
@@ -90,9 +90,9 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<User> readAll() {
+    public List<User> readAll(Long startLimitFrom, Long amountOnPage) {
         LOG.debug("UserDAO - read all");
-        return jdbcTemplate.query(QUERY_SELECT_ALL_USERS,
+        return jdbcTemplate.query(QUERY_SELECT_ALL_USERS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(User.class));
     }
 

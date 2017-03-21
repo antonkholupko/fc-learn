@@ -17,10 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = {"/category/category-dataset.xml"}, type = DatabaseOperation.CLEAN_INSERT)
@@ -77,8 +79,8 @@ public class CategoryDAOTest {
 
     @Test
     public void testReadAll() {
-        int expectedCategoriesAmount = 8;
-        List<Category> categories = categoryDAO.readAll();
+        int expectedCategoriesAmount = 3;
+        List<Category> categories = categoryDAO.readAll(2L, 3L);
         Assert.assertEquals(expectedCategoriesAmount, categories.size());
     }
 

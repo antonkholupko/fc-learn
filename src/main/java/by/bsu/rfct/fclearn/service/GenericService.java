@@ -48,7 +48,7 @@ public interface GenericService<T extends AbstractDTO, K> {
      *
      * @return <code>DTO</code> instances list
      */
-    List<T> readAll();
+    List<T> readAll(Long pageNumber, Long amountOnPage);
 
     /**
      * Counts all entities

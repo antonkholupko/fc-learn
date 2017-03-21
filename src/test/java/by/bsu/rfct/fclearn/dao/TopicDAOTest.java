@@ -18,10 +18,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = {"/topic/topic-dataset.xml"}, type = DatabaseOperation.CLEAN_INSERT)
@@ -78,8 +80,8 @@ public class TopicDAOTest {
 
     @Test
     public void readAll() throws Exception {
-        int expectedTopicsAmount = 15;
-        List<Topic> topics = topicDAO.readAll();
+        int expectedTopicsAmount = 12;
+        List<Topic> topics = topicDAO.readAll(2L, 12L);
         Assert.assertEquals(expectedTopicsAmount, topics.size());
     }
 

@@ -1,8 +1,10 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CardDAO;
+import by.bsu.rfct.fclearn.entity.Card;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.dto.CardDTO;
+import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,8 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public List<CardDTO> readAll() {
+    public List<CardDTO> readAll(Long pageNumber, Long amountOnPage) {
+        List<Card> cards = cardDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         return null;
     }
 

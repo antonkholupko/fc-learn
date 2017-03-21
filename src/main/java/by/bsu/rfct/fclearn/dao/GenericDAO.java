@@ -47,7 +47,7 @@ public interface GenericDAO <T extends AbstractEntity, K> {
      *
      * @return list of objects from database
      */
-    List<T> readAll();
+    List<T> readAll(Long startLimitFrom, Long amountOnPage);
 
     /**
      * Checks if this object exists in database

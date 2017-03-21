@@ -28,7 +28,7 @@ public class TopicDAOImpl implements TopicDAO{
             "WHERE id=?;";
     private static final String QUERY_UPDATE_TOPIC = "UPDATE topics SET name=?, image=? WHERE id=?;";
     private static final String QUERY_DELETE_TOPIC = "DELETE FROM topics WHERE id=?;";
-    private static final String QUERY_SELECT_ALL_TOPICS = "SELECT id, name, image FROM topics;";
+    private static final String QUERY_SELECT_ALL_TOPICS = "SELECT id, name, image FROM topics LIMIT ?,?;";
     private static final String QUERY_SELECT_TOPIC_BY_NAME = "SELECT id, name, image FROM topics " +
             "WHERE name=?;";
     private static final String QUERY_COUNT_ALL_TOPICS = "SELECT count(id) FROM topics;";
@@ -76,9 +76,9 @@ public class TopicDAOImpl implements TopicDAO{
     }
 
     @Override
-    public List<Topic> readAll() {
+    public List<Topic> readAll(Long startLimitFrom, Long amountOnPage) {
         LOG.debug("TopicDAO - read all");
-        return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS,
+        return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Topic.class));
     }
 

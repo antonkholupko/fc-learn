@@ -12,8 +12,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.management.AttributeList;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("cardDAO")
@@ -30,7 +32,7 @@ public class CardDAOImpl implements CardDAO{
             "question_image=?, answer_image=? WHERE id=?;";
     private static final String QUERY_DELETE_CARD = "DELETE FROM cards WHERE id=?;";
     private static final String QUERY_SELECT_ALL_CARDS = "SELECT id, collection_id, question, answer, " +
-            "question_image, answer_image FROM cards;";
+            "question_image, answer_image FROM cards LIMIT ?,?;";
     private static final String QUERY_SELECT_CARD_BY_QUESTION = "SELECT id, collection_id, question, answer, " +
             "question_image, answer_image FROM cards WHERE question=?;";
     private static final String QUERY_COUNT_ALL_CARDS = "SELECT count(id) FROM cards;";
@@ -90,9 +92,9 @@ public class CardDAOImpl implements CardDAO{
     }
 
     @Override
-    public List<Card> readAll() {
+    public List<Card> readAll(Long startLimitFrom, Long amountOnPage) {
         LOG.debug("CardDAO - read all");
-        return jdbcTemplate.query(QUERY_SELECT_ALL_CARDS,
+        return jdbcTemplate.query(QUERY_SELECT_ALL_CARDS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Card.class));
     }
 

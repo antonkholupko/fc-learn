@@ -17,12 +17,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = {"/card/card-dataset.xml"}, type = DatabaseOperation.CLEAN_INSERT)
@@ -86,8 +88,11 @@ public class CardDAOTest {
 
     @Test
     public void readAll() throws Exception {
-        int expectedCardsAmount = 60;
-        List<Card> cards = cardDAO.readAll();
+        int expectedCardsAmount = 12;
+        Long expectedId = 19L;
+        List<Card> cards = cardDAO.readAll(18L, 12L);
+        Long id = cards.get(0).getId();
+        Assert.assertEquals(expectedId, id);
         Assert.assertEquals(expectedCardsAmount, cards.size());
     }
 
