@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
         LOG.debug("UserService - count all");
         return userDAO.countAll();
     }
+
+    @Override
+    public Boolean checkIfExists(UserDTO dto) {
+        return null;
+    }
 }

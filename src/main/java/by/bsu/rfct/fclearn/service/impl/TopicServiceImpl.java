@@ -48,4 +48,9 @@ public class TopicServiceImpl implements TopicService{
         LOG.debug("TopicService - count all");
         return topicDAO.countAll();
     }
+
+    @Override
+    public Boolean checkIfExists(TopicDTO dto) {
+        return null;
+    }
 }

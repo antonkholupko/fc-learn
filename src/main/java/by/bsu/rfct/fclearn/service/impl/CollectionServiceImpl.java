@@ -48,4 +48,9 @@ public class CollectionServiceImpl implements CollectionService {
         LOG.debug("CollectionService - count all");
         return collectionDAO.countAll();
     }
+
+    @Override
+    public Boolean checkIfExists(CollectionDTO dto) {
+        return null;
+    }
 }
