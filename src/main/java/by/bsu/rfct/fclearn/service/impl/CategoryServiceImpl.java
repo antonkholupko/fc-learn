@@ -3,6 +3,7 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.service.CategoryService;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Autowired
     private CategoryDAO categoryDAO;
+
+    @Autowired
+    private CategoryConverter categoryConverter;
 
     @Override
     public CategoryDTO create(CategoryDTO dto) {
@@ -47,11 +51,11 @@ public class CategoryServiceImpl implements CategoryService{
         List<Category> categories = categoryDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage),
                 amountOnPage);
         for (Category category : categories) {
-            CategoryDTO categoryDTO = new CategoryDTO();
+            /*CategoryDTO categoryDTO = new CategoryDTO();
             categoryDTO.setId(category.getId());
             categoryDTO.setName(category.getName());
-            categoryDTO.setImage(category.getImage());
-            categoryDTOs.add(categoryDTO);
+            categoryDTO.setImage(category.getImage());*/
+            categoryDTOs.add(categoryConverter.convert(category));
         }
         return categoryDTOs;
     }
