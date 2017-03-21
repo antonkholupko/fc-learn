@@ -1,13 +1,23 @@
 package by.bsu.rfct.fclearn.service.impl;
 
+import by.bsu.rfct.fclearn.dao.UserDAO;
+import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.UserDTO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public UserDTO create(UserDTO dto) {
@@ -36,6 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countAll() {
-        return null;
+        LOG.debug("UserService - count all");
+        return userDAO.countAll();
     }
 }
