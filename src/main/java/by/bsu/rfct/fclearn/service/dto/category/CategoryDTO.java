@@ -1,4 +1,6 @@
-package by.bsu.rfct.fclearn.service.dto;
+package by.bsu.rfct.fclearn.service.dto.category;
+
+import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
 
 import java.util.Objects;
 

@@ -3,7 +3,7 @@ package by.bsu.rfct.fclearn.controller;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CategoryService;
-import by.bsu.rfct.fclearn.service.dto.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
