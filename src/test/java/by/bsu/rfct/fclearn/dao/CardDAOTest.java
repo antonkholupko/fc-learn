@@ -109,4 +109,11 @@ public class CardDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testCountAll() {
+        Long expectedCardsAmount = 60L;
+        Long cardAmount = cardDAO.countAll();
+        Assert.assertEquals(expectedCardsAmount, cardAmount);
+    }
+
 }

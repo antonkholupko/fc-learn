@@ -122,4 +122,11 @@ public class CollectionDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testCountAll() {
+        Long expectedCollectionsAmount = 20L;
+        Long collectionsAmount = collectionDAO.countAll();
+        Assert.assertEquals(expectedCollectionsAmount, collectionsAmount);
+    }
+
 }

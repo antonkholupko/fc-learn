@@ -31,6 +31,7 @@ public class TopicDAOImpl implements TopicDAO{
     private static final String QUERY_SELECT_ALL_TOPICS = "SELECT id, name, image FROM topics;";
     private static final String QUERY_SELECT_TOPIC_BY_NAME = "SELECT id, name, image FROM topics " +
             "WHERE name=?;";
+    private static final String QUERY_COUNT_ALL_TOPICS = "SELECT count(id) FROM topics;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -92,5 +93,11 @@ public class TopicDAOImpl implements TopicDAO{
             LOG.debug("TopicDAO - check if exists - name = {} doesn't exist", entity.getName());
             return false;
         }
+    }
+
+    @Override
+    public Long countAll() {
+        LOG.debug("TopicDAO - count all");
+        return jdbcTemplate.queryForObject(QUERY_COUNT_ALL_TOPICS, Long.class);
     }
 }

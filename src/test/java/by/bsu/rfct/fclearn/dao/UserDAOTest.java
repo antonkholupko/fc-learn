@@ -121,4 +121,25 @@ public class UserDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testAddCollection() {
+        Long userId = 10L;
+        Long collectionId = 15L;
+        userDAO.addCollection(userId, collectionId);
+    }
+
+    @Test
+    public void testAddCard() {
+        Long userId = 20L;
+        Long cardId = 2L;
+        userDAO.addCard(userId, cardId);
+    }
+
+    @Test
+    public void testCountAll() {
+        Long expectedUsersAmount = 30L;
+        Long usersAmount = userDAO.countAll();
+        Assert.assertEquals(expectedUsersAmount, usersAmount);
+    }
+
 }

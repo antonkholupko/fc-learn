@@ -100,4 +100,16 @@ public class CategoryDAOTest {
         Assert.assertEquals(false, check);
     }
 
+    @Test
+    public void testAddTopic() {
+        categoryDAO.addTopic(4L, 1L);
+    }
+
+    @Test
+    public void testCountAll() {
+        Long expectedCategoriesAmount = 8L;
+        Long categoriesAmount = categoryDAO.countAll();
+        Assert.assertEquals(expectedCategoriesAmount, categoriesAmount);
+    }
+
 }
