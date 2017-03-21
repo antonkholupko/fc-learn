@@ -3,7 +3,7 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.service.CategoryService;
-import by.bsu.rfct.fclearn.service.dto.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

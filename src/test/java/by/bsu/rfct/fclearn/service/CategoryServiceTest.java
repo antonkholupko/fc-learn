@@ -2,9 +2,8 @@ package by.bsu.rfct.fclearn.service;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
-import by.bsu.rfct.fclearn.service.dto.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.impl.CategoryServiceImpl;
-import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

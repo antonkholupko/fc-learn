@@ -2,7 +2,7 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.service.TopicService;
-import by.bsu.rfct.fclearn.service.dto.TopicDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

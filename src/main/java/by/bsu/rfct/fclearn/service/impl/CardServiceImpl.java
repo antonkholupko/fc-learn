@@ -3,7 +3,7 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CardDAO;
 import by.bsu.rfct.fclearn.entity.Card;
 import by.bsu.rfct.fclearn.service.CardService;
-import by.bsu.rfct.fclearn.service.dto.CardDTO;
+import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
