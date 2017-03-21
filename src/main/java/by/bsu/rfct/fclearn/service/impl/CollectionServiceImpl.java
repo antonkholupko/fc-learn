@@ -2,9 +2,11 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.dto.CollectionDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("collectionService")
 public class CollectionServiceImpl implements CollectionService {
 
     @Override

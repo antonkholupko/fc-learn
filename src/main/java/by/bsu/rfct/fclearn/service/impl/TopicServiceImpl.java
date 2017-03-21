@@ -2,9 +2,11 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.TopicDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("topicService")
 public class TopicServiceImpl implements TopicService{
 
     @Override
