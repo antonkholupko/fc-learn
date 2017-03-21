@@ -51,10 +51,6 @@ public class CategoryServiceImpl implements CategoryService{
         List<Category> categories = categoryDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage),
                 amountOnPage);
         for (Category category : categories) {
-            /*CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setId(category.getId());
-            categoryDTO.setName(category.getName());
-            categoryDTO.setImage(category.getImage());*/
             categoryDTOs.add(categoryConverter.convert(category));
         }
         return categoryDTOs;
