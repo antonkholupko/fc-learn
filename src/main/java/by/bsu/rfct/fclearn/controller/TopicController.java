@@ -37,7 +37,7 @@ public class TopicController {
     }
 
     @GetMapping("/{id:[\\d]+}")
-    public ResponseEntity findTopic(@PathVariable("id") Long id) {
+    public ResponseEntity findTopicById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(topicService.read(id), HttpStatus.OK);
     }
 

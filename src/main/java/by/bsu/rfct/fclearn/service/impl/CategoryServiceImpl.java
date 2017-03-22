@@ -32,7 +32,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDTO read(Long id) {
-        return null;
+        LOG.debug("CategoryService - read by id={}", id);
+        Category category = categoryDAO.read(id);
+        return categoryConverter.convert(category);
     }
 
     @Override
