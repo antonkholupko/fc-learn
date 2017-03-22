@@ -34,7 +34,9 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDTO read(Long id) {
         LOG.debug("CategoryService - read by id={}", id);
         Category category = categoryDAO.read(id);
-        return categoryConverter.convert(category);
+        CategoryDTO categoryDTO = categoryConverter.convert(category);
+        categoryDTO.setTopicAmount(this.countTopicAmount(id));
+        return categoryDTO;
     }
 
     @Override
@@ -54,7 +56,9 @@ public class CategoryServiceImpl implements CategoryService{
         List<Category> categories = categoryDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage),
                 amountOnPage);
         for (Category category : categories) {
-            categoryDTOs.add(categoryConverter.convert(category));
+            CategoryDTO categoryDTO = categoryConverter.convert(category);
+            categoryDTO.setTopicAmount(this.countTopicAmount(category.getId()));
+            categoryDTOs.add(categoryDTO);
         }
         return categoryDTOs;
     }
@@ -63,5 +67,11 @@ public class CategoryServiceImpl implements CategoryService{
     public Long countAll() {
         LOG.debug("CategoryService - count all");
         return categoryDAO.countAll();
+    }
+
+    @Override
+    public Long countTopicAmount(Long categoryId) {
+        LOG.debug("CategoryService - count topic amount");
+        return categoryDAO.countTopicAmount(categoryId);
     }
 }
