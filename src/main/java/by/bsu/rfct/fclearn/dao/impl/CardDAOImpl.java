@@ -36,6 +36,7 @@ public class CardDAOImpl implements CardDAO{
     private static final String QUERY_SELECT_CARD_BY_QUESTION = "SELECT id, collection_id, question, answer, " +
             "question_image, answer_image FROM cards WHERE question=?;";
     private static final String QUERY_COUNT_ALL_CARDS = "SELECT count(id) FROM cards;";
+    private static final String QUERY_COUNT_CARDS_IN_COLLECTION = "SELECT count(id) FROM cards WHERE collection_id=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -115,5 +116,11 @@ public class CardDAOImpl implements CardDAO{
             LOG.debug("CardDAO - check if exists - question = {} doesn't exist", entity.getQuestion());
             return false;
         }
+    }
+
+    @Override
+    public Long countCardAmountInCollection(Long collectionId) {
+        LOG.debug("CardDAO - count card amount in collection id={}", collectionId);
+        return jdbcTemplate.queryForObject(QUERY_COUNT_CARDS_IN_COLLECTION, new Object[] {collectionId}, Long.class);
     }
 }

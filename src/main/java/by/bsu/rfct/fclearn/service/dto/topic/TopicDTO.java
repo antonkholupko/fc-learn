@@ -47,9 +47,15 @@ public class TopicDTO extends AbstractDTO<Long> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         TopicDTO topicDTO = (TopicDTO) o;
         return Objects.equals(name, topicDTO.name) &&
                 Objects.equals(image, topicDTO.image) &&
