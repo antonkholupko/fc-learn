@@ -51,9 +51,4 @@ public class CardServiceImpl implements CardService{
         LOG.debug("CardService - count all");
         return cardDAO.countAll();
     }
-
-    @Override
-    public Boolean checkIfExists(CardDTO dto) {
-        return null;
-    }
 }

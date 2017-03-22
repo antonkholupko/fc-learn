@@ -57,12 +57,4 @@ public interface GenericService<T extends AbstractDTO, K> {
      */
     Long countAll();
 
-    /**
-     * Checks if this object exists
-     * @param dto
-     * @return true if object exists
-     *          false if object doesn't exist
-     */
-    Boolean checkIfExists(T dto);
-
 }

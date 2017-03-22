@@ -64,9 +64,4 @@ public class CategoryServiceImpl implements CategoryService{
         LOG.debug("CategoryService - count all");
         return categoryDAO.countAll();
     }
-
-    @Override
-    public Boolean checkIfExists(CategoryDTO dto) {
-        return null;
-    }
 }
