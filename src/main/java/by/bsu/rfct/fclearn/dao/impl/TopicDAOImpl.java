@@ -1,6 +1,7 @@
 package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.TopicDAO;
+import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.entity.Topic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
