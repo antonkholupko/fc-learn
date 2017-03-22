@@ -2,6 +2,7 @@ package by.bsu.rfct.fclearn.service;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.impl.CategoryServiceImpl;
 import org.junit.Test;
@@ -23,6 +24,8 @@ public class CategoryServiceTest {
     private CategoryServiceImpl categoryService;
     @Mock
     private CategoryDAO categoryDAO;
+    @Mock
+    private CategoryConverter categoryConverter;
 
     @Test
     public void testCreate() throws Exception {
@@ -51,9 +54,15 @@ public class CategoryServiceTest {
         expectedCategory.setId(3L);
         expectedCategory.setName("Name");
         expectedCategory.setImage("Image");
+        CategoryDTO expectedCategoryDTO = new CategoryDTO();
+        expectedCategoryDTO.setId(3L);
+        expectedCategoryDTO.setName("Name");
+        expectedCategoryDTO.setImage("Image");
         List<Category> categories = new ArrayList<>();
         categories.add(expectedCategory);
         when(categoryDAO.readAll(0L, 1L)).thenReturn(categories);
+        when(categoryConverter.convert(expectedCategory)).thenReturn(expectedCategoryDTO);
+        when(categoryDAO.countTopicAmount(3L)).thenReturn(3L);
         List<CategoryDTO> categoryDTOs = categoryService.readAll(1L, 1L);
         verify(categoryDAO, times(1)).readAll(0L,1L);
         CategoryDTO categoryDTO = categoryDTOs.get(0);

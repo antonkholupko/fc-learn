@@ -113,5 +113,11 @@ public class CategoryDAOTest {
         Long categoriesAmount = categoryDAO.countAll();
         Assert.assertEquals(expectedCategoriesAmount, categoriesAmount);
     }
+    @Test
+    public void testCountTopicAmount() {
+        Long expectedTopicAmount = 3L;
+        Long topicAmount = categoryDAO.countTopicAmount(3L);
+        Assert.assertEquals(expectedTopicAmount, topicAmount);
+    }
 
 }

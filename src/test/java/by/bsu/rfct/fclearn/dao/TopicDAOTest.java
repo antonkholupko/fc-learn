@@ -110,4 +110,12 @@ public class TopicDAOTest {
         Assert.assertEquals(expectedTopicsAmount, topicsAmount);
     }
 
+    @Test
+    public void testCountCollectionAmount() {
+        /*Long expectedCollectionAmount = 2L;
+        Long collectionAmount = topicDAO.countCollectionAmount(10L);
+        Assert.assertEquals(expectedCollectionAmount, collectionAmount);*/
+
+    }
+
 }

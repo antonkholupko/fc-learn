@@ -34,6 +34,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     private static final String QUERY_INSERT_TOPIC_INTO_CATEGORY = "INSERT INTO topic_categories (topic_id, category_id) " +
             "VALUES(?,?);";
     private static final String QUERY_COUNT_ALL_CATEGORIES = "SELECT count(id) FROM categories;";
+    private static final String QUERY_COUNT_TOPICS_IN_CATEGORY = "SELECT count(topic_id) FROM topic_categories " +
+            "WHERE category_id=?";
+    private static final String QUERY_READ_CATEGORIES_BY_TOPIC_ID = "SELECT categories.id AS id, categories.name AS name " +
+            "FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
+            "INNER JOIN categories ON topic_categories.category_id=categories.id where topics.id=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -113,5 +118,18 @@ public class CategoryDAOImpl implements CategoryDAO {
             ps.setLong(2, categoryId);
             return ps;
         }, holder);
+    }
+
+    @Override
+    public Long countTopicAmount(Long categoryId) {
+        LOG.debug("CategoryDAO - count topics");
+        return jdbcTemplate.queryForObject(QUERY_COUNT_TOPICS_IN_CATEGORY, new Object[] {categoryId}, Long.class);
+    }
+
+    @Override
+    public List<Category> readCategoriesByTopicId(Long topicId) {
+        LOG.debug("CategoryDAO - read categories by topic id");
+        return jdbcTemplate.query(QUERY_READ_CATEGORIES_BY_TOPIC_ID, new Object[] {topicId},
+                new BeanPropertyRowMapper<>(Category.class));
     }
 }
