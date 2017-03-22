@@ -32,7 +32,9 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public TopicDTO read(Long id) {
-        return null;
+        LOG.debug("TopicService - read by id={}", id);
+        Topic topic = topicDAO.read(id);
+        return topicConverter.convert(topic);
     }
 
     @Override
