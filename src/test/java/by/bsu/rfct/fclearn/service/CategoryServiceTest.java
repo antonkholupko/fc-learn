@@ -62,6 +62,7 @@ public class CategoryServiceTest {
         categories.add(expectedCategory);
         when(categoryDAO.readAll(0L, 1L)).thenReturn(categories);
         when(categoryConverter.convert(expectedCategory)).thenReturn(expectedCategoryDTO);
+        when(categoryDAO.countTopicAmount(3L)).thenReturn(3L);
         List<CategoryDTO> categoryDTOs = categoryService.readAll(1L, 1L);
         verify(categoryDAO, times(1)).readAll(0L,1L);
         CategoryDTO categoryDTO = categoryDTOs.get(0);

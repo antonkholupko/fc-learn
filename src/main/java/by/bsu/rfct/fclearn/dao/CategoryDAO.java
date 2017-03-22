@@ -11,4 +11,11 @@ public interface CategoryDAO extends GenericDAO<Category, Long>{
      */
     void addTopic(Long categoryId, Long topicId);
 
+    /**
+     * Counts how much topics in category
+     * @param categoryId category id
+     * @return topic amount in category
+     */
+    Long countTopicAmount(Long categoryId);
+
 }
