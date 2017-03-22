@@ -30,11 +30,11 @@ public class CategoryController {
         pageSize = ControllerUtils.validatePageSize(pageSize);
 
         List<CategoryDTO> categoryDTOList = categoryService.readAll(pageNumber, pageSize);
-        Long categoryCount = categoryService.countAll();
-        Long totalPages = ControllerUtils.calculatePagesAmount(categoryCount, pageSize);
+        Long categoryAmount = categoryService.countAll();
+        Long totalPages = ControllerUtils.calculatePagesAmount(categoryAmount, pageSize);
 
         HttpHeaders headers = new HttpHeaders();
-        PaginationHttpHeaders.addPaginationHeaders(headers, pageSize, pageNumber, categoryCount, totalPages);
+        PaginationHttpHeaders.addPaginationHeaders(headers, pageSize, pageNumber, categoryAmount, totalPages);
 
         return new ResponseEntity<>(categoryDTOList, headers, HttpStatus.OK);
     }
