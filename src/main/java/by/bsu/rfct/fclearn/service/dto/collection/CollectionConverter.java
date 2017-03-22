@@ -4,6 +4,7 @@ import by.bsu.rfct.fclearn.dao.CardDAO;
 import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.entity.Collection;
+import by.bsu.rfct.fclearn.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class CollectionConverter implements Converter<Collection, CollectionDTO>
     @Override
     public CollectionDTO convert(Collection collection) {
         CollectionDTO collectionDTO = new CollectionDTO();
+        User author = userDAO.read(collection.getAuthorId());
+        author.setPassword("");
         if (collection != null) {
             collectionDTO.setId(collection.getId());
             collectionDTO.setName(collection.getName());
@@ -32,7 +35,7 @@ public class CollectionConverter implements Converter<Collection, CollectionDTO>
             collectionDTO.setImage(collection.getImage());
             collectionDTO.setStatus(collection.getStatus().toString());
             collectionDTO.setRating(collection.getRating());
-            collectionDTO.setAuthor(userDAO.read(collection.getAuthorId()));
+            collectionDTO.setAuthor(author);
             collectionDTO.setTopic(topicDAO.read(collection.getTopicId()));
             collectionDTO.setCardsAmount(cardDAO.countCardAmountInCollection(collection.getId()));
         }
