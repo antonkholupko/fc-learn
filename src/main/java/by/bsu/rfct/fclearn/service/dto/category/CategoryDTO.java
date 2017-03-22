@@ -1,8 +1,6 @@
 package by.bsu.rfct.fclearn.service.dto.category;
 
-import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package by.bsu.rfct.fclearn.service.dto.topic;
 
-import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class TopicDTO extends AbstractDTO<Long> {
     private String name;
     private String image;
     private Long collectionAmount;
-    private List<Category> categories;
+    private List<CategoryDTO> categories;
 
     public String getName() {
         return name;
@@ -37,11 +37,11 @@ public class TopicDTO extends AbstractDTO<Long> {
         this.collectionAmount = collectionAmount;
     }
 
-    public List<Category> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<CategoryDTO> categories) {
         this.categories = categories;
     }
 
