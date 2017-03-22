@@ -51,4 +51,10 @@ public class CardServiceImpl implements CardService{
         LOG.debug("CardService - count all");
         return cardDAO.countAll();
     }
+
+    @Override
+    public Long countCardAmountInCollection(Long collectionId) {
+        LOG.debug("CardService - count card amount in collection id={}", collectionId);
+        return cardDAO.countCardAmountInCollection(collectionId);
+    }
 }

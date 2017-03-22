@@ -3,6 +3,8 @@ package by.bsu.rfct.fclearn.service.dto.collection;
 import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.entity.User;
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
+import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -16,8 +18,8 @@ public class CollectionDTO extends AbstractDTO<Long> {
     private String image;
     private String status;
     private Integer rating;
-    private User author;
-    private Topic topic;
+    private UserDTO author;
+    private TopicDTO topic;
     private Long cardsAmount;
 
     public String getName() {
@@ -76,19 +78,19 @@ public class CollectionDTO extends AbstractDTO<Long> {
         this.rating = rating;
     }
 
-    public User getAuthor() {
+    public UserDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserDTO author) {
         this.author = author;
     }
 
-    public Topic getTopic() {
+    public TopicDTO getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topic) {
+    public void setTopic(TopicDTO topic) {
         this.topic = topic;
     }
 
@@ -102,15 +104,9 @@ public class CollectionDTO extends AbstractDTO<Long> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         CollectionDTO that = (CollectionDTO) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&

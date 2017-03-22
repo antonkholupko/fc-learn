@@ -3,6 +3,7 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
 import by.bsu.rfct.fclearn.service.UserService;
+import by.bsu.rfct.fclearn.service.dto.user.UserConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private UserConverter userConverter;
+
     @Override
     public UserDTO create(UserDTO dto) {
         return null;
@@ -26,7 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO read(Long id) {
-        return null;
+        LOG.debug("UserService - read by id={}", id);
+        return userConverter.convert(userDAO.read(id));
     }
 
     @Override
