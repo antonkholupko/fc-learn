@@ -8,6 +8,7 @@ import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +35,9 @@ public class TopicServiceImpl implements TopicService{
 
     @Autowired
     private CategoryConverterSmall categoryConverterSmall;
+
+    @Autowired
+    private TopicConverterSmall topicConverterSmall;
 
     @Override
     public TopicDTO create(TopicDTO dto) {
@@ -92,5 +96,19 @@ public class TopicServiceImpl implements TopicService{
     public Long countCollectionAmount(Long topicId) {
         LOG.debug("TopicService - count amount of collections in topic id={}", topicId);
         return topicDAO.countCollectionAmount(topicId);
+    }
+
+    @Override
+    public List<TopicDTO> readAllByCategoryId(Long categoryId) {
+        LOG.debug("TopicService - read all topics by category id={}", categoryId);
+        List<TopicDTO> topicDTOs = new ArrayList<>();
+        List<Topic> topics = topicDAO.readAllByCategoryId(categoryId);
+        for (Topic topic : topics) {
+            Long collectionAmount = this.countCollectionAmount(topic.getId());
+            TopicDTO topicDTO = topicConverterSmall.convert(topic);
+            topicDTO.setCollectionAmount(collectionAmount);
+            topicDTOs.add(topicDTO);
+        }
+        return topicDTOs;
     }
 }

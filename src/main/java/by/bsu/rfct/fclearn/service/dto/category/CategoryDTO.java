@@ -1,7 +1,9 @@
 package by.bsu.rfct.fclearn.service.dto.category;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 
+import java.util.List;
 import java.util.Objects;
 
 public class CategoryDTO extends AbstractDTO<Long> {
@@ -9,6 +11,7 @@ public class CategoryDTO extends AbstractDTO<Long> {
     private String name;
     private String image;
     private Long topicAmount;
+    private List<TopicDTO> topics;
 
     public String getName() {
         return name;
@@ -34,25 +37,28 @@ public class CategoryDTO extends AbstractDTO<Long> {
         this.topicAmount = topicAmount;
     }
 
+    public List<TopicDTO> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<TopicDTO> topics) {
+        this.topics = topics;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         CategoryDTO that = (CategoryDTO) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(image, that.image) &&
-                Objects.equals(topicAmount, that.topicAmount);
+                Objects.equals(topicAmount, that.topicAmount) &&
+                Objects.equals(topics, that.topics);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image, topicAmount);
+        return Objects.hash(super.hashCode(), name, image, topicAmount, topics);
     }
 }

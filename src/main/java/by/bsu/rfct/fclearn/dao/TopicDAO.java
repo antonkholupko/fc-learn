@@ -1,6 +1,5 @@
 package by.bsu.rfct.fclearn.dao;
 
-import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.entity.Topic;
 
 import java.util.List;
@@ -13,4 +12,11 @@ public interface TopicDAO extends GenericDAO<Topic, Long>{
      * @return collection amount in topic
      */
     Long countCollectionAmount(Long topicId);
+
+    /**
+     * Reads topics by category id
+     * @param categoryId category id
+     * @return list of topics
+     */
+    List<Topic> readAllByCategoryId(Long categoryId);
 }

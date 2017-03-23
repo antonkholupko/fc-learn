@@ -2,9 +2,14 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
+import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.CategoryService;
+import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +30,15 @@ public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryConverter categoryConverter;
 
+    @Autowired
+    private TopicService topicService;
+
+    @Autowired
+    private TopicConverterSmall topicConverterSmall;
+
+    @Autowired
+    private TopicDTOConverter topicDTOConverter;
+
     @Override
     public CategoryDTO create(CategoryDTO dto) {
         return null;
@@ -36,6 +50,14 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = categoryDAO.read(id);
         CategoryDTO categoryDTO = categoryConverter.convert(category);
         categoryDTO.setTopicAmount(this.countTopicAmount(id));
+        List<TopicDTO> smallTopicDTOs = new ArrayList<>();
+        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id);
+        for (TopicDTO topicDTO : topicDTOs) {
+            Topic topic = topicDTOConverter.convert(topicDTO);
+            topicDTO = topicConverterSmall.convert(topic);
+            smallTopicDTOs.add(topicDTO);
+        }
+        categoryDTO.setTopics(smallTopicDTOs);
         return categoryDTO;
     }
 

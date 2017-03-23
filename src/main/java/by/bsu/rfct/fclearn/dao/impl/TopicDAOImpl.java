@@ -35,6 +35,9 @@ public class TopicDAOImpl implements TopicDAO{
     private static final String QUERY_COUNT_ALL_TOPICS = "SELECT count(id) FROM topics;";
     private static final String QUERY_COUNT_COLLECTIONS_IN_TOPIC = "SELECT count(topic_id) FROM collections " +
             "WHERE topic_id=?";
+    private static final String QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID = "SELECT topics.id, topics.name, topics.image " +
+            "FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
+            "WHERE topic_categories.category_id=?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -108,5 +111,12 @@ public class TopicDAOImpl implements TopicDAO{
     public Long countCollectionAmount(Long topicId) {
         LOG.debug("TopicDAO - count collections");
         return jdbcTemplate.queryForObject(QUERY_COUNT_COLLECTIONS_IN_TOPIC, new Object[] {topicId}, Long.class);
+    }
+
+    @Override
+    public List<Topic> readAllByCategoryId(Long categoryId) {
+        LOG.debug("TopicDAO - read all topics by category id={}", categoryId);
+        return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID, new Object[] {categoryId},
+                new BeanPropertyRowMapper<>(Topic.class));
     }
 }

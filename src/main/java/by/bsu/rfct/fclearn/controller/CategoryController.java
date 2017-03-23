@@ -40,5 +40,4 @@ public class CategoryController {
     public ResponseEntity findCategoryById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(categoryService.read(id), HttpStatus.OK);
     }
-
 }
