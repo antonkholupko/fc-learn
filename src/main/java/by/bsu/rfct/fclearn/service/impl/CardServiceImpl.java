@@ -2,14 +2,21 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CardDAO;
 import by.bsu.rfct.fclearn.entity.Card;
+import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.service.CardService;
+import by.bsu.rfct.fclearn.service.CollectionService;
+import by.bsu.rfct.fclearn.service.dto.card.CardConverter;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("cardService")
@@ -20,6 +27,18 @@ public class CardServiceImpl implements CardService{
     @Autowired
     private CardDAO cardDAO;
 
+    @Autowired
+    private CardConverter cardConverter;
+
+    @Autowired
+    private CollectionService collectionService;
+
+    @Autowired
+    private CollectionDTOConverter collectionDTOConverter;
+
+    @Autowired
+    private CollectionConverterSmall collectionConverterSmall;
+
     @Override
     public CardDTO create(CardDTO dto) {
         return null;
@@ -27,7 +46,14 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public CardDTO read(Long id) {
-        return null;
+        LOG.debug("CardService - read card id={}", id);
+        Card card = cardDAO.read(id);
+        CardDTO cardDTO = cardConverter.convert(card);
+        CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
+        Collection collection = collectionDTOConverter.convert(collectionDTO);
+        collectionDTO = collectionConverterSmall.convert(collection);
+        cardDTO.setCollectionDTO(collectionDTO);
+        return cardDTO;
     }
 
     @Override
@@ -42,8 +68,18 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public List<CardDTO> readAll(Long pageNumber, Long amountOnPage) {
+        LOG.debug("CardService - read all");
+        List<CardDTO> cardDTOs = new ArrayList<>();
         List<Card> cards = cardDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
-        return null;
+        for (Card card : cards) {
+            CardDTO cardDTO = cardConverter.convert(card);
+            CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
+            Collection collection = collectionDTOConverter.convert(collectionDTO);
+            collectionDTO = collectionConverterSmall.convert(collection);
+            cardDTO.setCollectionDTO(collectionDTO);
+            cardDTOs.add(cardDTO);
+        }
+        return cardDTOs;
     }
 
     @Override
