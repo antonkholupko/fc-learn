@@ -37,7 +37,7 @@ public class CollectionDAOImpl implements CollectionDAO{
             "created, modified, image, status AS statusString, rating FROM collections WHERE name=?;";
     private static final String QUERY_COUNT_ALL_COLLECTIONS = "SELECT count(id) FROM collections;";
     private static final String QUERY_SELECT_ALL_BY_TOPIC_ID = "SELECT id, author_id, topic_id, name, description, " +
-            "created, modified, image, status AS statusString, rating FROM collections WHERE topic_id=?;";
+            "created, modified, image, status AS statusString, rating FROM collections WHERE topic_id=? LIMIT ?,?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -125,9 +125,9 @@ public class CollectionDAOImpl implements CollectionDAO{
     }
 
     @Override
-    public List<Collection> readAllByTopicId(Long topicId) {
+    public List<Collection> readAllByTopicId(Long topicId, Long startLimitFrom, Long amountOnPage) {
         LOG.debug("CollectionDAO - read all by topic id={}", topicId);
-        return jdbcTemplate.query(QUERY_SELECT_ALL_BY_TOPIC_ID, new Object[] {topicId},
+        return jdbcTemplate.query(QUERY_SELECT_ALL_BY_TOPIC_ID, new Object[] {topicId, startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Collection.class));
     }
 }

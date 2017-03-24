@@ -61,18 +61,17 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public TopicDTO read(Long id) {
-        //TODO
         LOG.debug("TopicService - read by id={}", id);
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
-        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(topic.getId());
-        List<CollectionDTO> smallCollectionDTOs = new ArrayList<>();
+        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, 1L, 9L);
+        List<CollectionDTO> collectionDTOsSmall = new ArrayList<>();
         for (CollectionDTO collectionDTO : collectionDTOs) {
             Collection collection = collectionDTOConverter.convert(collectionDTO);
             collectionDTO = collectionConverterSmall.convert(collection);
-            smallCollectionDTOs.add(collectionDTO);
+            collectionDTOsSmall.add(collectionDTO);
         }
-        topicDTO.setCollections(smallCollectionDTOs);
+        topicDTO.setCollections(collectionDTOsSmall);
         return topicDTO;
     }
 

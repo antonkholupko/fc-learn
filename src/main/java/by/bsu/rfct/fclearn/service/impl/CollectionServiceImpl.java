@@ -17,6 +17,7 @@ import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTOConverter;
+import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,21 +121,13 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<CollectionDTO> readAllByTopicId(Long topicId) {
+    public List<CollectionDTO> readAllByTopicId(Long topicId, Long pageNumber, Long amountOnPage) {
         LOG.debug("CollectionService - read all by topic id={}", topicId);
-        List<Collection> collections = collectionDAO.readAllByTopicId(topicId);
         List<CollectionDTO> collectionDTOs = new ArrayList<>();
+        List<Collection> collections = collectionDAO.readAllByTopicId(topicId,
+                ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         for (Collection collection : collections) {
             CollectionDTO collectionDTO = collectionConverter.convert(collection);
-            UserDTO authorDTO = userService.read(collection.getAuthorId());
-            User author = userDTOConverter.convert(authorDTO);
-            authorDTO = userConverterSmall.convert(author);
-            collectionDTO.setAuthor(authorDTO);
-            TopicDTO topicDTO = topicService.read(collection.getTopicId());
-            Topic topic = topicDTOConverter.convert(topicDTO);
-            topicDTO = topicConverterSmall.convert(topic);
-            collectionDTO.setTopic(topicDTO);
-            collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(collection.getId()));
             collectionDTOs.add(collectionDTO);
         }
         return collectionDTOs;
