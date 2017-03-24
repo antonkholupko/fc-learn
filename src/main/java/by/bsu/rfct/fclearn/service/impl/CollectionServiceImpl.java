@@ -78,13 +78,7 @@ public class CollectionServiceImpl implements CollectionService {
         collectionDTO.setAuthor(authorDTO);
         collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(id));
         List<CardDTO> cardDTOs = cardService.readAllCardsByCollectionId(id, 1L, 9L);
-        List<CardDTO> smallCardDTOs = new ArrayList<>();
-        for (CardDTO cardDTO : cardDTOs) {
-            Card card = cardDTOConverter.convert(cardDTO);
-            cardDTO = cardConverterSmall.convert(card);
-            smallCardDTOs.add(cardDTO);
-        }
-        collectionDTO.setCards(smallCardDTOs);
+        collectionDTO.setCards(cardDTOs);
         return collectionDTO;
     }
 

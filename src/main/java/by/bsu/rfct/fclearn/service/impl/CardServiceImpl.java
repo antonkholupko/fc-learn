@@ -6,6 +6,7 @@ import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverter;
+import by.bsu.rfct.fclearn.service.dto.card.CardConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
@@ -39,6 +40,9 @@ public class CardServiceImpl implements CardService{
     @Autowired
     private CollectionConverterSmall collectionConverterSmall;
 
+    @Autowired
+    private CardConverterSmall cardConverterSmall;
+
     @Override
     public CardDTO create(CardDTO dto) {
         return null;
@@ -49,9 +53,6 @@ public class CardServiceImpl implements CardService{
         LOG.debug("CardService - read card id={}", id);
         Card card = cardDAO.read(id);
         CardDTO cardDTO = cardConverter.convert(card);
-        CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
-        Collection collection = collectionDTOConverter.convert(collectionDTO);
-        collectionDTO = collectionConverterSmall.convert(collection);
         return cardDTO;
     }
 
@@ -99,7 +100,7 @@ public class CardServiceImpl implements CardService{
         List<Card> cards = cardDAO.readAllCardsByCollectionId(collectionId,
                 ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         for (Card card : cards) {
-            CardDTO cardDTO = cardConverter.convert(card);
+            CardDTO cardDTO = cardConverterSmall.convert(card);
             cardDTOs.add(cardDTO);
         }
         return cardDTOs;

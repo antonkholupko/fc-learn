@@ -19,14 +19,15 @@ public class CardController {
     @Autowired
     CardService cardService;
 
-    @GetMapping
-    public ResponseEntity findCards(@RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
-                                    @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
+    @GetMapping("/collection/{collectionId:[\\d]+}")
+    public ResponseEntity findCards(@PathVariable("collectionId") Long collectionId,
+            @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
+            @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
 
-        List<CardDTO> cardDTOs = cardService.readAll(pageNumber, pageSize);
+        List<CardDTO> cardDTOs = cardService.readAllCardsByCollectionId(collectionId, pageNumber, pageSize);
         Long cardAmount = cardService.countAll();
         Long totalPages = ControllerUtils.calculatePagesAmount(cardAmount, pageSize);
 
