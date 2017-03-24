@@ -1,10 +1,11 @@
 package by.bsu.rfct.fclearn.service.dto.collection;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
+import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class CollectionDTO extends AbstractDTO<Long> {
@@ -17,7 +18,7 @@ public class CollectionDTO extends AbstractDTO<Long> {
     private String status;
     private Integer rating;
     private UserDTO author;
-    private TopicDTO topic;
+    private List<CardDTO> cards;
     private Long cardsAmount;
 
     public String getName() {
@@ -84,12 +85,12 @@ public class CollectionDTO extends AbstractDTO<Long> {
         this.author = author;
     }
 
-    public TopicDTO getTopic() {
-        return topic;
+    public List<CardDTO> getCards() {
+        return cards;
     }
 
-    public void setTopic(TopicDTO topic) {
-        this.topic = topic;
+    public void setCards(List<CardDTO> cards) {
+        this.cards = cards;
     }
 
     public Long getCardsAmount() {
@@ -114,12 +115,12 @@ public class CollectionDTO extends AbstractDTO<Long> {
                 Objects.equals(status, that.status) &&
                 Objects.equals(rating, that.rating) &&
                 Objects.equals(author, that.author) &&
-                Objects.equals(topic, that.topic) &&
+                Objects.equals(cards, that.cards) &&
                 Objects.equals(cardsAmount, that.cardsAmount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, created, modified, image, status, rating, author, topic, cardsAmount);
+        return Objects.hash(super.hashCode(), name, description, created, modified, image, status, rating, author, cards, cardsAmount);
     }
 }

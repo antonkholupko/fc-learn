@@ -19,14 +19,15 @@ public class CollectionController {
     @Autowired
     CollectionService collectionService;
 
-    @GetMapping
-    public ResponseEntity findCollections(@RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
-                            @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
+    @GetMapping("/topic/{topicId:[\\d]+}")
+    public ResponseEntity findCollectionsByTopicId(@PathVariable("topicId") Long topicId,
+            @RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
+            @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
 
-        List<CollectionDTO> collectionDTOs = collectionService.readAll(pageNumber, pageSize);
+        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(topicId, pageNumber, pageSize);
         Long collectionAmount = collectionService.countAll();
         Long totalPages = ControllerUtils.calculatePagesAmount(collectionAmount, pageSize);
 

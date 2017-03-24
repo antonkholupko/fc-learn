@@ -12,8 +12,6 @@ public class CollectionDTOConverter implements Converter<CollectionDTO, Collecti
         Collection collection = new Collection();
         if (collectionDTO != null) {
             collection.setId(collectionDTO.getId());
-            //collection.setAuthorId(collectionDTO.getAuthor().getId());
-            //collection.setTopicId(collectionDTO.getTopic().getId());
             collection.setName(collectionDTO.getName());
             collection.setDescription(collectionDTO.getDescription());
             collection.setCreated(collectionDTO.getCreated());

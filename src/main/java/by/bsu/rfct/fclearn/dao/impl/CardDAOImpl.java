@@ -37,6 +37,8 @@ public class CardDAOImpl implements CardDAO{
             "question_image, answer_image FROM cards WHERE question=?;";
     private static final String QUERY_COUNT_ALL_CARDS = "SELECT count(id) FROM cards;";
     private static final String QUERY_COUNT_CARDS_IN_COLLECTION = "SELECT count(id) FROM cards WHERE collection_id=?;";
+    private static final String QUERY_SELECT_CARDS_BY_COLLECTION_ID = "SELECT id, collection_id, question, answer, " +
+            "question_image, answer_image FROM cards WHERE collection_id=? LIMIT ?,?;";
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -122,5 +124,12 @@ public class CardDAOImpl implements CardDAO{
     public Long countCardAmountInCollection(Long collectionId) {
         LOG.debug("CardDAO - count card amount in collection id={}", collectionId);
         return jdbcTemplate.queryForObject(QUERY_COUNT_CARDS_IN_COLLECTION, new Object[] {collectionId}, Long.class);
+    }
+
+    @Override
+    public List<Card> readAllCardsByCollectionId(Long collectionId, Long startLimitFrom, Long amountOnPage) {
+        LOG.debug("CardDAO - read all cards by collection id={}", collectionId);
+        return jdbcTemplate.query(QUERY_SELECT_CARDS_BY_COLLECTION_ID, new Object[] {collectionId, startLimitFrom,
+        amountOnPage}, new BeanPropertyRowMapper<>(Card.class));
     }
 }

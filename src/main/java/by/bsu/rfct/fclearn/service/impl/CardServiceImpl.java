@@ -52,7 +52,6 @@ public class CardServiceImpl implements CardService{
         CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
         Collection collection = collectionDTOConverter.convert(collectionDTO);
         collectionDTO = collectionConverterSmall.convert(collection);
-        cardDTO.setCollectionDTO(collectionDTO);
         return cardDTO;
     }
 
@@ -76,7 +75,6 @@ public class CardServiceImpl implements CardService{
             CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
             Collection collection = collectionDTOConverter.convert(collectionDTO);
             collectionDTO = collectionConverterSmall.convert(collection);
-            cardDTO.setCollectionDTO(collectionDTO);
             cardDTOs.add(cardDTO);
         }
         return cardDTOs;
@@ -92,5 +90,18 @@ public class CardServiceImpl implements CardService{
     public Long countCardAmountInCollection(Long collectionId) {
         LOG.debug("CardService - count card amount in collection id={}", collectionId);
         return cardDAO.countCardAmountInCollection(collectionId);
+    }
+
+    @Override
+    public List<CardDTO> readAllCardsByCollectionId(Long collectionId, Long pageNumber, Long amountOnPage) {
+        LOG.debug("CardService - read all cards by collection id={}", collectionId);
+        List<CardDTO> cardDTOs = new ArrayList<>();
+        List<Card> cards = cardDAO.readAllCardsByCollectionId(collectionId,
+                ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
+        for (Card card : cards) {
+            CardDTO cardDTO = cardConverter.convert(card);
+            cardDTOs.add(cardDTO);
+        }
+        return cardDTOs;
     }
 }

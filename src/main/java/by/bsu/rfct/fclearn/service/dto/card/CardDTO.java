@@ -1,7 +1,6 @@
 package by.bsu.rfct.fclearn.service.dto.card;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 
 import java.util.Objects;
 
@@ -11,7 +10,6 @@ public class CardDTO extends AbstractDTO<Long> {
     private String answer;
     private String questionImage;
     private String answerImage;
-    private CollectionDTO collectionDTO;
 
     public String getQuestion() {
         return question;
@@ -45,14 +43,6 @@ public class CardDTO extends AbstractDTO<Long> {
         this.answerImage = answerImage;
     }
 
-    public CollectionDTO getCollectionDTO() {
-        return collectionDTO;
-    }
-
-    public void setCollectionDTO(CollectionDTO collectionDTO) {
-        this.collectionDTO = collectionDTO;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,12 +52,11 @@ public class CardDTO extends AbstractDTO<Long> {
         return Objects.equals(question, cardDTO.question) &&
                 Objects.equals(answer, cardDTO.answer) &&
                 Objects.equals(questionImage, cardDTO.questionImage) &&
-                Objects.equals(answerImage, cardDTO.answerImage) &&
-                Objects.equals(collectionDTO, cardDTO.collectionDTO);
+                Objects.equals(answerImage, cardDTO.answerImage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), question, answer, questionImage, answerImage, collectionDTO);
+        return Objects.hash(super.hashCode(), question, answer, questionImage, answerImage);
     }
 }
