@@ -2,15 +2,10 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CardDAO;
 import by.bsu.rfct.fclearn.entity.Card;
-import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.service.CardService;
-import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverter;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,15 +25,6 @@ public class CardServiceImpl implements CardService{
 
     @Autowired
     private CardConverter cardConverter;
-
-    @Autowired
-    private CollectionService collectionService;
-
-    @Autowired
-    private CollectionDTOConverter collectionDTOConverter;
-
-    @Autowired
-    private CollectionConverterSmall collectionConverterSmall;
 
     @Autowired
     private CardConverterSmall cardConverterSmall;
@@ -69,16 +55,7 @@ public class CardServiceImpl implements CardService{
     @Override
     public List<CardDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("CardService - read all");
-        List<CardDTO> cardDTOs = new ArrayList<>();
-        List<Card> cards = cardDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
-        for (Card card : cards) {
-            CardDTO cardDTO = cardConverter.convert(card);
-            CollectionDTO collectionDTO = collectionService.read(card.getCollectionId());
-            Collection collection = collectionDTOConverter.convert(collectionDTO);
-            collectionDTO = collectionConverterSmall.convert(collection);
-            cardDTOs.add(cardDTO);
-        }
-        return cardDTOs;
+        return null;
     }
 
     @Override

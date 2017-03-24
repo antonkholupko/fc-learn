@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.bsu.rfct.fclearn.service.util.ServiceUtils.countStartLimitFrom;
-
 @Service("userService")
 public class UserServiceImpl implements UserService {
 

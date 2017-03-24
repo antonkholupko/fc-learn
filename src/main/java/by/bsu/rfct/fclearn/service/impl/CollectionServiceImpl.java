@@ -1,18 +1,13 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CollectionDAO;
-import by.bsu.rfct.fclearn.entity.Card;
 import by.bsu.rfct.fclearn.entity.Collection;
-import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.entity.User;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
-import by.bsu.rfct.fclearn.service.dto.card.CardConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
-import by.bsu.rfct.fclearn.service.dto.card.CardDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
@@ -82,18 +77,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public List<CollectionDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("CollectionService - read all");
-        List<CollectionDTO> collectionDTOs = new ArrayList<>();
-        /*List<Collection> collections = collectionDAO.readAll(pageNumber, amountOnPage);
-        for (Collection collection : collections) {
-            CollectionDTO collectionDTO = collectionConverter.convert(collection);
-            UserDTO authorDTO = userService.read(collection.getId());
-            User author = userDTOConverter.convert(authorDTO);
-            authorDTO = userConverterSmall.convert(author);
-            collectionDTO.setAuthor(authorDTO);
-            collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(collection.getId()));
-            collectionDTOs.add(collectionDTO);
-        }*/
-        return collectionDTOs;
+        return null;
     }
 
     @Override

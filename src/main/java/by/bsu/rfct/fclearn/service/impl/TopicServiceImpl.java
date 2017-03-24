@@ -1,20 +1,14 @@
 package by.bsu.rfct.fclearn.service.impl;
 
-import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.dao.TopicDAO;
-import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.TopicService;
-import by.bsu.rfct.fclearn.service.dto.category.CategoryConverterSmall;
-import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
@@ -34,16 +28,7 @@ public class TopicServiceImpl implements TopicService{
     private TopicDAO topicDAO;
 
     @Autowired
-    private CategoryDAO categoryDAO;
-
-    @Autowired
     private TopicConverter topicConverter;
-
-    @Autowired
-    private CategoryConverterSmall categoryConverterSmall;
-
-    @Autowired
-    private TopicConverterSmall topicConverterSmall;
 
     @Autowired
     private CollectionService collectionService;
@@ -64,6 +49,7 @@ public class TopicServiceImpl implements TopicService{
         LOG.debug("TopicService - read by id={}", id);
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
+        //todo
         List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, 1L, 9L);
         List<CollectionDTO> collectionDTOsSmall = new ArrayList<>();
         for (CollectionDTO collectionDTO : collectionDTOs) {
@@ -88,13 +74,7 @@ public class TopicServiceImpl implements TopicService{
     @Override
     public List<TopicDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("TopicService - read all");
-        List<TopicDTO> topicDTOs = new ArrayList<>();
-        List<Topic> topics = topicDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
-        for (Topic topic : topics) {
-            TopicDTO topicDTO = topicConverter.convert(topic);
-            topicDTOs.add(topicDTO);
-        }
-        return topicDTOs;
+        return null;
     }
 
     @Override
