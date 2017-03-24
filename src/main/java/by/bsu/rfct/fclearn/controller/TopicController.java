@@ -19,14 +19,15 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
-    @GetMapping
-    public ResponseEntity findTopics(@RequestParam(name="page", defaultValue=ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
+    @GetMapping("/category/{categoryId:[\\d]+}")
+    public ResponseEntity findTopics(@PathVariable("categoryId") Long categoryId,
+                                    @RequestParam(name="page", defaultValue=ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
                                      @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
 
-        List<TopicDTO> topicDTOs = topicService.readAll(pageNumber, pageSize);
+        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(categoryId, pageNumber, pageSize);
         Long topicAmount = topicService.countAll();
         Long totalPages = ControllerUtils.calculatePagesAmount(topicAmount, pageSize);
 

@@ -18,5 +18,5 @@ public interface TopicDAO extends GenericDAO<Topic, Long>{
      * @param categoryId category id
      * @return list of topics
      */
-    List<Topic> readAllByCategoryId(Long categoryId);
+    List<Topic> readAllByCategoryId(Long categoryId, Long startLimitFrom, Long amountOnPage);
 }

@@ -1,7 +1,7 @@
 package by.bsu.rfct.fclearn.service.dto.topic;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class TopicDTO extends AbstractDTO<Long> {
     private String name;
     private String image;
     private Long collectionAmount;
-    private List<CategoryDTO> categories;
+    private List<CollectionDTO> collections;
 
     public String getName() {
         return name;
@@ -37,34 +37,28 @@ public class TopicDTO extends AbstractDTO<Long> {
         this.collectionAmount = collectionAmount;
     }
 
-    public List<CategoryDTO> getCategories() {
-        return categories;
+    public List<CollectionDTO> getCollections() {
+        return collections;
     }
 
-    public void setCategories(List<CategoryDTO> categories) {
-        this.categories = categories;
+    public void setCollections(List<CollectionDTO> collections) {
+        this.collections = collections;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         TopicDTO topicDTO = (TopicDTO) o;
         return Objects.equals(name, topicDTO.name) &&
                 Objects.equals(image, topicDTO.image) &&
                 Objects.equals(collectionAmount, topicDTO.collectionAmount) &&
-                Objects.equals(categories, topicDTO.categories);
+                Objects.equals(collections, topicDTO.collections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image, collectionAmount, categories);
+        return Objects.hash(super.hashCode(), name, image, collectionAmount, collections);
     }
 }

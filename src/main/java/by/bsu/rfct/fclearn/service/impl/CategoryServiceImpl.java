@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService{
         CategoryDTO categoryDTO = categoryConverter.convert(category);
         categoryDTO.setTopicAmount(this.countTopicAmount(id));
         List<TopicDTO> smallTopicDTOs = new ArrayList<>();
-        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id);
+        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id, 1L, 9L);
         for (TopicDTO topicDTO : topicDTOs) {
             Topic topic = topicDTOConverter.convert(topicDTO);
             topicDTO = topicConverterSmall.convert(topic);

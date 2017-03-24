@@ -1,7 +1,5 @@
 package by.bsu.rfct.fclearn.service.dto.collection;
 
-import by.bsu.rfct.fclearn.entity.Topic;
-import by.bsu.rfct.fclearn.entity.User;
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;

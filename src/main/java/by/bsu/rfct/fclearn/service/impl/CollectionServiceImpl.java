@@ -9,6 +9,7 @@ import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
@@ -55,6 +56,9 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Autowired
     private CardService cardService;
+
+    @Autowired
+    private CollectionConverterSmall collectionConverterSmall;
 
     @Override
     public CollectionDTO create(CollectionDTO dto) {
@@ -113,5 +117,26 @@ public class CollectionServiceImpl implements CollectionService {
     public Long countAll() {
         LOG.debug("CollectionService - count all");
         return collectionDAO.countAll();
+    }
+
+    @Override
+    public List<CollectionDTO> readAllByTopicId(Long topicId) {
+        LOG.debug("CollectionService - read all by topic id={}", topicId);
+        List<Collection> collections = collectionDAO.readAllByTopicId(topicId);
+        List<CollectionDTO> collectionDTOs = new ArrayList<>();
+        for (Collection collection : collections) {
+            CollectionDTO collectionDTO = collectionConverter.convert(collection);
+            UserDTO authorDTO = userService.read(collection.getAuthorId());
+            User author = userDTOConverter.convert(authorDTO);
+            authorDTO = userConverterSmall.convert(author);
+            collectionDTO.setAuthor(authorDTO);
+            TopicDTO topicDTO = topicService.read(collection.getTopicId());
+            Topic topic = topicDTOConverter.convert(topicDTO);
+            topicDTO = topicConverterSmall.convert(topic);
+            collectionDTO.setTopic(topicDTO);
+            collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(collection.getId()));
+            collectionDTOs.add(collectionDTO);
+        }
+        return collectionDTOs;
     }
 }

@@ -3,10 +3,16 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.entity.Category;
+import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.entity.Topic;
+import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
@@ -39,6 +45,15 @@ public class TopicServiceImpl implements TopicService{
     @Autowired
     private TopicConverterSmall topicConverterSmall;
 
+    @Autowired
+    private CollectionService collectionService;
+
+    @Autowired
+    private CollectionConverterSmall collectionConverterSmall;
+
+    @Autowired
+    private CollectionDTOConverter collectionDTOConverter;
+
     @Override
     public TopicDTO create(TopicDTO dto) {
         return null;
@@ -46,15 +61,18 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public TopicDTO read(Long id) {
+        //TODO
         LOG.debug("TopicService - read by id={}", id);
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
-        List<Category> categories = categoryDAO.readCategoriesByTopicId(id);
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-        for(Category category : categories) {
-            categoryDTOs.add(categoryConverterSmall.convert(category));
+        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(topic.getId());
+        List<CollectionDTO> smallCollectionDTOs = new ArrayList<>();
+        for (CollectionDTO collectionDTO : collectionDTOs) {
+            Collection collection = collectionDTOConverter.convert(collectionDTO);
+            collectionDTO = collectionConverterSmall.convert(collection);
+            smallCollectionDTOs.add(collectionDTO);
         }
-        topicDTO.setCategories(categoryDTOs);
+        topicDTO.setCollections(smallCollectionDTOs);
         return topicDTO;
     }
 
@@ -74,13 +92,7 @@ public class TopicServiceImpl implements TopicService{
         List<TopicDTO> topicDTOs = new ArrayList<>();
         List<Topic> topics = topicDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         for (Topic topic : topics) {
-            List<Category> categories = categoryDAO.readCategoriesByTopicId(topic.getId());
-            List<CategoryDTO> categoryDTOs = new ArrayList<>();
-            for (Category category : categories) {
-                categoryDTOs.add(categoryConverterSmall.convert(category));
-            }
             TopicDTO topicDTO = topicConverter.convert(topic);
-            topicDTO.setCategories(categoryDTOs);
             topicDTOs.add(topicDTO);
         }
         return topicDTOs;
@@ -99,14 +111,13 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDTO> readAllByCategoryId(Long categoryId) {
+    public List<TopicDTO> readAllByCategoryId(Long categoryId, Long pageNumber, Long amountOnPage) {
         LOG.debug("TopicService - read all topics by category id={}", categoryId);
         List<TopicDTO> topicDTOs = new ArrayList<>();
-        List<Topic> topics = topicDAO.readAllByCategoryId(categoryId);
+        List<Topic> topics = topicDAO.readAllByCategoryId(categoryId,
+                ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         for (Topic topic : topics) {
-            Long collectionAmount = this.countCollectionAmount(topic.getId());
-            TopicDTO topicDTO = topicConverterSmall.convert(topic);
-            topicDTO.setCollectionAmount(collectionAmount);
+            TopicDTO topicDTO = topicConverter.convert(topic);
             topicDTOs.add(topicDTO);
         }
         return topicDTOs;
