@@ -20,7 +20,7 @@ public class TopicController {
     private TopicService topicService;
 
     @GetMapping("/category/{categoryId:[\\d]+}")
-    public ResponseEntity findTopics(@PathVariable("categoryId") Long categoryId,
+    public ResponseEntity findTopicsByCategoryId(@PathVariable("categoryId") Long categoryId,
                                     @RequestParam(name="page", defaultValue=ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
                                      @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
 

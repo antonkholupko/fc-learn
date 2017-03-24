@@ -10,6 +10,7 @@ public class UserDTO extends AbstractDTO<Long> {
     private String email;
     private String photo;
     private String Status;
+    private Long collectionsAuthorAmount;
 
     public String getLogin() {
         return login;
@@ -43,6 +44,14 @@ public class UserDTO extends AbstractDTO<Long> {
         Status = status;
     }
 
+    public Long getCollectionsAuthorAmount() {
+        return collectionsAuthorAmount;
+    }
+
+    public void setCollectionsAuthorAmount(Long collectionsAuthorAmount) {
+        this.collectionsAuthorAmount = collectionsAuthorAmount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,11 +61,12 @@ public class UserDTO extends AbstractDTO<Long> {
         return Objects.equals(login, userDTO.login) &&
                 Objects.equals(email, userDTO.email) &&
                 Objects.equals(photo, userDTO.photo) &&
-                Objects.equals(Status, userDTO.Status);
+                Objects.equals(Status, userDTO.Status) &&
+                Objects.equals(collectionsAuthorAmount, userDTO.collectionsAuthorAmount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), login, email, photo, Status);
+        return Objects.hash(super.hashCode(), login, email, photo, Status, collectionsAuthorAmount);
     }
 }

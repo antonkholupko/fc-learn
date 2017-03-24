@@ -8,4 +8,6 @@ public interface CollectionDAO extends GenericDAO<Collection, Long>{
 
     List<Collection> readAllByTopicId(Long topicId, Long startLimitFrom, Long amountOnPage);
 
+    Long countByAuthorId(Long authorId);
+
 }

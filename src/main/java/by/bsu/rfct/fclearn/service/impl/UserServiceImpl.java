@@ -2,15 +2,22 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
+import by.bsu.rfct.fclearn.entity.User;
+import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverter;
+import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
+import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static by.bsu.rfct.fclearn.service.util.ServiceUtils.countStartLimitFrom;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -23,6 +30,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserConverter userConverter;
 
+    @Autowired
+    private UserConverterSmall userConverterSmall;
+
+    @Autowired
+    private CollectionService collectionService;
+
     @Override
     public UserDTO create(UserDTO dto) {
         return null;
@@ -31,7 +44,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO read(Long id) {
         LOG.debug("UserService - read by id={}", id);
-        return userConverter.convert(userDAO.read(id));
+        UserDTO userDTO = userConverter.convert(userDAO.read(id));
+        userDTO.setCollectionsAuthorAmount(collectionService.countByAuthorId(userDTO.getId()));
+        return userDTO;
     }
 
     @Override
@@ -46,7 +61,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> readAll(Long pageNumber, Long amountOnPage) {
-        return null;
+        LOG.debug("UserService - read all users");
+        List<UserDTO> userDTOs = new ArrayList<>();
+        List<User> users = userDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
+        for (User user : users) {
+            userDTOs.add(userConverterSmall.convert(user));
+        }
+        return userDTOs;
     }
 
     @Override

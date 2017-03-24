@@ -13,6 +13,7 @@ public class UserConverterSmall implements Converter<User, UserDTO>{
         if (user != null) {
             userDTO.setId(user.getId());
             userDTO.setLogin(user.getLogin());
+            userDTO.setPhoto(user.getPhoto());
         }
         return userDTO;
     }

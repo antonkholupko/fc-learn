@@ -8,4 +8,6 @@ public interface CollectionService extends GenericService<CollectionDTO, Long> {
 
     List<CollectionDTO> readAllByTopicId(Long topicId, Long pageNumber, Long amountOnPage);
 
+    Long countByAuthorId(Long authorId);
+
 }

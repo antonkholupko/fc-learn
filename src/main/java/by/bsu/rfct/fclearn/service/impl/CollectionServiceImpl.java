@@ -7,7 +7,6 @@ import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.entity.User;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.CollectionService;
-import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
@@ -15,9 +14,6 @@ import by.bsu.rfct.fclearn.service.dto.card.CardDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTOConverter;
@@ -52,15 +48,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Autowired
     private CardService cardService;
-
-    @Autowired
-    private CollectionConverterSmall collectionConverterSmall;
-
-    @Autowired
-    private CardDTOConverter cardDTOConverter;
-
-    @Autowired
-    private CardConverterSmall cardConverterSmall;
 
     @Override
     public CollectionDTO create(CollectionDTO dto) {
@@ -127,5 +114,11 @@ public class CollectionServiceImpl implements CollectionService {
             collectionDTOs.add(collectionDTO);
         }
         return collectionDTOs;
+    }
+
+    @Override
+    public Long countByAuthorId(Long authorId) {
+        LOG.debug("CollectionService - count by author id");
+        return collectionDAO.countByAuthorId(authorId);
     }
 }
