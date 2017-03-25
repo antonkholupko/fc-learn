@@ -74,7 +74,7 @@ public class TopicServiceImpl implements TopicService{
     @Override
     public List<TopicDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("TopicService - read all");
-        return null;
+        throw new UnsupportedOperationException("TopicService - read all - unsupported method");
     }
 
     @Override

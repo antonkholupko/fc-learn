@@ -77,7 +77,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public List<CollectionDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("CollectionService - read all");
-        return null;
+        throw new UnsupportedOperationException("CollectionService - read all  - unsupported method");
     }
 
     @Override

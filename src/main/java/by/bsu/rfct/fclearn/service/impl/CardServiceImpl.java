@@ -55,7 +55,7 @@ public class CardServiceImpl implements CardService{
     @Override
     public List<CardDTO> readAll(Long pageNumber, Long amountOnPage) {
         LOG.debug("CardService - read all");
-        return null;
+        throw new UnsupportedOperationException("CardService - read all - unsupported method");
     }
 
     @Override
