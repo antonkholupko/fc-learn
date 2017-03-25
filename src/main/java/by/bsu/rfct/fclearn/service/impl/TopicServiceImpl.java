@@ -24,6 +24,9 @@ public class TopicServiceImpl implements TopicService{
 
     private static final Logger LOG = LogManager.getLogger(TopicServiceImpl.class);
 
+    private static final Long COLLECTION_LIST_STARTS = 1L;
+    private static final Long COLLECTION_LIST_SIZE = 5L;
+
     @Autowired
     private TopicDAO topicDAO;
 
@@ -49,8 +52,7 @@ public class TopicServiceImpl implements TopicService{
         LOG.debug("TopicService - read by id={}", id);
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
-        //todo
-        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, 1L, 9L);
+        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, COLLECTION_LIST_STARTS, COLLECTION_LIST_SIZE);
         List<CollectionDTO> collectionDTOsSmall = new ArrayList<>();
         for (CollectionDTO collectionDTO : collectionDTOs) {
             Collection collection = collectionDTOConverter.convert(collectionDTO);

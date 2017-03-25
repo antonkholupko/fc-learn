@@ -24,6 +24,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     private static final Logger LOG = LogManager.getLogger(CategoryServiceImpl.class);
 
+    private static final Long TOPIC_LIST_STARTS = 1L;
+    private static final Long TOPIC_LIST_SIZE = 5L;
+
     @Autowired
     private CategoryDAO categoryDAO;
 
@@ -51,8 +54,7 @@ public class CategoryServiceImpl implements CategoryService{
         CategoryDTO categoryDTO = categoryConverter.convert(category);
         categoryDTO.setTopicAmount(this.countTopicAmount(id));
         List<TopicDTO> smallTopicDTOs = new ArrayList<>();
-        //todo
-        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id, 1L, 9L);
+        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id, TOPIC_LIST_STARTS, TOPIC_LIST_SIZE);
         for (TopicDTO topicDTO : topicDTOs) {
             Topic topic = topicDTOConverter.convert(topicDTO);
             topicDTO = topicConverterSmall.convert(topic);

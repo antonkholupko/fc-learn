@@ -26,6 +26,9 @@ public class CollectionServiceImpl implements CollectionService {
 
     private static final Logger LOG = LogManager.getLogger(CollectionServiceImpl.class);
 
+    private static final Long CARD_LIST_STARTS = 1L;
+    private static final Long CARD_LIST_SIZE = 5L;
+
     @Autowired
     private CollectionDAO collectionDAO;
 
@@ -59,7 +62,7 @@ public class CollectionServiceImpl implements CollectionService {
         authorDTO = userConverterSmall.convert(author);
         collectionDTO.setAuthor(authorDTO);
         collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(id));
-        List<CardDTO> cardDTOs = cardService.readAllCardsByCollectionId(id, 1L, 9L);
+        List<CardDTO> cardDTOs = cardService.readAllCardsByCollectionId(id, CARD_LIST_STARTS, CARD_LIST_SIZE);
         collectionDTO.setCards(cardDTOs);
         return collectionDTO;
     }
