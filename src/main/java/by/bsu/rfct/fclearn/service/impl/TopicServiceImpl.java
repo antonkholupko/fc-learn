@@ -13,7 +13,6 @@ import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,20 +26,20 @@ public class TopicServiceImpl implements TopicService{
     private static final Long COLLECTION_LIST_STARTS = 1L;
     private static final Long COLLECTION_LIST_SIZE = 5L;
 
-    @Autowired
     private TopicDAO topicDAO;
-
-    @Autowired
     private TopicConverter topicConverter;
-
-    @Autowired
     private CollectionService collectionService;
-
-    @Autowired
     private CollectionConverterSmall collectionConverterSmall;
-
-    @Autowired
     private CollectionDTOConverter collectionDTOConverter;
+
+    public TopicServiceImpl(TopicDAO topicDAO, CollectionService collectionService, TopicConverter topicConverter,
+                            CollectionConverterSmall collectionConverterSmall,CollectionDTOConverter collectionDTOConverter) {
+        this.topicDAO = topicDAO;
+        this.collectionService = collectionService;
+        this.topicConverter = topicConverter;
+        this.collectionConverterSmall = collectionConverterSmall;
+        this.collectionDTOConverter = collectionDTOConverter;
+    }
 
     @Override
     public TopicDTO create(TopicDTO dto) {
@@ -52,6 +51,7 @@ public class TopicServiceImpl implements TopicService{
         LOG.debug("TopicService - read by id={}", id);
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
+        topicDTO.setCollectionAmount(topicDAO.countCollectionAmount(id));
         List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, COLLECTION_LIST_STARTS, COLLECTION_LIST_SIZE);
         List<CollectionDTO> collectionDTOsSmall = new ArrayList<>();
         for (CollectionDTO collectionDTO : collectionDTOs) {
@@ -99,6 +99,7 @@ public class TopicServiceImpl implements TopicService{
                 ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
         for (Topic topic : topics) {
             TopicDTO topicDTO = topicConverter.convert(topic);
+            topicDTO.setCollectionAmount(topicDAO.countCollectionAmount(topic.getId()));
             topicDTOs.add(topicDTO);
         }
         return topicDTOs;

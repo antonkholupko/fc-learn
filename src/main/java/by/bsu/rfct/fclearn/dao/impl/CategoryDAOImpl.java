@@ -37,13 +37,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     private static final String QUERY_COUNT_TOPICS_IN_CATEGORY = "SELECT count(topic_id) FROM topic_categories " +
             "WHERE category_id=?";
 
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CategoryDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public CategoryDAOImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

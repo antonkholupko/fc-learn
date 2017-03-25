@@ -17,7 +17,7 @@ import java.util.List;
 public class CardController {
 
     @Autowired
-    CardService cardService;
+    private CardService cardService;
 
     @GetMapping("/collection/{collectionId:[\\d]+}")
     public ResponseEntity findCards(@PathVariable("collectionId") Long collectionId,

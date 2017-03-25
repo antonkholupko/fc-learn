@@ -20,14 +20,15 @@ public class CardServiceImpl implements CardService{
 
     private static final Logger LOG = LogManager.getLogger(CardServiceImpl.class);
 
-    @Autowired
     private CardDAO cardDAO;
-
-    @Autowired
     private CardConverter cardConverter;
-
-    @Autowired
     private CardConverterSmall cardConverterSmall;
+
+    public CardServiceImpl(CardDAO cardDAO, CardConverter cardConverter, CardConverterSmall cardConverterSmall) {
+        this.cardDAO = cardDAO;
+        this.cardConverter = cardConverter;
+        this.cardConverterSmall = cardConverterSmall;
+    }
 
     @Override
     public CardDTO create(CardDTO dto) {

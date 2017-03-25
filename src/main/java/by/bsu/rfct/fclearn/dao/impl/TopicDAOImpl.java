@@ -38,13 +38,11 @@ public class TopicDAOImpl implements TopicDAO{
             "FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
             "WHERE topic_categories.category_id=? LIMIT ?,?;";
 
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public TopicDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public TopicDAOImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

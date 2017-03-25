@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity findUsers(@RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,

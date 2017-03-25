@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.service.impl;
 
+import by.bsu.rfct.fclearn.dao.CollectionDAO;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
 import by.bsu.rfct.fclearn.entity.User;
@@ -22,17 +23,18 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
 
-    @Autowired
     private UserDAO userDAO;
-
-    @Autowired
     private UserConverter userConverter;
-
-    @Autowired
     private UserConverterSmall userConverterSmall;
+    private CollectionDAO collectionDAO;
 
-    @Autowired
-    private CollectionService collectionService;
+    public UserServiceImpl(UserDAO userDAO, UserConverter userConverter, UserConverterSmall userConverterSmall,
+                           CollectionDAO collectionDAO) {
+        this.userDAO = userDAO;
+        this.userConverter = userConverter;
+        this.userConverterSmall = userConverterSmall;
+        this.collectionDAO = collectionDAO;
+    }
 
     @Override
     public UserDTO create(UserDTO dto) {
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO read(Long id) {
         LOG.debug("UserService - read by id={}", id);
         UserDTO userDTO = userConverter.convert(userDAO.read(id));
-        userDTO.setCollectionsAuthorAmount(collectionService.countByAuthorId(userDTO.getId()));
+        userDTO.setCollectionsAuthorAmount(collectionDAO.countByAuthorId(userDTO.getId()));
         return userDTO;
     }
 

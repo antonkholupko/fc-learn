@@ -43,13 +43,11 @@ public class UserDAOImpl implements UserDAO{
             "VALUES(?,?,?,0);";
     private static final String QUERY_COUNT_ALL_USERS = "SELECT count(id) FROM users;";
 
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public UserDAOImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

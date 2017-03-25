@@ -29,23 +29,23 @@ public class CollectionServiceImpl implements CollectionService {
     private static final Long CARD_LIST_STARTS = 1L;
     private static final Long CARD_LIST_SIZE = 5L;
 
-    @Autowired
     private CollectionDAO collectionDAO;
-
-    @Autowired
     private CollectionConverter collectionConverter;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private UserDTOConverter userDTOConverter;
-
-    @Autowired
     private UserConverterSmall userConverterSmall;
-
-    @Autowired
     private CardService cardService;
+
+    public CollectionServiceImpl(CollectionDAO collectionDAO, CollectionConverter collectionConverter,
+                                 UserService userService, UserDTOConverter userDTOConverter,
+                                 UserConverterSmall userConverterSmall, CardService cardService) {
+        this.collectionDAO = collectionDAO;
+        this.collectionConverter = collectionConverter;
+        this.userService = userService;
+        this.userDTOConverter = userDTOConverter;
+        this.userConverterSmall = userConverterSmall;
+        this.cardService = cardService;
+    }
 
     @Override
     public CollectionDTO create(CollectionDTO dto) {

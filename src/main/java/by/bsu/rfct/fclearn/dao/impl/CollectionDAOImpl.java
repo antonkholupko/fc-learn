@@ -40,13 +40,11 @@ public class CollectionDAOImpl implements CollectionDAO{
             "created, modified, image, status AS statusString, rating FROM collections WHERE topic_id=? LIMIT ?,?;";
     private static final String QUERY_COUNT_BY_AUTHOR_ID = "SELECT count(id) FROM collections WHERE author_id=?";
 
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CollectionDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public CollectionDAOImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

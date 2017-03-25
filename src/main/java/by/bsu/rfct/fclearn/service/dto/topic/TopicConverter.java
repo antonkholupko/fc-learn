@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.service.dto.topic;
 
+import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,11 @@ import org.springframework.stereotype.Component;
 @Component("topicConverter")
 public class TopicConverter implements Converter<Topic, TopicDTO> {
 
-    @Autowired
-    private TopicService topicService;
+    private TopicDAO topicDAO;
+
+    public TopicConverter(TopicDAO topicDAO) {
+        this.topicDAO = topicDAO;
+    }
 
     @Override
     public TopicDTO convert(Topic topic) {
@@ -19,7 +23,6 @@ public class TopicConverter implements Converter<Topic, TopicDTO> {
             topicDTO.setId(topic.getId());
             topicDTO.setName(topic.getName());
             topicDTO.setImage(topic.getImage());
-            topicDTO.setCollectionAmount(topicService.countCollectionAmount(topic.getId()));
         }
         return topicDTO;
     }

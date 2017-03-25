@@ -17,7 +17,7 @@ import java.util.List;
 public class CollectionController {
 
     @Autowired
-    CollectionService collectionService;
+    private CollectionService collectionService;
 
     @GetMapping("/topic/{topicId:[\\d]+}")
     public ResponseEntity findCollectionsByTopicId(@PathVariable("topicId") Long topicId,

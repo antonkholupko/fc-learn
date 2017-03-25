@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -38,13 +37,11 @@ public class CardDAOImpl implements CardDAO{
     private static final String QUERY_SELECT_CARDS_BY_COLLECTION_ID = "SELECT id, collection_id, question, answer, " +
             "question_image, answer_image FROM cards WHERE collection_id=? LIMIT ?,?;";
 
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CardDAOImpl(DataSource dataSource){
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public CardDAOImpl(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -54,18 +51,10 @@ public class CardDAOImpl implements CardDAO{
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CARD, new String[]{PK_COLUMN});
             ps.setLong(1, entity.getCollectionId());
-            if (entity.getQuestion() != null) {
-                ps.setString(2, entity.getQuestion());
-            }
-            if (entity.getAnswer() != null) {
-                ps.setString(3, entity.getAnswer());
-            }
-            if (entity.getQuestionImage() != null) {
-                ps.setString(4, entity.getQuestionImage());
-            }
-            if (entity.getAnswerImage() != null) {
-                ps.setString(5, entity.getAnswerImage());
-            }
+            ps.setString(2, entity.getQuestion());
+            ps.setString(3, entity.getAnswer());
+            ps.setString(4, entity.getQuestionImage());
+            ps.setString(5, entity.getAnswerImage());
             return ps;
         }, holder);
         return holder.getKey().longValue();
