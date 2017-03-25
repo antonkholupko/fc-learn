@@ -2,7 +2,7 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public class Topic extends AbstractEntity{
+public class Topic extends AbstractEntity<Long>{
 
     private String name;
     private String image;

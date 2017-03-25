@@ -3,7 +3,7 @@ package by.bsu.rfct.fclearn.entity;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Collection extends AbstractEntity{
+public class Collection extends AbstractEntity<Long>{
 
     public enum Status {
         PRIVATE, REQ, PUBLIC

@@ -12,12 +12,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository("topicDAO")
-public class TopicDAOImpl implements TopicDAO{
+public class TopicDAOImpl implements TopicDAO {
 
     private static final Logger LOG = LogManager.getLogger(TopicDAOImpl.class);
 
@@ -52,7 +51,7 @@ public class TopicDAOImpl implements TopicDAO{
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_TOPIC, new String[]{PK_COLUMN});
             ps.setString(1, entity.getName());
-            ps.setString(2,entity.getImage());
+            ps.setString(2, entity.getImage());
             return ps;
         }, holder);
         return holder.getKey().longValue();
@@ -66,7 +65,7 @@ public class TopicDAOImpl implements TopicDAO{
     }
 
     @Override
-    public Long update(Topic entity){
+    public Long update(Topic entity) {
         LOG.debug("TopicDAO - update - id = {}", entity.getId());
         jdbcTemplate.update(QUERY_UPDATE_TOPIC, entity.getName(), entity.getImage(), entity.getId());
         return entity.getId();
@@ -79,7 +78,7 @@ public class TopicDAOImpl implements TopicDAO{
     }
 
     @Override
-    public List<Topic> readAll(Long startLimitFrom, Long amountOnPage) {
+    public List<Topic> readAll(Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("TopicDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Topic.class));
@@ -107,13 +106,13 @@ public class TopicDAOImpl implements TopicDAO{
     @Override
     public Long countCollectionAmount(Long topicId) {
         LOG.debug("TopicDAO - count collections");
-        return jdbcTemplate.queryForObject(QUERY_COUNT_COLLECTIONS_IN_TOPIC, new Object[] {topicId}, Long.class);
+        return jdbcTemplate.queryForObject(QUERY_COUNT_COLLECTIONS_IN_TOPIC, new Object[]{topicId}, Long.class);
     }
 
     @Override
-    public List<Topic> readAllByCategoryId(Long categoryId, Long startLimitFrom, Long amountOnPage) {
+    public List<Topic> readAllByCategoryId(Long categoryId, Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("TopicDAO - read all topics by category id={}", categoryId);
-        return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID, new Object[] {categoryId, startLimitFrom, amountOnPage},
+        return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID, new Object[]{categoryId, startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Topic.class));
     }
 }

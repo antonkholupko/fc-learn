@@ -15,7 +15,6 @@ import by.bsu.rfct.fclearn.service.dto.user.UserDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ public class CollectionServiceImpl implements CollectionService {
 
     private static final Logger LOG = LogManager.getLogger(CollectionServiceImpl.class);
 
-    private static final Long CARD_LIST_STARTS = 1L;
-    private static final Long CARD_LIST_SIZE = 5L;
+    private static final Integer CARD_LIST_STARTS = 1;
+    private static final Integer CARD_LIST_SIZE = 5;
 
     private CollectionDAO collectionDAO;
     private CollectionConverter collectionConverter;
@@ -78,7 +77,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<CollectionDTO> readAll(Long pageNumber, Long amountOnPage) {
+    public List<CollectionDTO> readAll(Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CollectionService - read all");
         throw new UnsupportedOperationException("CollectionService - read all  - unsupported method");
     }
@@ -90,7 +89,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<CollectionDTO> readAllByTopicId(Long topicId, Long pageNumber, Long amountOnPage) {
+    public List<CollectionDTO> readAllByTopicId(Long topicId, Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CollectionService - read all by topic id={}", topicId);
         List<CollectionDTO> collectionDTOs = new ArrayList<>();
         List<Collection> collections = collectionDAO.readAllByTopicId(topicId,

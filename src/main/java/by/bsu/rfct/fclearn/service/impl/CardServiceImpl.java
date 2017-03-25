@@ -9,14 +9,13 @@ import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("cardService")
-public class CardServiceImpl implements CardService{
+public class CardServiceImpl implements CardService {
 
     private static final Logger LOG = LogManager.getLogger(CardServiceImpl.class);
 
@@ -54,7 +53,7 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public List<CardDTO> readAll(Long pageNumber, Long amountOnPage) {
+    public List<CardDTO> readAll(Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CardService - read all");
         throw new UnsupportedOperationException("CardService - read all - unsupported method");
     }
@@ -72,7 +71,7 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public List<CardDTO> readAllCardsByCollectionId(Long collectionId, Long pageNumber, Long amountOnPage) {
+    public List<CardDTO> readAllCardsByCollectionId(Long collectionId, Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CardService - read all cards by collection id={}", collectionId);
         List<CardDTO> cardDTOs = new ArrayList<>();
         List<Card> cards = cardDAO.readAllCardsByCollectionId(collectionId,

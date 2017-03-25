@@ -2,13 +2,17 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public class Card extends AbstractEntity{
+public class Card extends AbstractEntity<Long>{
 
     private Long collectionId;
     private String question;
     private String answer;
     private String questionImage;
     private String answerImage;
+
+    public enum Status {
+        NEW, LOW, MEDIUM, HIGH
+    }
 
     public Long getCollectionId() {
         return collectionId;

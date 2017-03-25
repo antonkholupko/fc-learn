@@ -2,15 +2,15 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public abstract class AbstractEntity {
+public abstract class AbstractEntity<K> {
 
-    protected Long id;
+    protected K id;
 
-    public Long getId() {
+    public K getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(K id) {
         this.id = id;
     }
 

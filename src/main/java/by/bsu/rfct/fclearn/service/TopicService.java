@@ -8,6 +8,6 @@ public interface TopicService extends GenericService<TopicDTO, Long> {
 
     Long countCollectionAmount(Long topicId);
 
-    List<TopicDTO> readAllByCategoryId(Long categoryId, Long pageNumber, Long amountOnPage);
+    List<TopicDTO> readAllByCategoryId(Long categoryId, Integer pageNumber, Integer amountOnPage);
 
 }

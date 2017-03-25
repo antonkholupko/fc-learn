@@ -23,8 +23,8 @@ public class TopicServiceImpl implements TopicService{
 
     private static final Logger LOG = LogManager.getLogger(TopicServiceImpl.class);
 
-    private static final Long COLLECTION_LIST_STARTS = 1L;
-    private static final Long COLLECTION_LIST_SIZE = 5L;
+    private static final Integer COLLECTION_LIST_STARTS = 1;
+    private static final Integer COLLECTION_LIST_SIZE = 5;
 
     private TopicDAO topicDAO;
     private TopicConverter topicConverter;
@@ -74,7 +74,7 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDTO> readAll(Long pageNumber, Long amountOnPage) {
+    public List<TopicDTO> readAll(Integer pageNumber, Integer amountOnPage) {
         LOG.debug("TopicService - read all");
         throw new UnsupportedOperationException("TopicService - read all - unsupported method");
     }
@@ -92,7 +92,7 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDTO> readAllByCategoryId(Long categoryId, Long pageNumber, Long amountOnPage) {
+    public List<TopicDTO> readAllByCategoryId(Long categoryId, Integer pageNumber, Integer amountOnPage) {
         LOG.debug("TopicService - read all topics by category id={}", categoryId);
         List<TopicDTO> topicDTOs = new ArrayList<>();
         List<Topic> topics = topicDAO.readAllByCategoryId(categoryId,

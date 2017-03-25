@@ -1,6 +1,7 @@
 package by.bsu.rfct.fclearn.dao;
 
 import by.bsu.rfct.fclearn.entity.AbstractEntity;
+
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * @param <T>  instance type
  * @param <K> primary key type
  */
-public interface GenericDAO <T extends AbstractEntity, K> {
+public interface GenericDAO <T extends AbstractEntity<K>, K> {
 
     /**
      * Inserts object <code>T</code> into database.
@@ -47,7 +48,7 @@ public interface GenericDAO <T extends AbstractEntity, K> {
      *
      * @return list of objects from database
      */
-    List<T> readAll(Long startLimitFrom, Long amountOnPage);
+    List<T> readAll(Integer startLimitFrom, Integer amountOnPage);
 
     /**
      * Checks if this object exists in database

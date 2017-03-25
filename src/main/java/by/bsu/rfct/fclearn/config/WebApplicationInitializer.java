@@ -1,6 +1,5 @@
-package by.bsu.rfct.fclearn.controller.config;
+package by.bsu.rfct.fclearn.config;
 
-import by.bsu.rfct.fclearn.config.ApplicationConfig;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -9,7 +8,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected Class[] getRootConfigClasses() {
-        return new Class[]{WebApplicationConfiguration.class, ApplicationConfig.class};
+        return new Class[]{WebApplicationConfiguration.class};
     }
 
     @Override

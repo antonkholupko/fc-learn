@@ -2,7 +2,7 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public class User extends AbstractEntity {
+public class User extends AbstractEntity<Long> {
 
     public enum Status{
         ADMIN, ACTIVE, BANED

@@ -9,16 +9,16 @@ public class ControllerUtils {
     private ControllerUtils() {
     }
 
-    public static Long calculatePagesAmount(Long entitiesCount, Long pageSize) {
-        return (long) Math.ceil(entitiesCount * 1.0 / pageSize);
+    public static Integer calculatePagesAmount(Long entitiesCount, Integer pageSize) {
+        return (int) Math.ceil(entitiesCount * 1.0 / pageSize);
     }
 
-    public static Long validatePageNumber(Long pageNumber) {
+    public static Integer validatePageNumber(Integer pageNumber) {
         return pageNumber > 0 ? (pageNumber < MAX_PAGE_SIZE ? pageNumber : MAX_PAGE_SIZE) :
                 Integer.valueOf(DEFAULT_PAGE_NUMBER);
     }
 
-    public static Long validatePageSize(Long pageSize) {
+    public static Integer validatePageSize(Integer pageSize) {
         return pageSize > 0 ? pageSize : Integer.valueOf(DEFAULT_PAGE_SIZE);
     }
 }

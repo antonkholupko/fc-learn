@@ -12,14 +12,13 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
 
 @Repository("collectionDAO")
-public class CollectionDAOImpl implements CollectionDAO{
+public class CollectionDAOImpl implements CollectionDAO {
 
     private static final Logger LOG = LogManager.getLogger(CollectionDAOImpl.class);
 
@@ -67,7 +66,7 @@ public class CollectionDAOImpl implements CollectionDAO{
             } else {
                 ps.setNull(6, Types.TIMESTAMP);
             }
-            ps.setString(7,entity.getImage());
+            ps.setString(7, entity.getImage());
             ps.setString(8, entity.getStatus().toString());
             ps.setInt(9, entity.getRating());
             return ps;
@@ -98,7 +97,7 @@ public class CollectionDAOImpl implements CollectionDAO{
     }
 
     @Override
-    public List<Collection> readAll(Long startLimitFrom, Long amountOnPage) {
+    public List<Collection> readAll(Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("CollectionDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_COLLECTIONS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Collection.class));
@@ -124,15 +123,15 @@ public class CollectionDAOImpl implements CollectionDAO{
     }
 
     @Override
-    public List<Collection> readAllByTopicId(Long topicId, Long startLimitFrom, Long amountOnPage) {
+    public List<Collection> readAllByTopicId(Long topicId, Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("CollectionDAO - read all by topic id={}", topicId);
-        return jdbcTemplate.query(QUERY_SELECT_ALL_BY_TOPIC_ID, new Object[] {topicId, startLimitFrom, amountOnPage},
+        return jdbcTemplate.query(QUERY_SELECT_ALL_BY_TOPIC_ID, new Object[]{topicId, startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Collection.class));
     }
 
     @Override
     public Long countByAuthorId(Long authorId) {
         LOG.debug("CollectionDAO - count by author id");
-        return jdbcTemplate.queryForObject(QUERY_COUNT_BY_AUTHOR_ID, new Object[] {authorId}, Long.class);
+        return jdbcTemplate.queryForObject(QUERY_COUNT_BY_AUTHOR_ID, new Object[]{authorId}, Long.class);
     }
 }

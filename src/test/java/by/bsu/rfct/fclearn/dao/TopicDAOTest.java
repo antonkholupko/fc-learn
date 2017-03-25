@@ -1,7 +1,6 @@
 package by.bsu.rfct.fclearn.dao;
 
 import by.bsu.rfct.fclearn.config.DAOTestConfig;
-import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.entity.Topic;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -81,7 +80,7 @@ public class TopicDAOTest {
     @Test
     public void readAll() throws Exception {
         int expectedTopicsAmount = 12;
-        List<Topic> topics = topicDAO.readAll(2L, 12L);
+        List<Topic> topics = topicDAO.readAll(2, 12);
         Assert.assertEquals(expectedTopicsAmount, topics.size());
     }
 

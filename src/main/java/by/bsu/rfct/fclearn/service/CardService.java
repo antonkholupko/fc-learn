@@ -8,6 +8,6 @@ public interface CardService extends GenericService<CardDTO, Long> {
 
     Long countCardAmountInCollection(Long collectionId);
 
-    List<CardDTO> readAllCardsByCollectionId(Long collectionId, Long pageNumber, Long amountOnPage);
+    List<CardDTO> readAllCardsByCollectionId(Long collectionId, Integer pageNumber, Integer amountOnPage);
 
 }

@@ -8,6 +8,6 @@ public interface CardDAO extends GenericDAO<Card, Long>{
 
     Long countCardAmountInCollection(Long collectionId);
 
-    List<Card> readAllCardsByCollectionId(Long collectionId, Long startLimitFrom, Long amountOnPage);
+    List<Card> readAllCardsByCollectionId(Long collectionId, Integer startLimitFrom, Integer amountOnPage);
 
 }

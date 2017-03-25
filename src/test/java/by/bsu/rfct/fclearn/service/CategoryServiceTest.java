@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -60,11 +60,11 @@ public class CategoryServiceTest {
         expectedCategoryDTO.setImage("Image");
         List<Category> categories = new ArrayList<>();
         categories.add(expectedCategory);
-        when(categoryDAO.readAll(0L, 1L)).thenReturn(categories);
+        when(categoryDAO.readAll(0, 1)).thenReturn(categories);
         when(categoryConverter.convert(expectedCategory)).thenReturn(expectedCategoryDTO);
         when(categoryDAO.countTopicAmount(3L)).thenReturn(3L);
-        List<CategoryDTO> categoryDTOs = categoryService.readAll(1L, 1L);
-        verify(categoryDAO, times(1)).readAll(0L,1L);
+        List<CategoryDTO> categoryDTOs = categoryService.readAll(1, 1);
+        verify(categoryDAO, times(1)).readAll(0,1);
         CategoryDTO categoryDTO = categoryDTOs.get(0);
         assertEquals(expectedCategory.getId(), categoryDTO.getId());
         assertEquals(expectedCategory.getName(), categoryDTO.getName());

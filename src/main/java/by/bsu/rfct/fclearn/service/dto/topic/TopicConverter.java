@@ -2,8 +2,6 @@ package by.bsu.rfct.fclearn.service.dto.topic;
 
 import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.entity.Topic;
-import by.bsu.rfct.fclearn.service.TopicService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

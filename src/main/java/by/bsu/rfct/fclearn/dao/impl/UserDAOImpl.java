@@ -1,7 +1,7 @@
 package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.UserDAO;
-import by.bsu.rfct.fclearn.entity.CardStatus;
+import by.bsu.rfct.fclearn.entity.Card;
 import by.bsu.rfct.fclearn.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,12 +14,11 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository("userDAO")
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
 
     private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
 
@@ -41,7 +40,7 @@ public class UserDAOImpl implements UserDAO{
             "collection_id) VALUES(?,?);";
     private static final String QUERY_INSERT_CARD_INTO_USER = "INSERT INTO user_cards (users_id, cards_id, card_status, low_count) " +
             "VALUES(?,?,?,0);";
-    private static final String QUERY_COUNT_ALL_USERS = "SELECT count(id) FROM users;";
+    private static final String QUERY_COUNT_ALL_USERS = "SELECT COUNT(id) FROM users;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -88,7 +87,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<User> readAll(Long startLimitFrom, Long amountOnPage) {
+    public List<User> readAll(Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("UserDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_USERS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(User.class));
@@ -141,7 +140,7 @@ public class UserDAOImpl implements UserDAO{
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CARD_INTO_USER);
             ps.setLong(1, userId);
             ps.setLong(2, cardId);
-            ps.setString(3, CardStatus.NEW.toString());
+            ps.setString(3, Card.Status.NEW.toString());
             return ps;
         }, holder);
     }

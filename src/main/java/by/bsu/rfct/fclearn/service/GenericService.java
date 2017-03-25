@@ -10,7 +10,7 @@ import java.util.List;
  * @param <T> DTO instance type
  * @param <K> id type
 */
-public interface GenericService<T extends AbstractDTO, K> {
+public interface GenericService<T extends AbstractDTO<K>, K> {
 
     /**
      * Creates <code>DTO</code> instance
@@ -48,13 +48,13 @@ public interface GenericService<T extends AbstractDTO, K> {
      *
      * @return <code>DTO</code> instances list
      */
-    List<T> readAll(Long pageNumber, Long amountOnPage) throws UnsupportedOperationException;
+    List<T> readAll(Integer pageNumber, Integer amountOnPage);
 
     /**
      * Counts all entities
      *
      * @return entities amount
      */
-    Long countAll();
+    K countAll();
 
 }

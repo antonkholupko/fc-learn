@@ -4,7 +4,6 @@ import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,19 +15,22 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    @Autowired
     private CategoryService categoryService;
 
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     @GetMapping
-    public ResponseEntity findCategories(@RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) long pageNumber,
-                                      @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) long pageSize) {
+    public ResponseEntity findCategories(@RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
+                                      @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
 
         List<CategoryDTO> categoryDTOList = categoryService.readAll(pageNumber, pageSize);
         Long categoryAmount = categoryService.countAll();
-        Long totalPages = ControllerUtils.calculatePagesAmount(categoryAmount, pageSize);
+        Integer totalPages = ControllerUtils.calculatePagesAmount(categoryAmount, pageSize);
 
         HttpHeaders headers = new HttpHeaders();
         PaginationHttpHeaders.addPaginationHeaders(headers, pageSize, pageNumber, categoryAmount, totalPages);

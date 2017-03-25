@@ -22,8 +22,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
@@ -102,7 +100,7 @@ public class CollectionDAOTest {
     @Test
     public void readAll() throws Exception {
         int expectedColletionsAmount = 4;
-        List<Collection> collections = collectionDAO.readAll(2L, 4L);
+        List<Collection> collections = collectionDAO.readAll(2, 4);
         Assert.assertEquals(expectedColletionsAmount, collections.size());
     }
 

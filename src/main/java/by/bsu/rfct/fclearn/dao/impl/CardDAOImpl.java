@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository("cardDAO")
-public class CardDAOImpl implements CardDAO{
+public class CardDAOImpl implements CardDAO {
 
     private static final Logger LOG = LogManager.getLogger(CardDAOImpl.class);
 
@@ -40,7 +40,7 @@ public class CardDAOImpl implements CardDAO{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CardDAOImpl(JdbcTemplate jdbcTemplate){
+    public CardDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -82,7 +82,7 @@ public class CardDAOImpl implements CardDAO{
     }
 
     @Override
-    public List<Card> readAll(Long startLimitFrom, Long amountOnPage) {
+    public List<Card> readAll(Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("CardDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_CARDS, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Card.class));
@@ -110,13 +110,13 @@ public class CardDAOImpl implements CardDAO{
     @Override
     public Long countCardAmountInCollection(Long collectionId) {
         LOG.debug("CardDAO - count card amount in collection id={}", collectionId);
-        return jdbcTemplate.queryForObject(QUERY_COUNT_CARDS_IN_COLLECTION, new Object[] {collectionId}, Long.class);
+        return jdbcTemplate.queryForObject(QUERY_COUNT_CARDS_IN_COLLECTION, new Object[]{collectionId}, Long.class);
     }
 
     @Override
-    public List<Card> readAllCardsByCollectionId(Long collectionId, Long startLimitFrom, Long amountOnPage) {
+    public List<Card> readAllCardsByCollectionId(Long collectionId, Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("CardDAO - read all cards by collection id={}", collectionId);
-        return jdbcTemplate.query(QUERY_SELECT_CARDS_BY_COLLECTION_ID, new Object[] {collectionId, startLimitFrom,
-        amountOnPage}, new BeanPropertyRowMapper<>(Card.class));
+        return jdbcTemplate.query(QUERY_SELECT_CARDS_BY_COLLECTION_ID, new Object[]{collectionId, startLimitFrom,
+                amountOnPage}, new BeanPropertyRowMapper<>(Card.class));
     }
 }

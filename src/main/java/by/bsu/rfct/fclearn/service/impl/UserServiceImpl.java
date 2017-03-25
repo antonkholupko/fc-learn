@@ -4,7 +4,6 @@ import by.bsu.rfct.fclearn.dao.CollectionDAO;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
 import by.bsu.rfct.fclearn.entity.User;
-import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
@@ -12,7 +11,6 @@ import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> readAll(Long pageNumber, Long amountOnPage) {
+    public List<UserDTO> readAll(Integer pageNumber, Integer amountOnPage) {
         LOG.debug("UserService - read all users");
         List<UserDTO> userDTOs = new ArrayList<>();
         List<User> users = userDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);

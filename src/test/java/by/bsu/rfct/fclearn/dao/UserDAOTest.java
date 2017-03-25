@@ -89,7 +89,7 @@ public class UserDAOTest {
     @Test
     public void testReadAll() {
         int expectedUsersAmount = 12;
-        List<User> users = userDAO.readAll(2L, 12L);
+        List<User> users = userDAO.readAll(2, 12);
         Assert.assertEquals(expectedUsersAmount, users.size());
     }
 

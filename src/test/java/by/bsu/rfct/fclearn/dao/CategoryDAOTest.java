@@ -80,7 +80,7 @@ public class CategoryDAOTest {
     @Test
     public void testReadAll() {
         int expectedCategoriesAmount = 3;
-        List<Category> categories = categoryDAO.readAll(2L, 3L);
+        List<Category> categories = categoryDAO.readAll(2, 3);
         Assert.assertEquals(expectedCategoriesAmount, categories.size());
     }
 

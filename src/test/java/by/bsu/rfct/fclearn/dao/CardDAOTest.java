@@ -21,8 +21,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = DAOTestConfig.class)
@@ -90,7 +88,7 @@ public class CardDAOTest {
     public void readAll() throws Exception {
         int expectedCardsAmount = 12;
         Long expectedId = 19L;
-        List<Card> cards = cardDAO.readAll(18L, 12L);
+        List<Card> cards = cardDAO.readAll(18, 12);
         Long id = cards.get(0).getId();
         Assert.assertEquals(expectedId, id);
         Assert.assertEquals(expectedCardsAmount, cards.size());

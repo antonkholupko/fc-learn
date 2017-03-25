@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_CATEGORY, new String[]{PK_COLUMN});
             ps.setString(1, entity.getName());
-            ps.setString(2,entity.getImage());
+            ps.setString(2, entity.getImage());
             return ps;
         }, holder);
         return holder.getKey().longValue();
@@ -78,7 +77,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public List<Category> readAll(Long startLimitFrom, Long amountOnPage) {
+    public List<Category> readAll(Integer startLimitFrom, Integer amountOnPage) {
         LOG.debug("CategoryDAO - read all");
         return jdbcTemplate.query(QUERY_SELECT_ALL_CATEGORIES, new Object[]{startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Category.class));
@@ -118,6 +117,6 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Long countTopicAmount(Long categoryId) {
         LOG.debug("CategoryDAO - count topics");
-        return jdbcTemplate.queryForObject(QUERY_COUNT_TOPICS_IN_CATEGORY, new Object[] {categoryId}, Long.class);
+        return jdbcTemplate.queryForObject(QUERY_COUNT_TOPICS_IN_CATEGORY, new Object[]{categoryId}, Long.class);
     }
 }

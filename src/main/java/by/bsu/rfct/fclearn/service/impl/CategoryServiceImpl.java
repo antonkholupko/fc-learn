@@ -14,19 +14,18 @@ import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("categoryService")
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOG = LogManager.getLogger(CategoryServiceImpl.class);
 
-    private static final Long TOPIC_LIST_STARTS = 1L;
-    private static final Long TOPIC_LIST_SIZE = 5L;
+    private static final Integer TOPIC_LIST_STARTS = 1;
+    private static final Integer TOPIC_LIST_SIZE = 5;
 
     private CategoryDAO categoryDAO;
     private CategoryConverter categoryConverter;
@@ -80,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<CategoryDTO> readAll(Long pageNumber, Long amountOnPage) {
+    public List<CategoryDTO> readAll(Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CategoryService - read all");
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         List<Category> categories = categoryDAO.readAll(ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage),

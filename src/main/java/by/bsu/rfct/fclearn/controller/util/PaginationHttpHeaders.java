@@ -13,7 +13,7 @@ public class PaginationHttpHeaders {
     }
 
     public static void addPaginationHeaders(HttpHeaders httpHeaders,
-                                            Long pageSize, Long pageNumber, Long entityCount, Long totalPages) {
+                                            Integer pageSize, Integer pageNumber, Long entityCount, Integer totalPages) {
 
         httpHeaders.add(PER_PAGE, String.valueOf(pageSize));
         httpHeaders.add(CURRENT_PAGE, String.valueOf(pageNumber));
