@@ -4,8 +4,13 @@ import java.util.Objects;
 
 public class Topic extends AbstractEntity<Long>{
 
+    public enum Status {
+        PRIVATE, PUBLIC, REQ
+    }
+
     private String name;
     private String image;
+    private Status status;
 
     public String getName() {
         return name;
@@ -23,24 +28,37 @@ public class Topic extends AbstractEntity<Long>{
         this.image = image;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setStatusString (String statusString) {
+        this.status = Status.valueOf(statusString.toUpperCase().trim());
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)){
+        if (!super.equals(o)) {
             return false;
         }
         Topic topic = (Topic) o;
         return Objects.equals(name, topic.name) &&
-                Objects.equals(image, topic.image);
+                Objects.equals(image, topic.image) &&
+                status == topic.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image);
+        return Objects.hash(super.hashCode(), name, image, status);
     }
 }

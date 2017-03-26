@@ -37,6 +37,7 @@ public class TopicDAOTest {
         Topic expectedTopic = new Topic();
         expectedTopic.setName("Collections");
         expectedTopic.setImage("http://google.com/images/array");
+        expectedTopic.setStatusString("PRIVATE");
         Long id = topicDAO.create(expectedTopic);
         expectedTopic.setId(id);
         Topic topic = topicDAO.read(id);
@@ -50,6 +51,7 @@ public class TopicDAOTest {
         expectedTopic.setId(topicId);
         expectedTopic.setName("CPCU");
         expectedTopic.setImage("http://dummyimage.com/194x131.jpg/cc0000/ffffff");
+        expectedTopic.setStatusString("PRIVATE");
         Topic topic = topicDAO.read(topicId);
         Assert.assertEquals(expectedTopic, topic);
     }

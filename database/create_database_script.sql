@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`topics` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `image` VARCHAR(500) NULL,
+  `status` ENUM('private', 'public', 'req') NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
@@ -92,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`cards` (
   `collection_id` BIGINT NOT NULL,
   `question` VARCHAR(4500) NULL,
   `answer` VARCHAR(4500) NULL,
-  `questionImage` VARCHAR(500) NULL,
-  `answerImage` VARCHAR(500) NULL,
+  `question_image` VARCHAR(500) NULL,
+  `answer_image` VARCHAR(500) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `c_id_UNIQUE` (`id` ASC),
   INDEX `fk_cards_topics_idx` (`collection_id` ASC),
@@ -127,6 +128,7 @@ DROP TABLE IF EXISTS `fc_learn_db_schema`.`user_collections` ;
 CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`user_collections` (
   `collection_id` BIGINT NOT NULL,
   `user_id` BIGINT NOT NULL,
+  `rating` ENUM('like', 'nolike') NULL DEFAULT 'nolike',
   PRIMARY KEY (`collection_id`, `user_id`),
   INDEX `fk_topics_has_users_users1_idx` (`user_id` ASC),
   INDEX `fk_topics_has_users_topics1_idx` (`collection_id` ASC),

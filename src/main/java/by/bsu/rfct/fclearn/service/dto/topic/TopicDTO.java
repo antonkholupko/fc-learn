@@ -11,6 +11,7 @@ public class TopicDTO extends AbstractDTO<Long> {
     private String name;
     private String image;
     private Long collectionAmount;
+    private String status;
     private List<CollectionDTO> collections;
 
     public String getName() {
@@ -37,6 +38,14 @@ public class TopicDTO extends AbstractDTO<Long> {
         this.collectionAmount = collectionAmount;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public List<CollectionDTO> getCollections() {
         return collections;
     }
@@ -47,18 +56,25 @@ public class TopicDTO extends AbstractDTO<Long> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         TopicDTO topicDTO = (TopicDTO) o;
         return Objects.equals(name, topicDTO.name) &&
                 Objects.equals(image, topicDTO.image) &&
                 Objects.equals(collectionAmount, topicDTO.collectionAmount) &&
+                Objects.equals(status, topicDTO.status) &&
                 Objects.equals(collections, topicDTO.collections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image, collectionAmount, collections);
+        return Objects.hash(super.hashCode(), name, image, collectionAmount, status, collections);
     }
 }

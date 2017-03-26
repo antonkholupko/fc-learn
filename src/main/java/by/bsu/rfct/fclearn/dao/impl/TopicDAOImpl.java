@@ -21,20 +21,20 @@ public class TopicDAOImpl implements TopicDAO {
     private static final Logger LOG = LogManager.getLogger(TopicDAOImpl.class);
 
     private static final String PK_COLUMN = "id";
-    private static final String QUERY_INSERT_TOPIC = "INSERT INTO topics (name, image) " +
-            "VALUES(?, ?);";
-    private static final String QUERY_SELECT_TOPIC = "SELECT id, name, image FROM topics " +
+    private static final String QUERY_INSERT_TOPIC = "INSERT INTO topics (name, image, status) " +
+            "VALUES(?, ?, ?);";
+    private static final String QUERY_SELECT_TOPIC = "SELECT id, name, image, status AS statusString FROM topics " +
             "WHERE id=?;";
-    private static final String QUERY_UPDATE_TOPIC = "UPDATE topics SET name=?, image=? WHERE id=?;";
+    private static final String QUERY_UPDATE_TOPIC = "UPDATE topics SET name=?, image=?, status=? WHERE id=?;";
     private static final String QUERY_DELETE_TOPIC = "DELETE FROM topics WHERE id=?;";
     private static final String QUERY_SELECT_ALL_TOPICS = "SELECT id, name, image FROM topics LIMIT ?,?;";
-    private static final String QUERY_SELECT_TOPIC_BY_NAME = "SELECT id, name, image FROM topics " +
+    private static final String QUERY_SELECT_TOPIC_BY_NAME = "SELECT id, name, image, status AS statusString FROM topics " +
             "WHERE name=?;";
     private static final String QUERY_COUNT_ALL_TOPICS = "SELECT count(id) FROM topics;";
     private static final String QUERY_COUNT_COLLECTIONS_IN_TOPIC = "SELECT count(topic_id) FROM collections " +
             "WHERE topic_id=?";
-    private static final String QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID = "SELECT topics.id, topics.name, topics.image " +
-            "FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
+    private static final String QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID = "SELECT topics.id, topics.name, topics.image, " +
+            "topics.status AS statusString FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
             "WHERE topic_categories.category_id=? LIMIT ?,?;";
 
     private JdbcTemplate jdbcTemplate;
@@ -52,6 +52,8 @@ public class TopicDAOImpl implements TopicDAO {
             PreparedStatement ps = connection.prepareStatement(QUERY_INSERT_TOPIC, new String[]{PK_COLUMN});
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getImage());
+            ps.setString(3, entity.getStatus() != null ? entity.getStatus().toString() :
+                    Topic.Status.PRIVATE.toString());
             return ps;
         }, holder);
         return holder.getKey().longValue();
@@ -67,7 +69,11 @@ public class TopicDAOImpl implements TopicDAO {
     @Override
     public Long update(Topic entity) {
         LOG.debug("TopicDAO - update - id = {}", entity.getId());
-        jdbcTemplate.update(QUERY_UPDATE_TOPIC, entity.getName(), entity.getImage(), entity.getId());
+        if (entity.getStatus() == null) {
+            entity.setStatus(Topic.Status.PRIVATE);
+        }
+        jdbcTemplate.update(QUERY_UPDATE_TOPIC, entity.getName(), entity.getImage(), entity.getStatus().toString(),
+                entity.getId());
         return entity.getId();
     }
 

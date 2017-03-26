@@ -13,6 +13,7 @@ public class TopicConverterSmall implements Converter<Topic, TopicDTO> {
         if (topic != null) {
             topicDTO.setId(topic.getId());
             topicDTO.setName(topic.getName());
+            topicDTO.setStatus(topic.getStatus().toString());
         }
         return topicDTO;
     }
