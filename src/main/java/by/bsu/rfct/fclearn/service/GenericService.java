@@ -18,7 +18,7 @@ public interface GenericService<T extends AbstractDTO<K>, K> {
      * @param dto dto for creation
      * @return created dto
      */
-    T create(T dto);
+    K create(T dto);
 
     /**
      * Gets <code>DTO</code> instance by <code>ID<code>

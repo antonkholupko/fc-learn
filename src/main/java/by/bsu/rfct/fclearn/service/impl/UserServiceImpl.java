@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO create(UserDTO dto) {
+    public Long create(UserDTO dto) {
         return null;
     }
 

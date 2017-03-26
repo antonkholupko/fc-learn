@@ -43,7 +43,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public CollectionDTO create(CollectionDTO dto) {
+    public Long create(CollectionDTO dto) {
         return null;
     }
 

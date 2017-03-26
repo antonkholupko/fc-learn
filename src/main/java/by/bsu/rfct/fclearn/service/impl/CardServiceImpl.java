@@ -30,7 +30,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardDTO create(CardDTO dto) {
+    public Long create(CardDTO dto) {
         return null;
     }
 

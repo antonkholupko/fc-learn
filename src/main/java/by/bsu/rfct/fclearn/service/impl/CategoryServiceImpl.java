@@ -5,6 +5,7 @@ import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.service.dto.category.CategoryDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,15 +21,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryDAO categoryDAO;
     private CategoryConverter categoryConverter;
+    private CategoryDTOConverter categoryDTOConverter;
 
-    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryConverter categoryConverter) {
+    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryConverter categoryConverter,
+                               CategoryDTOConverter categoryDTOConverter) {
         this.categoryDAO = categoryDAO;
         this.categoryConverter = categoryConverter;
+        this.categoryDTOConverter = categoryDTOConverter;
     }
 
     @Override
-    public CategoryDTO create(CategoryDTO dto) {
-        return null;
+    public Long create(CategoryDTO dto) {
+        LOG.debug("CategoryService - create - category name={}", dto.getName());
+        return categoryDAO.create(categoryDTOConverter.convert(dto));
     }
 
     @Override

@@ -4,16 +4,23 @@ import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
+
+    private static final String CATEGORY_PATH = "%s/categories/%s";
+
+    @Value("${category.created}")
+    private String messageCreated;
 
     private CategoryService categoryService;
 
@@ -41,5 +48,14 @@ public class CategoryController {
     @GetMapping("/{id:[\\d]+}")
     public ResponseEntity findCategoryById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(categoryService.read(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity createCategory(@RequestBody @Valid CategoryDTO categoryDTO, @RequestHeader String host) {
+        Long createdCategoryId = categoryService.create(categoryDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LOCATION, String.format(CATEGORY_PATH, host, createdCategoryId));
+        return new ResponseEntity<>(String.format(messageCreated, createdCategoryId), headers, HttpStatus.CREATED);
     }
 }

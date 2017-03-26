@@ -27,7 +27,7 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public TopicDTO create(TopicDTO dto) {
+    public Long create(TopicDTO dto) {
         return null;
     }
 
