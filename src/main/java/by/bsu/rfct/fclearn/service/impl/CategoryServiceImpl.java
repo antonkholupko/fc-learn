@@ -1,16 +1,10 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
-import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.entity.Category;
-import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.CategoryService;
-import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicConverterSmall;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
-import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,25 +18,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOG = LogManager.getLogger(CategoryServiceImpl.class);
 
-    private static final Integer TOPIC_LIST_STARTS = 1;
-    private static final Integer TOPIC_LIST_SIZE = 5;
-
     private CategoryDAO categoryDAO;
     private CategoryConverter categoryConverter;
-    private TopicService topicService;
-    private TopicConverterSmall topicConverterSmall;
-    private TopicDTOConverter topicDTOConverter;
-    private TopicDAO topicDAO;
 
-    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryConverter categoryConverter, TopicService topicService,
-                               TopicConverterSmall topicConverterSmall, TopicDTOConverter topicDTOConverter,
-                               TopicDAO topicDAO) {
+    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryConverter categoryConverter) {
         this.categoryDAO = categoryDAO;
         this.categoryConverter = categoryConverter;
-        this.topicService = topicService;
-        this.topicConverterSmall = topicConverterSmall;
-        this.topicDTOConverter = topicDTOConverter;
-        this.topicDAO = topicDAO;
     }
 
     @Override
@@ -56,15 +37,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDAO.read(id);
         CategoryDTO categoryDTO = categoryConverter.convert(category);
         categoryDTO.setTopicAmount(this.countTopicAmount(id));
-        List<TopicDTO> smallTopicDTOs = new ArrayList<>();
-        List<TopicDTO> topicDTOs = topicService.readAllByCategoryId(id, TOPIC_LIST_STARTS, TOPIC_LIST_SIZE);
-        topicDTOs.forEach(topicDTO -> {
-            Topic topic = topicDTOConverter.convert(topicDTO);
-            topicDTO.setCollectionAmount(topicDAO.countCollectionAmount(topicDTO.getId()));
-            topicDTO = topicConverterSmall.convert(topic);
-            smallTopicDTOs.add(topicDTO);
-        });
-        categoryDTO.setTopics(smallTopicDTOs);
         return categoryDTO;
     }
 

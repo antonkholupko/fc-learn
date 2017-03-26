@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cards")
 public class CardController {
 
     private CardService cardService;
@@ -21,7 +20,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping("/collection/{collectionId:[\\d]+}")
+    @GetMapping("/collections/{collectionId:[\\d]+}/cards")
     public ResponseEntity findCards(@PathVariable("collectionId") Long collectionId,
             @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
@@ -39,7 +38,7 @@ public class CardController {
         return new ResponseEntity<>(cardDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/{id:[\\d]+}")
+    @GetMapping("/cards/{id:[\\d]+}")
     public ResponseEntity findCardById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(cardService.read(id), HttpStatus.OK);
     }

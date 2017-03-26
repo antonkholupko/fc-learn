@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/collections")
 public class CollectionController {
 
     private CollectionService collectionService;
@@ -21,7 +20,7 @@ public class CollectionController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("/topic/{topicId:[\\d]+}")
+    @GetMapping("/topics/{topicId:[\\d]+}/collections")
     public ResponseEntity findCollectionsByTopicId(@PathVariable("topicId") Long topicId,
             @RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
@@ -39,7 +38,7 @@ public class CollectionController {
         return new ResponseEntity<>(collectionDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/{id:[\\d]+}")
+    @GetMapping("/collections/{id:[\\d]+}")
     public ResponseEntity findCollectionById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(collectionService.read(id), HttpStatus.OK);
     }

@@ -6,7 +6,6 @@ import by.bsu.rfct.fclearn.entity.User;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
-import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
@@ -24,9 +23,6 @@ import java.util.List;
 public class CollectionServiceImpl implements CollectionService {
 
     private static final Logger LOG = LogManager.getLogger(CollectionServiceImpl.class);
-
-    private static final Integer CARD_LIST_STARTS = 1;
-    private static final Integer CARD_LIST_SIZE = 5;
 
     private CollectionDAO collectionDAO;
     private CollectionConverter collectionConverter;
@@ -61,8 +57,6 @@ public class CollectionServiceImpl implements CollectionService {
         authorDTO = userConverterSmall.convert(author);
         collectionDTO.setAuthor(authorDTO);
         collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(id));
-        List<CardDTO> cardDTOs = cardService.readAllCardsByCollectionId(id, CARD_LIST_STARTS, CARD_LIST_SIZE);
-        collectionDTO.setCards(cardDTOs);
         return collectionDTO;
     }
 

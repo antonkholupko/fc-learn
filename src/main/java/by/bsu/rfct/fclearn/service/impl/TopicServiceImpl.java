@@ -1,13 +1,8 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.TopicDAO;
-import by.bsu.rfct.fclearn.entity.Collection;
 import by.bsu.rfct.fclearn.entity.Topic;
-import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.TopicService;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverterSmall;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
@@ -23,22 +18,12 @@ public class TopicServiceImpl implements TopicService{
 
     private static final Logger LOG = LogManager.getLogger(TopicServiceImpl.class);
 
-    private static final Integer COLLECTION_LIST_STARTS = 1;
-    private static final Integer COLLECTION_LIST_SIZE = 5;
-
     private TopicDAO topicDAO;
     private TopicConverter topicConverter;
-    private CollectionService collectionService;
-    private CollectionConverterSmall collectionConverterSmall;
-    private CollectionDTOConverter collectionDTOConverter;
 
-    public TopicServiceImpl(TopicDAO topicDAO, CollectionService collectionService, TopicConverter topicConverter,
-                            CollectionConverterSmall collectionConverterSmall,CollectionDTOConverter collectionDTOConverter) {
+    public TopicServiceImpl(TopicDAO topicDAO, TopicConverter topicConverter) {
         this.topicDAO = topicDAO;
-        this.collectionService = collectionService;
         this.topicConverter = topicConverter;
-        this.collectionConverterSmall = collectionConverterSmall;
-        this.collectionDTOConverter = collectionDTOConverter;
     }
 
     @Override
@@ -52,14 +37,6 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = topicDAO.read(id);
         TopicDTO topicDTO = topicConverter.convert(topic);
         topicDTO.setCollectionAmount(topicDAO.countCollectionAmount(id));
-        List<CollectionDTO> collectionDTOs = collectionService.readAllByTopicId(id, COLLECTION_LIST_STARTS, COLLECTION_LIST_SIZE);
-        List<CollectionDTO> collectionDTOsSmall = new ArrayList<>();
-        for (CollectionDTO collectionDTO : collectionDTOs) {
-            Collection collection = collectionDTOConverter.convert(collectionDTO);
-            collectionDTO = collectionConverterSmall.convert(collection);
-            collectionDTOsSmall.add(collectionDTO);
-        }
-        topicDTO.setCollections(collectionDTOsSmall);
         return topicDTO;
     }
 
