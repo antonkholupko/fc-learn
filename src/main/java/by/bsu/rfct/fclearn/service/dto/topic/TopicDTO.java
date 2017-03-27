@@ -14,13 +14,18 @@ public class TopicDTO extends AbstractDTO<Long> {
     @NotBlank(message="{validation.topic.name.empty}")
     @Length(min=1, max=45, message = "{validation.topic.name.length}")
     private String name;
+
     @URL(message = "{validation.topic.image.invalid}")
     @Length(min=1, max=500, message = "{validation.topic.image.length}")
     private String image;
+
     private Long collectionAmount;
+
     @NotBlank(message = "{validation.topic.status.empty}")
     private String status;
+
     private Long categoryId;
+
     private List<CollectionDTO> collections;
 
     public String getName() {

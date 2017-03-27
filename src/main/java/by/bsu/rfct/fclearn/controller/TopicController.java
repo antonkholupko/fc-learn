@@ -50,7 +50,7 @@ public class TopicController {
         return new ResponseEntity<>(topicService.read(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/topics")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createTopic(@RequestBody @Valid TopicDTO topicDTO, @RequestHeader String host) {
         Long createdTopicId = topicService.create(topicDTO);

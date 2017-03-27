@@ -8,14 +8,17 @@ import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionConverter;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTOConverter;
+import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,21 +33,33 @@ public class CollectionServiceImpl implements CollectionService {
     private UserDTOConverter userDTOConverter;
     private UserConverterSmall userConverterSmall;
     private CardService cardService;
+    private CollectionDTOConverter collectionDTOConverter;
 
     public CollectionServiceImpl(CollectionDAO collectionDAO, CollectionConverter collectionConverter,
                                  UserService userService, UserDTOConverter userDTOConverter,
-                                 UserConverterSmall userConverterSmall, CardService cardService) {
+                                 UserConverterSmall userConverterSmall, CardService cardService,
+                                 CollectionDTOConverter collectionDTOConverter) {
         this.collectionDAO = collectionDAO;
         this.collectionConverter = collectionConverter;
         this.userService = userService;
         this.userDTOConverter = userDTOConverter;
         this.userConverterSmall = userConverterSmall;
         this.cardService = cardService;
+        this.collectionDTOConverter = collectionDTOConverter;
     }
 
     @Override
     public Long create(CollectionDTO dto) {
-        return null;
+        LOG.debug("CollectionService - create collection name={}", dto.getName());
+        Collection collection = collectionDTOConverter.convert(dto);
+        LocalDateTime createdTime = LocalDateTime.now();
+        collection.setCreated(createdTime);
+        collection.setModified(createdTime);
+        if (!collectionDAO.checkIfExist(collection)) {
+            return collectionDAO.create(collection);
+        } else {
+            throw new EntityExistsException("Such collection exists");
+        }
     }
 
     @Override

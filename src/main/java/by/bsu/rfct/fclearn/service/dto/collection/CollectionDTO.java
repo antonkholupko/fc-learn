@@ -3,6 +3,9 @@ package by.bsu.rfct.fclearn.service.dto.collection;
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,16 +13,34 @@ import java.util.Objects;
 
 public class CollectionDTO extends AbstractDTO<Long> {
 
+    @NotBlank(message = "{validation.collection.name.empty}")
+    @Length(min = 1, max = 300, message = "{validation.collection.name.length}")
     private String name;
+
+    @NotBlank(message = "{validation.collection.description.empty}")
+    @Length(min = 1, max = 1500, message = "{validation.collection.description.length}")
     private String description;
+
     private LocalDateTime created;
+
     private LocalDateTime modified;
+
+    @URL(message = "{validation.collection.image.invalid}")
+    @Length
     private String image;
+
+    @NotBlank(message = "{validation.collection.staus.empty}")
     private String status;
+
     private Integer rating;
+
     private UserDTO author;
+
     private List<CardDTO> cards;
+
     private Long cardsAmount;
+
+    private Long topicId;
 
     public String getName() {
         return name;
@@ -101,6 +122,14 @@ public class CollectionDTO extends AbstractDTO<Long> {
         this.cardsAmount = cardsAmount;
     }
 
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,11 +145,12 @@ public class CollectionDTO extends AbstractDTO<Long> {
                 Objects.equals(rating, that.rating) &&
                 Objects.equals(author, that.author) &&
                 Objects.equals(cards, that.cards) &&
-                Objects.equals(cardsAmount, that.cardsAmount);
+                Objects.equals(cardsAmount, that.cardsAmount) &&
+                Objects.equals(topicId, that.topicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, created, modified, image, status, rating, author, cards, cardsAmount);
+        return Objects.hash(super.hashCode(), name, description, created, modified, image, status, rating, author, cards, cardsAmount, topicId);
     }
 }

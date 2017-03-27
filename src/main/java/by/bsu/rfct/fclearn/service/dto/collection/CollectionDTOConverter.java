@@ -19,6 +19,8 @@ public class CollectionDTOConverter implements Converter<CollectionDTO, Collecti
             collection.setImage(collectionDTO.getImage());
             collection.setStatus(Collection.Status.valueOf(collectionDTO.getStatus()));
             collection.setRating(collectionDTO.getRating());
+            collection.setAuthorId(collectionDTO.getAuthor().getId());
+            collection.setTopicId(collectionDTO.getTopicId());
         }
         return collection;
     }
