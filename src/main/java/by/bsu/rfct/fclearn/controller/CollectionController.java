@@ -59,4 +59,10 @@ public class CollectionController {
         return new ResponseEntity<>(String.format(messageCreated, createdCollectionId), headers, HttpStatus.CREATED);
     }
 
+    @PutMapping("/collections/{id:[\\d]+}")
+    public ResponseEntity updateCollection(@PathVariable("id") Long id, @RequestBody @Valid CollectionDTO collectionDTO) {
+        collectionDTO.setId(id);
+        return new ResponseEntity<>(collectionService.update(collectionDTO), HttpStatus.OK);
+    }
+
 }

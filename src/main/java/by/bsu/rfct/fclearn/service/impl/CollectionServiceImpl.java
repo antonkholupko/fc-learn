@@ -77,7 +77,10 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public Long update(CollectionDTO dto) {
-        return null;
+        LOG.debug("CollectionService - update id={}", dto.getId());
+        LocalDateTime modifiedTime = LocalDateTime.now();
+        dto.setModified(modifiedTime);
+        return collectionDAO.update(collectionDTOConverter.convert(dto));
     }
 
     @Override
