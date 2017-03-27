@@ -58,4 +58,10 @@ public class CategoryController {
         headers.add(HttpHeaders.LOCATION, String.format(CATEGORY_PATH, host, createdCategoryId));
         return new ResponseEntity<>(String.format(messageCreated, createdCategoryId), headers, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity updateCategory(@PathVariable("id") Long id, @RequestBody @Valid CategoryDTO categoryDTO) {
+        categoryDTO.setId(id);
+        return new ResponseEntity<>(categoryService.update(categoryDTO), HttpStatus.OK);
+    }
 }

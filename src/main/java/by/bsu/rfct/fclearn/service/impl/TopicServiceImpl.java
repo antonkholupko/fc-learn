@@ -60,7 +60,7 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public TopicDTO update(TopicDTO dto) {
+    public Long update(TopicDTO dto) {
         return null;
     }
 

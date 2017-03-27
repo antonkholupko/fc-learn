@@ -51,8 +51,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO update(CategoryDTO dto) {
-        return null;
+    public Long update(CategoryDTO dto) {
+        LOG.debug("CategoryService - update category id={}", dto.getId());
+        return categoryDAO.update(categoryDTOConverter.convert(dto));
     }
 
     @Override

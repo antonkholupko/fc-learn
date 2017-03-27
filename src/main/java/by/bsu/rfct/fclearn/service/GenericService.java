@@ -34,7 +34,7 @@ public interface GenericService<T extends AbstractDTO<K>, K> {
      * @param dto dto for updating
      * @return updated dto
      */
-    T update(T dto);
+    K update(T dto);
 
     /**
      * Deletes  <code>DTO</code> instance

@@ -53,7 +53,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardDTO update(CardDTO dto) {
+    public Long update(CardDTO dto) {
         return null;
     }
 

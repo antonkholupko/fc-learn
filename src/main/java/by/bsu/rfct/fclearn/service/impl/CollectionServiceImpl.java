@@ -76,7 +76,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public CollectionDTO update(CollectionDTO dto) {
+    public Long update(CollectionDTO dto) {
         return null;
     }
 
