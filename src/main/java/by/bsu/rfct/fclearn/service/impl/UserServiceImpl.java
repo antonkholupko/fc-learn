@@ -58,7 +58,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long update(UserDTO dto) {
-        return null;
+        LOG.debug("UserService - update user id={}", dto.getId());
+        return userDAO.update(userDTOConverter.convert(dto));
     }
 
     @Override

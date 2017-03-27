@@ -59,5 +59,11 @@ public class UserController {
         return new ResponseEntity<>(String.format(messageCreated, createdUserId), headers, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDTO userDTO) {
+        userDTO.setId(id);
+        return new ResponseEntity<>(userService.update(userDTO), HttpStatus.OK);
+    }
+
 
 }
