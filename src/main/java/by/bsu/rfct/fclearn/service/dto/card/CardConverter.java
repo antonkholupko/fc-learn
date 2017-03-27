@@ -16,6 +16,7 @@ public class CardConverter implements Converter<Card, CardDTO> {
             cardDTO.setAnswer(card.getAnswer());
             cardDTO.setQuestionImage(card.getQuestionImage());
             cardDTO.setAnswerImage(card.getAnswerImage());
+            cardDTO.setCollectionId(card.getCollectionId());
         }
         return cardDTO;
     }

@@ -29,7 +29,7 @@ public class CollectionDTO extends AbstractDTO<Long> {
     @Length
     private String image;
 
-    @NotBlank(message = "{validation.collection.staus.empty}")
+    @NotBlank(message = "{validation.collection.status.empty}")
     private String status;
 
     private Integer rating;

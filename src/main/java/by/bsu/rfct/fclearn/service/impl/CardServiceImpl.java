@@ -6,6 +6,8 @@ import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverter;
 import by.bsu.rfct.fclearn.service.dto.card.CardConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.service.dto.card.CardDTOConverter;
+import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,16 +24,24 @@ public class CardServiceImpl implements CardService {
     private CardDAO cardDAO;
     private CardConverter cardConverter;
     private CardConverterSmall cardConverterSmall;
+    private CardDTOConverter cardDTOConverter;
 
-    public CardServiceImpl(CardDAO cardDAO, CardConverter cardConverter, CardConverterSmall cardConverterSmall) {
+    public CardServiceImpl(CardDAO cardDAO, CardConverter cardConverter, CardConverterSmall cardConverterSmall,
+                           CardDTOConverter cardDTOConverter) {
         this.cardDAO = cardDAO;
         this.cardConverter = cardConverter;
         this.cardConverterSmall = cardConverterSmall;
+        this.cardDTOConverter = cardDTOConverter;
     }
 
     @Override
     public Long create(CardDTO dto) {
-        return null;
+        LOG.debug("CardService - create card question={}", dto.getQuestion());
+        if (!cardDAO.checkIfExist(cardDTOConverter.convert(dto))) {
+            return cardDAO.create(cardDTOConverter.convert(dto));
+        } else {
+            throw new EntityExistsException("Such card exists");
+        }
     }
 
     @Override

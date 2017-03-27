@@ -4,15 +4,22 @@ import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CardService;
 import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 public class CardController {
+
+    private static final String CARD_PATH = "%s/cards/%s";
+
+    @Value("${card.created}")
+    private String messageCreated;
 
     private CardService cardService;
 
@@ -42,5 +49,15 @@ public class CardController {
     public ResponseEntity findCardById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(cardService.read(id), HttpStatus.OK);
     }
+
+    @PostMapping("/cards")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity createCard(@RequestBody @Valid CardDTO cardDTO, @RequestHeader String host) {
+        Long createdCardId = cardService.create(cardDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LOCATION, String.format(CARD_PATH, host, createdCardId));
+        return new ResponseEntity<>(String.format(messageCreated, createdCardId), headers, HttpStatus.CREATED);
+    }
+
 
 }
