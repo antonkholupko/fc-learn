@@ -1,11 +1,13 @@
 package by.bsu.rfct.fclearn.service.impl;
 
+import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.dao.TopicDAO;
 import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
+import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,11 +22,14 @@ public class TopicServiceImpl implements TopicService{
     private static final Logger LOG = LogManager.getLogger(TopicServiceImpl.class);
 
     private TopicDAO topicDAO;
+    private CategoryDAO categoryDAO;
     private TopicConverter topicConverter;
     private TopicDTOConverter topicDTOConverter;
 
-    public TopicServiceImpl(TopicDAO topicDAO, TopicConverter topicConverter, TopicDTOConverter topicDTOConverter) {
+    public TopicServiceImpl(TopicDAO topicDAO, TopicConverter topicConverter, TopicDTOConverter topicDTOConverter,
+                            CategoryDAO categoryDAO) {
         this.topicDAO = topicDAO;
+        this.categoryDAO = categoryDAO;
         this.topicConverter = topicConverter;
         this.topicDTOConverter = topicDTOConverter;
     }
@@ -32,13 +37,17 @@ public class TopicServiceImpl implements TopicService{
     @Override
     public Long create(TopicDTO dto) {
         LOG.debug("TopicService - create topic name={}", dto.getName());
-        //todo
-        if (topicDAO.checkIfExist(topicDTOConverter.convert(dto))) {
-
+        if (!topicDAO.checkIfExist(topicDTOConverter.convert(dto))) {
+            Long topicId = topicDAO.create(topicDTOConverter.convert(dto));
+            if (topicDAO.checkIfTopicExistsInCategory(topicId, dto.getCategoryId())) {
+                throw new EntityExistsException("Such topic exists in category");
+            } else {
+                categoryDAO.addTopic(dto.getCategoryId(), topicId);
+            }
+            return topicId;
         } else {
-
+            throw new EntityExistsException("Such topic exists");
         }
-        return null;
     }
 
     @Override

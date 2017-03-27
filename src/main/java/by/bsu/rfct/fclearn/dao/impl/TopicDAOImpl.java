@@ -36,6 +36,8 @@ public class TopicDAOImpl implements TopicDAO {
     private static final String QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID = "SELECT topics.id, topics.name, topics.image, " +
             "topics.status AS statusString FROM topics INNER JOIN topic_categories ON topics.id=topic_categories.topic_id " +
             "WHERE topic_categories.category_id=? LIMIT ?,?;";
+    private static final String QUERY_SELECT_FROM_TOPIC_CATEGORIES = "SELECT topic_id, category_id FROM topic_categories " +
+            "WHERE topic_id=? AND category_id=?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -121,4 +123,19 @@ public class TopicDAOImpl implements TopicDAO {
         return jdbcTemplate.query(QUERY_SELECT_ALL_TOPICS_BY_CATEGORY_ID, new Object[]{categoryId, startLimitFrom, amountOnPage},
                 new BeanPropertyRowMapper<>(Topic.class));
     }
+
+    @Override
+    public Boolean checkIfTopicExistsInCategory(Long topicId, Long categoryId) {
+        LOG.debug("TopicDAO - check if topic exists in category topicId={}, categoryId={}", topicId, categoryId);
+        try {
+            jdbcTemplate.queryForObject(QUERY_SELECT_FROM_TOPIC_CATEGORIES, new Object[] {topicId, categoryId},
+                    new BeanPropertyRowMapper<>(Topic.class));
+            return true;
+        } catch (EmptyResultDataAccessException exc){
+            return false;
+        }
+
+    }
+
+
 }

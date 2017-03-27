@@ -20,6 +20,7 @@ public class TopicDTO extends AbstractDTO<Long> {
     private Long collectionAmount;
     @NotBlank(message = "{validation.topic.status.empty}")
     private String status;
+    private Long categoryId;
     private List<CollectionDTO> collections;
 
     public String getName() {
@@ -54,6 +55,14 @@ public class TopicDTO extends AbstractDTO<Long> {
         this.status = status;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public List<CollectionDTO> getCollections() {
         return collections;
     }
@@ -78,11 +87,12 @@ public class TopicDTO extends AbstractDTO<Long> {
                 Objects.equals(image, topicDTO.image) &&
                 Objects.equals(collectionAmount, topicDTO.collectionAmount) &&
                 Objects.equals(status, topicDTO.status) &&
+                Objects.equals(categoryId, topicDTO.categoryId) &&
                 Objects.equals(collections, topicDTO.collections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image, collectionAmount, status, collections);
+        return Objects.hash(super.hashCode(), name, image, collectionAmount, status, categoryId, collections);
     }
 }

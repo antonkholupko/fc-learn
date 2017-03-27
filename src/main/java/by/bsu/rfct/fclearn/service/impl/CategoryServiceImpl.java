@@ -85,4 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
         LOG.debug("CategoryService - count topic amount");
         return categoryDAO.countTopicAmount(categoryId);
     }
+
+
+
 }
