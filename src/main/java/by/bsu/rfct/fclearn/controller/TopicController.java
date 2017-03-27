@@ -59,4 +59,10 @@ public class TopicController {
         return new ResponseEntity<>(String.format(messageCreated, createdTopicId), headers, HttpStatus.CREATED);
     }
 
+    @PutMapping("/topics/{id:[\\d]+}")
+    public ResponseEntity updateTopic(@PathVariable("id") Long id, @RequestBody @Valid TopicDTO topicDTO) {
+        topicDTO.setId(id);
+        return new ResponseEntity<>(topicService.update(topicDTO), HttpStatus.OK);
+    }
+
 }

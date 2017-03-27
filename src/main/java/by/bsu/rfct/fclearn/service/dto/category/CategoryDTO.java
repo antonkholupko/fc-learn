@@ -15,7 +15,6 @@ public class CategoryDTO extends AbstractDTO<Long> {
     @Length(min=1, max=45, message = "{validation.category.name.length}")
     private String name;
     @URL(message = "{validation.category.image.invalid}")
-    @Length(min=1, max=500, message = "{validation.category.image.length}")
     private String image;
     private Long topicAmount;
     private List<TopicDTO> topics;

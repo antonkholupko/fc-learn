@@ -61,7 +61,8 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public Long update(TopicDTO dto) {
-        return null;
+        LOG.debug("TopicService - update topic id={}", dto.getId());
+        return topicDAO.update(topicDTOConverter.convert(dto));
     }
 
     @Override
