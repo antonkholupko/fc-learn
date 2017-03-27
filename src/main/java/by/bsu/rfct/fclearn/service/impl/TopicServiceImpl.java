@@ -5,6 +5,7 @@ import by.bsu.rfct.fclearn.entity.Topic;
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicConverter;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
+import by.bsu.rfct.fclearn.service.dto.topic.TopicDTOConverter;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,14 +21,23 @@ public class TopicServiceImpl implements TopicService{
 
     private TopicDAO topicDAO;
     private TopicConverter topicConverter;
+    private TopicDTOConverter topicDTOConverter;
 
-    public TopicServiceImpl(TopicDAO topicDAO, TopicConverter topicConverter) {
+    public TopicServiceImpl(TopicDAO topicDAO, TopicConverter topicConverter, TopicDTOConverter topicDTOConverter) {
         this.topicDAO = topicDAO;
         this.topicConverter = topicConverter;
+        this.topicDTOConverter = topicDTOConverter;
     }
 
     @Override
     public Long create(TopicDTO dto) {
+        LOG.debug("TopicService - create topic name={}", dto.getName());
+        //todo
+        if (topicDAO.checkIfExist(topicDTOConverter.convert(dto))) {
+
+        } else {
+
+        }
         return null;
     }
 

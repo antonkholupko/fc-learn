@@ -6,6 +6,7 @@ import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.dto.category.CategoryDTOConverter;
+import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Long create(CategoryDTO dto) {
         LOG.debug("CategoryService - create - category name={}", dto.getName());
-        return categoryDAO.create(categoryDTOConverter.convert(dto));
+        if (!categoryDAO.checkIfExist(categoryDTOConverter.convert(dto))) {
+            return categoryDAO.create(categoryDTOConverter.convert(dto));
+        } else {
+            throw new EntityExistsException("Such category exists");
+        }
     }
 
     @Override

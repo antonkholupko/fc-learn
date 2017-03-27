@@ -2,15 +2,23 @@ package by.bsu.rfct.fclearn.service.dto.topic;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
 import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 import java.util.Objects;
 
 public class TopicDTO extends AbstractDTO<Long> {
 
+    @NotBlank(message="{validation.topic.name.empty}")
+    @Length(min=1, max=45, message = "{validation.topic.name.length}")
     private String name;
+    @URL(message = "{validation.topic.image.invalid}")
+    @Length(min=1, max=500, message = "{validation.topic.image.length}")
     private String image;
     private Long collectionAmount;
+    @NotBlank(message = "{validation.topic.status.empty}")
     private String status;
     private List<CollectionDTO> collections;
 

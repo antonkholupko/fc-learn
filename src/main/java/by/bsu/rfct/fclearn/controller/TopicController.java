@@ -4,15 +4,22 @@ import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.dto.topic.TopicDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 public class TopicController {
+
+    private static final String TOPIC_PATH = "%s/topics/%s";
+
+    @Value("${topic.created}")
+    private String messageCreated;
 
     private TopicService topicService;
 
@@ -41,6 +48,15 @@ public class TopicController {
     @GetMapping("/topics/{id:[\\d]+}")
     public ResponseEntity findTopicById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(topicService.read(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity createTopic(@RequestBody @Valid TopicDTO topicDTO, @RequestHeader String host) {
+        Long createdTopicId = topicService.create(topicDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LOCATION, String.format(TOPIC_PATH, host, createdTopicId));
+        return new ResponseEntity<>(String.format(messageCreated, createdTopicId), headers, HttpStatus.CREATED);
     }
 
 }
