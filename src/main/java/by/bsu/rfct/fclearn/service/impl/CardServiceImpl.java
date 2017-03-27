@@ -54,7 +54,8 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Long update(CardDTO dto) {
-        return null;
+        LOG.debug("CardService - update card id={}", dto.getId());
+        return cardDAO.update(cardDTOConverter.convert(dto));
     }
 
     @Override

@@ -59,5 +59,12 @@ public class CardController {
         return new ResponseEntity<>(String.format(messageCreated, createdCardId), headers, HttpStatus.CREATED);
     }
 
+    @PutMapping("/cards/{id:[\\d]}")
+    public ResponseEntity updateCard(@PathVariable("id") Long id, @RequestBody @Valid CardDTO cardDTO) {
+        cardDTO.setId(id);
+        return new ResponseEntity<>(cardService.update(cardDTO), HttpStatus.OK);
+    }
+
+
 
 }
