@@ -1,14 +1,30 @@
 package by.bsu.rfct.fclearn.service.dto.user;
 
 import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.Objects;
 
 public class UserDTO extends AbstractDTO<Long> {
 
+    @NotBlank(message = "{validation.user.login.empty}")
+    @Length(min = 5, max = 100, message = "{validation.user.name.length}")
     private String login;
+
+    @NotBlank(message = "{validation.user.password.empty}")
+    private String password;
+
+    @NotBlank(message = "{validation.user.email.empty}")
+    @Email(message = "{validation.user.email.invalid}")
     private String email;
+
+    @URL(message = "{validation.user.photo.invalid}")
     private String photo;
+
+    @NotBlank(message = "{validation.user.status.empty}")
     private String Status;
     private Long collectionsAuthorAmount;
 
@@ -18,6 +34,14 @@ public class UserDTO extends AbstractDTO<Long> {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -59,6 +83,7 @@ public class UserDTO extends AbstractDTO<Long> {
         if (!super.equals(o)) return false;
         UserDTO userDTO = (UserDTO) o;
         return Objects.equals(login, userDTO.login) &&
+                Objects.equals(password, userDTO.password) &&
                 Objects.equals(email, userDTO.email) &&
                 Objects.equals(photo, userDTO.photo) &&
                 Objects.equals(Status, userDTO.Status) &&
@@ -67,6 +92,6 @@ public class UserDTO extends AbstractDTO<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), login, email, photo, Status, collectionsAuthorAmount);
+        return Objects.hash(super.hashCode(), login, password, email, photo, Status, collectionsAuthorAmount);
     }
 }

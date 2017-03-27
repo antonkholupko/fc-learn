@@ -8,6 +8,8 @@ import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverter;
 import by.bsu.rfct.fclearn.service.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
+import by.bsu.rfct.fclearn.service.dto.user.UserDTOConverter;
+import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,18 +27,25 @@ public class UserServiceImpl implements UserService {
     private UserConverter userConverter;
     private UserConverterSmall userConverterSmall;
     private CollectionDAO collectionDAO;
+    private UserDTOConverter userDTOConverter;
 
     public UserServiceImpl(UserDAO userDAO, UserConverter userConverter, UserConverterSmall userConverterSmall,
-                           CollectionDAO collectionDAO) {
+                           CollectionDAO collectionDAO, UserDTOConverter userDTOConverter) {
         this.userDAO = userDAO;
         this.userConverter = userConverter;
         this.userConverterSmall = userConverterSmall;
         this.collectionDAO = collectionDAO;
+        this.userDTOConverter = userDTOConverter;
     }
 
     @Override
     public Long create(UserDTO dto) {
-        return null;
+        LOG.debug("UserService - create user login={}", dto.getLogin());
+        if(!userDAO.checkIfExist(userDTOConverter.convert(dto))) {
+            return userDAO.create(userDTOConverter.convert(dto));
+        } else {
+            throw new EntityExistsException("Such user exists");
+        }
     }
 
     @Override

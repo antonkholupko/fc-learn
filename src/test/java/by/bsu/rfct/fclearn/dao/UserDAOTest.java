@@ -95,7 +95,7 @@ public class UserDAOTest {
 
     @Test
     public void testCheckIfExist_userExists() {
-        String login = "ntuckerm";
+        String login = "ntuckerm1";
         String email = "ltorresm@opera.com";
         User user1 = new User();
         User user2 = new User();
@@ -107,8 +107,8 @@ public class UserDAOTest {
         Boolean check1 = userDAO.checkIfExist(user1);
         Boolean check2 = userDAO.checkIfExist(user2);
         Boolean check3 = userDAO.checkIfExist(user3);
-        Assert.assertEquals(true, check1);
-        Assert.assertEquals(true, check2);
+        Assert.assertEquals(false, check1);
+        Assert.assertEquals(false, check2);
         Assert.assertEquals(true, check3);
     }
 

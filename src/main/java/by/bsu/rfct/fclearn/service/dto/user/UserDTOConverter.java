@@ -13,6 +13,7 @@ public class UserDTOConverter implements Converter<UserDTO, User> {
         if (userDTO != null) {
             user.setId(userDTO.getId());
             user.setLogin(userDTO.getLogin());
+            user.setPassword(userDTO.getPassword());
             user.setEmail(userDTO.getEmail());
             user.setPhoto(userDTO.getPhoto());
             user.setStatus(User.Status.valueOf(userDTO.getStatus()));

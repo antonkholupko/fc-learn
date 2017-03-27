@@ -95,23 +95,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Boolean checkIfExist(User entity) {
-        try {
-            if (!StringUtils.isEmpty(entity.getLogin())) {
-                LOG.debug("UserDAO - check if exists - login = {}", entity.getLogin());
-                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_LOGIN, new Object[]{entity.getLogin()},
-                        new BeanPropertyRowMapper<>(User.class));
-                return true;
-            } else if (!StringUtils.isEmpty(entity.getEmail())) {
-                LOG.debug("UserDAO - check if exists - email = {}", entity.getEmail());
-                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_EMAIL, new Object[]{entity.getEmail()},
-                        new BeanPropertyRowMapper<>(User.class));
-                return true;
-            }
-        } catch (EmptyResultDataAccessException exc) {
-            LOG.debug("UserDAO - check if exists - login = {}; email = {} doesn't exist", entity.getLogin(),
-                    entity.getEmail());
+        LOG.debug("UserDAO - check if exists");
+        if (checkIfExistsByLogin(entity) || checkIfExistsByEmail(entity)) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -143,5 +132,37 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(3, Card.Status.NEW.toString());
             return ps;
         }, holder);
+    }
+
+    private Boolean checkIfExistsByLogin(User entity) {
+        try {
+            if (!StringUtils.isEmpty(entity.getLogin())) {
+                LOG.debug("UserDAO - check if exists - login = {}", entity.getLogin());
+                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_LOGIN, new Object[]{entity.getLogin()},
+                        new BeanPropertyRowMapper<>(User.class));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("UserDAO - check if exists - login = {} doesn't exist", entity.getLogin());
+            return false;
+        }
+    }
+
+    private Boolean checkIfExistsByEmail(User entity) {
+        try {
+            if (!StringUtils.isEmpty(entity.getLogin())) {
+                LOG.debug("UserDAO - check if exists - email = {}", entity.getEmail());
+                jdbcTemplate.queryForObject(QUERY_SELECT_USER_BY_EMAIL, new Object[]{entity.getEmail()},
+                        new BeanPropertyRowMapper<>(User.class));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.debug("UserDAO - check if exists - email = {} doesn't exist", entity.getEmail());
+            return false;
+        }
     }
 }
