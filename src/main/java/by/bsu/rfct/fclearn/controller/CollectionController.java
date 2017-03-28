@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
+import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CollectionService;
@@ -22,6 +23,9 @@ public class CollectionController {
 
     @Value("${collection.created}")
     private String messageCreated;
+
+    @Value("${collection.deleted}")
+    private String deleteMessage;
 
     public CollectionController(CollectionService collectionService) {
         this.collectionService = collectionService;
@@ -63,6 +67,12 @@ public class CollectionController {
     public ResponseEntity updateCollection(@PathVariable("id") Long id, @RequestBody @Valid CollectionDTO collectionDTO) {
         collectionDTO.setId(id);
         return new ResponseEntity<>(collectionService.update(collectionDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/collections/{id:[\\d]+}")
+    public ResponseEntity deleteCollection(@PathVariable("id") Long id) {
+        collectionService.delete(id);
+        return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
 
 }

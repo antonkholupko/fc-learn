@@ -85,7 +85,8 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("CollectionService - delete id={}", id);
+        collectionDAO.delete(id);
     }
 
     @Override
