@@ -67,7 +67,8 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("TopicService - delete topic id={}", id);
+        topicDAO.delete(id);
     }
 
     @Override

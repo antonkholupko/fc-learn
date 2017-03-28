@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
+import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.TopicService;
@@ -20,6 +21,9 @@ public class TopicController {
 
     @Value("${topic.created}")
     private String messageCreated;
+
+    @Value("${topic.deleted}")
+    private String deleteMessage;
 
     private TopicService topicService;
 
@@ -63,6 +67,12 @@ public class TopicController {
     public ResponseEntity updateTopic(@PathVariable("id") Long id, @RequestBody @Valid TopicDTO topicDTO) {
         topicDTO.setId(id);
         return new ResponseEntity<>(topicService.update(topicDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/topics/{id:[\\d]+}")
+    public ResponseEntity deleteTopic(@PathVariable("id") Long id) {
+        topicService.delete(id);
+        return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
 
 }

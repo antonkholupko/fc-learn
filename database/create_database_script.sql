@@ -194,7 +194,12 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`topic_categories` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `fc_learn_db_schema`.`topics`
+CHANGE COLUMN `status` `status` ENUM('private', 'public', 'req') NULL DEFAULT 'private' ;
+
+SET SQL_SAFE_UPDATES = 0;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
