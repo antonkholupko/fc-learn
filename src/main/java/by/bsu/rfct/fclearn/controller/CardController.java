@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
+import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CardService;
@@ -20,6 +21,9 @@ public class CardController {
 
     @Value("${card.created}")
     private String messageCreated;
+
+    @Value("${card.deleted}")
+    private String deleteMessage;
 
     private CardService cardService;
 
@@ -59,12 +63,16 @@ public class CardController {
         return new ResponseEntity<>(String.format(messageCreated, createdCardId), headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("/cards/{id:[\\d]}")
+    @PutMapping("/cards/{id:[\\d]+}")
     public ResponseEntity updateCard(@PathVariable("id") Long id, @RequestBody @Valid CardDTO cardDTO) {
         cardDTO.setId(id);
         return new ResponseEntity<>(cardService.update(cardDTO), HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/cards/{id:[\\d]+}")
+    public ResponseEntity deleteCard(@PathVariable("id") Long id) {
+        cardService.delete(id);
+        return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
+    }
 
 }

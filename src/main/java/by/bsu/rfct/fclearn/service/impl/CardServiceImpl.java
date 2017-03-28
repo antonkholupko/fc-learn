@@ -60,7 +60,8 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("CardService - delete card id={}", id);
+        cardDAO.delete(id);
     }
 
     @Override
