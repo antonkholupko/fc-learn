@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
+import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.UserService;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Value("${user.created}")
     private String messageCreated;
+
+    @Value("${user.deleted}")
+    private String deleteMessage;
 
     private UserService userService;
 
@@ -65,5 +69,10 @@ public class UserController {
         return new ResponseEntity<>(userService.update(userDTO), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id:[\\d]+}")
+    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+        userService.delete(id);
+        return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
+    }
 
 }
