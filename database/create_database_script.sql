@@ -73,13 +73,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`collections` (
   CONSTRAINT `fk_topics_course1`
     FOREIGN KEY (`topic_id`)
     REFERENCES `fc_learn_db_schema`.`topics` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_collections_users1`
     FOREIGN KEY (`author_id`)
     REFERENCES `fc_learn_db_schema`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`cards` (
   CONSTRAINT `fk_cards_topics`
     FOREIGN KEY (`collection_id`)
     REFERENCES `fc_learn_db_schema`.`collections` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -135,13 +135,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`user_collections` (
   CONSTRAINT `fk_topics_has_users_topics1`
     FOREIGN KEY (`collection_id`)
     REFERENCES `fc_learn_db_schema`.`collections` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_topics_has_users_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `fc_learn_db_schema`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -161,13 +161,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`user_cards` (
   CONSTRAINT `fk_users_has_cards_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `fc_learn_db_schema`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_users_has_cards_cards1`
     FOREIGN KEY (`cards_id`)
     REFERENCES `fc_learn_db_schema`.`cards` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -185,13 +185,13 @@ CREATE TABLE IF NOT EXISTS `fc_learn_db_schema`.`topic_categories` (
   CONSTRAINT `fk_categories_has_topics_categories1`
     FOREIGN KEY (`category_id`)
     REFERENCES `fc_learn_db_schema`.`categories` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_categories_has_topics_topics1`
     FOREIGN KEY (`topic_id`)
     REFERENCES `fc_learn_db_schema`.`topics` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

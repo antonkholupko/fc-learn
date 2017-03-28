@@ -58,7 +58,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
-
+        LOG.debug("CategoryService - delete category id={}", id);
+        categoryDAO.delete(id);
     }
 
     @Override

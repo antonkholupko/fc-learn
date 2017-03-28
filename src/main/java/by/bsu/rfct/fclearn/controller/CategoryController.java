@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
+import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CategoryService;
@@ -21,6 +22,9 @@ public class CategoryController {
 
     @Value("${category.created}")
     private String messageCreated;
+
+    @Value("${category.deleted}")
+    private String deleteMessage;
 
     private CategoryService categoryService;
 
@@ -63,5 +67,11 @@ public class CategoryController {
     public ResponseEntity updateCategory(@PathVariable("id") Long id, @RequestBody @Valid CategoryDTO categoryDTO) {
         categoryDTO.setId(id);
         return new ResponseEntity<>(categoryService.update(categoryDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id:[\\d]+}")
+    public ResponseEntity deleteCategory(@PathVariable("id") Long id) {
+        categoryService.delete(id);
+        return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
 }
