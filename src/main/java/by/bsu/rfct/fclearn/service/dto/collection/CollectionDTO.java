@@ -25,8 +25,6 @@ public class CollectionDTO extends AbstractDTO<Long> {
 
     private LocalDateTime modified;
 
-    @URL(message = "{validation.collection.image.invalid}")
-    @Length
     private String image;
 
     @NotBlank(message = "{validation.collection.status.empty}")

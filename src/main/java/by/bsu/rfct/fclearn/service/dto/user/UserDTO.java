@@ -21,7 +21,6 @@ public class UserDTO extends AbstractDTO<Long> {
     @Email(message = "{validation.user.email.invalid}")
     private String email;
 
-    @URL(message = "{validation.user.photo.invalid}")
     private String photo;
 
     @NotBlank(message = "{validation.user.status.empty}")

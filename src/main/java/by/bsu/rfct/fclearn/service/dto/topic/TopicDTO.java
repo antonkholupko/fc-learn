@@ -15,7 +15,6 @@ public class TopicDTO extends AbstractDTO<Long> {
     @Length(min=1, max=45, message = "{validation.topic.name.length}")
     private String name;
 
-    @URL(message = "{validation.topic.image.invalid}")
     private String image;
 
     private Long collectionAmount;
