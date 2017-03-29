@@ -3,6 +3,7 @@ package by.bsu.rfct.fclearn.dao.impl;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.entity.Card;
 import by.bsu.rfct.fclearn.entity.User;
+import by.bsu.rfct.fclearn.service.exception.CannotLoginUserException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class UserDAOImpl implements UserDAO {
     private static final String QUERY_INSERT_CARD_INTO_USER = "INSERT INTO user_cards (users_id, cards_id, card_status, low_count) " +
             "VALUES(?,?,?,0);";
     private static final String QUERY_COUNT_ALL_USERS = "SELECT COUNT(id) FROM users;";
+    private static final String QUERY_SELECT_BY_LOGIN_PASSWORD = "SELECT id, status AS statusString FROM users " +
+            "WHERE login=? AND password=?;";
+    private static final String QUERY_SELECT_BY_EMAIL_PASSWORD = "SELECT id, status AS statusString FROM users " +
+            "WHERE email=? AND password=?;";
+    private static final String QUERY_SELECT_BY_LOGIN_EMAIL_PASSWORD = "SELECT id, status AS statusString FROM users " +
+            "WHERE login=? AND email=? AND password=?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -132,6 +139,39 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(3, Card.Status.NEW.toString());
             return ps;
         }, holder);
+    }
+
+    @Override
+    public User readUserByLoginAndPassword(String login, String password) {
+        LOG.debug("UserDAO - login user by login={}", login);
+        try {
+            return jdbcTemplate.queryForObject(QUERY_SELECT_BY_LOGIN_PASSWORD, new Object[]{login, password},
+                    new BeanPropertyRowMapper<>(User.class));
+        } catch (EmptyResultDataAccessException exc) {
+            throw new CannotLoginUserException("No such user in database");
+        }
+    }
+
+    @Override
+    public User readUserByEmailAndPassword(String email, String password) {
+        LOG.debug("UserDAO - login user by email={}", email);
+        try {
+            return jdbcTemplate.queryForObject(QUERY_SELECT_BY_EMAIL_PASSWORD, new Object[]{email, password},
+                    new BeanPropertyRowMapper<>(User.class));
+        } catch (EmptyResultDataAccessException exc) {
+            throw new CannotLoginUserException("No such user in database");
+        }
+    }
+
+    @Override
+    public User readUserByLoginAndEmailAndPassword(String login, String email, String password) {
+        LOG.debug("UserDAO - login user by login={}, email={}", login, email);
+        try {
+            return jdbcTemplate.queryForObject(QUERY_SELECT_BY_LOGIN_EMAIL_PASSWORD, new Object[]{login, email, password},
+                    new BeanPropertyRowMapper<>(User.class));
+        } catch (EmptyResultDataAccessException exc) {
+            throw new CannotLoginUserException("No such user in database");
+        }
     }
 
     private Boolean checkIfExistsByLogin(User entity) {

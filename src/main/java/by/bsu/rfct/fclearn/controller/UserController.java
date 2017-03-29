@@ -75,4 +75,9 @@ public class UserController {
         return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity loginUser(@RequestBody UserDTO userDTO) {
+        return new ResponseEntity<>(userService.loginUser(userDTO), HttpStatus.OK);
+    }
+
 }
