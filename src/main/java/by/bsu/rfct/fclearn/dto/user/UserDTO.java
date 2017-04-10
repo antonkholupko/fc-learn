@@ -1,10 +1,9 @@
-package by.bsu.rfct.fclearn.service.dto.user;
+package by.bsu.rfct.fclearn.dto.user;
 
-import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.dto.AbstractDTO;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 import java.util.Objects;
 

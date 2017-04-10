@@ -1,10 +1,10 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CardService;
-import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.dto.card.CardDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping("/collections/{collectionId:[\\d]+}/cards")
+    @GetMapping("categories/topics/collections/{collectionId:[\\d]+}/cards")
     public ResponseEntity findCards(@PathVariable("collectionId") Long collectionId,
             @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
@@ -49,7 +49,7 @@ public class CardController {
         return new ResponseEntity<>(cardDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/cards/{id:[\\d]+}")
+    @GetMapping("categories/topics/collections/cards/{id:[\\d]+}")
     public ResponseEntity findCardById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(cardService.read(id), HttpStatus.OK);
     }

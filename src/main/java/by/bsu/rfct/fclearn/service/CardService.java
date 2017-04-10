@@ -1,6 +1,6 @@
 package by.bsu.rfct.fclearn.service;
 
-import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.dto.card.CardDTO;
 
 import java.util.List;
 

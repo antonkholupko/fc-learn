@@ -1,6 +1,6 @@
 package by.bsu.rfct.fclearn.service;
 
-import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.dto.AbstractDTO;
 
 import java.util.List;
 

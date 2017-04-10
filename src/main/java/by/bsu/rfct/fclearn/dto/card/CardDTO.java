@@ -1,6 +1,6 @@
-package by.bsu.rfct.fclearn.service.dto.card;
+package by.bsu.rfct.fclearn.dto.card;
 
-import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.dto.AbstractDTO;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 

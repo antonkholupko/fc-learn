@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.service.dto.topic;
+package by.bsu.rfct.fclearn.dto.topic;
 
 import by.bsu.rfct.fclearn.entity.Topic;
 import org.springframework.core.convert.converter.Converter;

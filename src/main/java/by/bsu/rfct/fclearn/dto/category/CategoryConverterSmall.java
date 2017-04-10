@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.service.dto.category;
+package by.bsu.rfct.fclearn.dto.category;
 
 import by.bsu.rfct.fclearn.entity.Category;
 import org.springframework.core.convert.converter.Converter;

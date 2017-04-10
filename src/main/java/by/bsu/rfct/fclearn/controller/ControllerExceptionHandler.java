@@ -1,6 +1,6 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.controller.dto;
+package by.bsu.rfct.fclearn.dto;
 
 import java.util.Objects;
 

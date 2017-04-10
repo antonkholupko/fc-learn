@@ -2,8 +2,8 @@ package by.bsu.rfct.fclearn.service;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.entity.Category;
-import by.bsu.rfct.fclearn.service.dto.category.CategoryConverter;
-import by.bsu.rfct.fclearn.service.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.dto.category.CategoryConverter;
+import by.bsu.rfct.fclearn.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.service.impl.CategoryServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;

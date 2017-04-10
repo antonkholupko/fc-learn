@@ -1,10 +1,10 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.controller.dto.MessageDTO;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.service.CollectionService;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.dto.collection.CollectionDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class CollectionController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("/topics/{topicId:[\\d]+}/collections")
+    @GetMapping("categories/topics/{topicId:[\\d]+}/collections")
     public ResponseEntity findCollectionsByTopicId(@PathVariable("topicId") Long topicId,
             @RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
@@ -49,7 +49,7 @@ public class CollectionController {
         return new ResponseEntity<>(collectionDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/collections/{id:[\\d]+}")
+    @GetMapping("categories/topics/collections/{id:[\\d]+}")
     public ResponseEntity findCollectionById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(collectionService.read(id), HttpStatus.OK);
     }

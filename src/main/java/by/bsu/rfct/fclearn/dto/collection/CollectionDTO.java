@@ -1,11 +1,10 @@
-package by.bsu.rfct.fclearn.service.dto.collection;
+package by.bsu.rfct.fclearn.dto.collection;
 
-import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import by.bsu.rfct.fclearn.service.dto.card.CardDTO;
-import by.bsu.rfct.fclearn.service.dto.user.UserDTO;
+import by.bsu.rfct.fclearn.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.dto.user.UserDTO;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDateTime;
 import java.util.List;

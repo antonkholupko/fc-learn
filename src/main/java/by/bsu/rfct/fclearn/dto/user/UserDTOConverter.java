@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.service.dto.user;
+package by.bsu.rfct.fclearn.dto.user;
 
 import by.bsu.rfct.fclearn.entity.User;
 import org.springframework.core.convert.converter.Converter;

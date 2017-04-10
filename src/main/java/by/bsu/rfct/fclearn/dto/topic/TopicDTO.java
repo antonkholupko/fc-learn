@@ -1,10 +1,9 @@
-package by.bsu.rfct.fclearn.service.dto.topic;
+package by.bsu.rfct.fclearn.dto.topic;
 
-import by.bsu.rfct.fclearn.service.dto.AbstractDTO;
-import by.bsu.rfct.fclearn.service.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.dto.AbstractDTO;
+import by.bsu.rfct.fclearn.dto.collection.CollectionDTO;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 import java.util.Objects;

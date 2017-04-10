@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.service.dto.card;
+package by.bsu.rfct.fclearn.dto.card;
 
 import by.bsu.rfct.fclearn.entity.Card;
 import org.springframework.core.convert.converter.Converter;

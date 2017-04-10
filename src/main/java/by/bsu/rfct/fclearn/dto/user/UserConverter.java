@@ -1,11 +1,11 @@
-package by.bsu.rfct.fclearn.service.dto.user;
+package by.bsu.rfct.fclearn.dto.user;
 
 import by.bsu.rfct.fclearn.entity.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-@Component("userConverterSmall")
-public class UserConverterSmall implements Converter<User, UserDTO>{
+@Component("userConverter")
+public class UserConverter implements Converter<User, UserDTO> {
 
     @Override
     public UserDTO convert(User user) {
@@ -13,7 +13,9 @@ public class UserConverterSmall implements Converter<User, UserDTO>{
         if (user != null) {
             userDTO.setId(user.getId());
             userDTO.setLogin(user.getLogin());
+            userDTO.setEmail(user.getEmail());
             userDTO.setPhoto(user.getPhoto());
+            userDTO.setStatus(user.getStatus().toString());
         }
         return userDTO;
     }

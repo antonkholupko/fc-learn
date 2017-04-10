@@ -1,4 +1,4 @@
-package by.bsu.rfct.fclearn.service.dto.collection;
+package by.bsu.rfct.fclearn.dto.collection;
 
 import by.bsu.rfct.fclearn.entity.Collection;
 import org.springframework.core.convert.converter.Converter;
