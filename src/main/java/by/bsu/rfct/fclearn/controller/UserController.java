@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private static final String USER_PATH = "%s/userss/%s";
+    private static final String USER_PATH = "%s/users/%s";
 
     @Value("${user.created}")
     private String messageCreated;
@@ -77,7 +77,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserDTO userDTO) {
-        return new ResponseEntity<>(userService.loginUser(userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(new UserDTO(userService.loginUser(userDTO)), HttpStatus.OK);
     }
 
 }

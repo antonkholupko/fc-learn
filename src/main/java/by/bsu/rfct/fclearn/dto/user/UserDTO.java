@@ -26,6 +26,14 @@ public class UserDTO extends AbstractDTO<Long> {
     private String Status;
     private Long collectionsAuthorAmount;
 
+    public UserDTO() {
+
+    }
+
+    public UserDTO(Long id) {
+        this.id = id;
+    }
+
     public String getLogin() {
         return login;
     }

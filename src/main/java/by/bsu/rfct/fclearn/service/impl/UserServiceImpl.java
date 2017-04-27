@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(userDTO.getLogin()) && !StringUtils.isEmpty(userDTO.getEmail()) &&
                 !StringUtils.isEmpty(userDTO.getPassword())) {
             LOG.debug("UserService - login user login={}, email={}", userDTO.getLogin(), userDTO.getEmail());
+            userDTO.setPassword(ServiceUtils.getHashedPassword(userDTO.getPassword()));
             User user = userDAO.readUserByLoginAndEmailAndPassword(userDTO.getLogin(), userDTO.getEmail(),
                     userDTO.getPassword());
             if(User.Status.BANED == user.getStatus()) {
@@ -100,6 +101,7 @@ public class UserServiceImpl implements UserService {
             return user.getId();
         } else if (!StringUtils.isEmpty(userDTO.getEmail()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             LOG.debug("UserService - login user email={}", userDTO.getEmail());
+            userDTO.setPassword(ServiceUtils.getHashedPassword(userDTO.getPassword()));
             User user = userDAO.readUserByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
             if (User.Status.BANED == user.getStatus()) {
                 throw new CannotLoginUserException("User is baned");
@@ -107,6 +109,7 @@ public class UserServiceImpl implements UserService {
             return user.getId();
         } else if (!StringUtils.isEmpty(userDTO.getLogin()) && !StringUtils.isEmpty(userDTO.getPassword())){
             LOG.debug("UserService - login user login={}", userDTO.getLogin());
+            userDTO.setPassword(ServiceUtils.getHashedPassword(userDTO.getPassword()));
             User user = userDAO.readUserByLoginAndPassword(userDTO.getLogin(), userDTO.getPassword());
             if (User.Status.BANED == user.getStatus()) {
                 throw new CannotLoginUserException("User is baned");
