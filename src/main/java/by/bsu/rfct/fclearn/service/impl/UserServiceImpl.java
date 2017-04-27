@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     public Long create(UserDTO dto) {
         LOG.debug("UserService - create user login={}", dto.getLogin());
         if(!userDAO.checkIfExist(userDTOConverter.convert(dto))) {
+            dto.setPassword(ServiceUtils.getHashedPassword(dto.getPassword()));
             return userDAO.create(userDTOConverter.convert(dto));
         } else {
             throw new EntityExistsException("Such user exists");
