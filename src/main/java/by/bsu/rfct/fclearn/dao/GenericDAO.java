@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Provides abstraction for DAO layer of the application.
  *
- * @param <T>  instance type
+ * @param <T> instance type
  * @param <K> primary key type
  */
-public interface GenericDAO <T extends AbstractEntity<K>, K> {
+public interface GenericDAO<T extends AbstractEntity<K>, K> {
 
     /**
      * Inserts object <code>T</code> into database.
@@ -52,14 +52,16 @@ public interface GenericDAO <T extends AbstractEntity<K>, K> {
 
     /**
      * Checks if this object exists in database
+     *
      * @param entity
      * @return true if object exists
-     *          false if object doesn't exist
+     * false if object doesn't exist
      */
     Boolean checkIfExist(T entity);
 
     /**
      * Counts all objects
+     *
      * @return objects amount
      */
     Long countAll();

@@ -1,10 +1,10 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
-import by.bsu.rfct.fclearn.service.UserService;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.dto.user.UserDTO;
+import by.bsu.rfct.fclearn.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity findUsers(@RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
-                                    @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
+    public ResponseEntity findUsers(@RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);

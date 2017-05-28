@@ -1,10 +1,10 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
-import by.bsu.rfct.fclearn.service.CardService;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.dto.card.CardDTO;
+import by.bsu.rfct.fclearn.service.CardService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/categories/{categoryId:[\\d]+}/topics/{topicId:[\\d]+}/collections/{collectionId:[\\d]+}/cards")
 public class CardController {
 
     private static final String CARD_PATH = "%s/cards/%s";
@@ -31,10 +32,10 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping("categories/topics/collections/{collectionId:[\\d]+}/cards")
+    @GetMapping
     public ResponseEntity findCards(@PathVariable("collectionId") Long collectionId,
-            @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
-            @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
+                                    @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
@@ -49,30 +50,33 @@ public class CardController {
         return new ResponseEntity<>(cardDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("categories/topics/collections/cards/{id:[\\d]+}")
+    @GetMapping("/{id:[\\d]+}")
     public ResponseEntity findCardById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(cardService.read(id), HttpStatus.OK);
     }
 
-    @PostMapping("/cards")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createCard(@RequestBody @Valid CardDTO cardDTO, @RequestHeader String host) {
+    public ResponseEntity createCard(@PathVariable("collectionId") Long collectionId, @RequestBody @Valid CardDTO cardDTO,
+                                     @RequestHeader String host) {
+        cardDTO.setCollectionId(collectionId);
         Long createdCardId = cardService.create(cardDTO);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.LOCATION, String.format(CARD_PATH, host, createdCardId));
         return new ResponseEntity<>(String.format(messageCreated, createdCardId), headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("/cards/{id:[\\d]+}")
-    public ResponseEntity updateCard(@PathVariable("id") Long id, @RequestBody @Valid CardDTO cardDTO) {
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity updateCard(@PathVariable("collectionId") Long collectionId, @PathVariable("id") Long id,
+                                     @RequestBody @Valid CardDTO cardDTO) {
+        cardDTO.setCollectionId(collectionId);
         cardDTO.setId(id);
         return new ResponseEntity<>(cardService.update(cardDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping("/cards/{id:[\\d]+}")
+    @DeleteMapping("/{id:[\\d]+}")
     public ResponseEntity deleteCard(@PathVariable("id") Long id) {
         cardService.delete(id);
         return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
-
 }

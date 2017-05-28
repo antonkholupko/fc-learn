@@ -2,11 +2,7 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public class Topic extends AbstractEntity<Long>{
-
-    public enum Status {
-        PRIVATE, PUBLIC, REQ
-    }
+public class Topic extends AbstractEntity<Long> {
 
     private String name;
     private String image;
@@ -36,7 +32,7 @@ public class Topic extends AbstractEntity<Long>{
         this.status = status;
     }
 
-    public void setStatusString (String statusString) {
+    public void setStatusString(String statusString) {
         this.status = Status.valueOf(statusString.toUpperCase().trim());
     }
 
@@ -60,5 +56,9 @@ public class Topic extends AbstractEntity<Long>{
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), name, image, status);
+    }
+
+    public enum Status {
+        PRIVATE, PUBLIC, REQ
     }
 }

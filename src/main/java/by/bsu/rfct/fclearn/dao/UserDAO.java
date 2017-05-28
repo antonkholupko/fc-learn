@@ -2,7 +2,7 @@ package by.bsu.rfct.fclearn.dao;
 
 import by.bsu.rfct.fclearn.entity.User;
 
-public interface UserDAO extends GenericDAO<User, Long>{
+public interface UserDAO extends GenericDAO<User, Long> {
 
     void addCollection(Long userId, Long collectionId);
 
@@ -14,4 +14,5 @@ public interface UserDAO extends GenericDAO<User, Long>{
 
     User readUserByLoginAndEmailAndPassword(String login, String email, String password);
 
+    User readByUsername(String username);
 }

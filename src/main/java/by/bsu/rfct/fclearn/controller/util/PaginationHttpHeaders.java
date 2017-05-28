@@ -9,7 +9,7 @@ public class PaginationHttpHeaders {
     public static final String TOTAL_PAGES = "X-Pagination-Total-Pages";
     public static final String TOTAL_ENTRIES = "X-Pagination-Total-Entries";
 
-    private PaginationHttpHeaders(){
+    private PaginationHttpHeaders() {
     }
 
     public static void addPaginationHeaders(HttpHeaders httpHeaders,

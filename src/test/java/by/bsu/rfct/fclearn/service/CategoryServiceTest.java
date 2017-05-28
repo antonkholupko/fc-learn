@@ -1,9 +1,9 @@
 package by.bsu.rfct.fclearn.service;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
-import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.dto.category.CategoryDTO;
+import by.bsu.rfct.fclearn.entity.Category;
 import by.bsu.rfct.fclearn.service.impl.CategoryServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +64,7 @@ public class CategoryServiceTest {
         when(categoryConverter.convert(expectedCategory)).thenReturn(expectedCategoryDTO);
         when(categoryDAO.countTopicAmount(3L)).thenReturn(3L);
         List<CategoryDTO> categoryDTOs = categoryService.readAll(1, 1);
-        verify(categoryDAO, times(1)).readAll(0,1);
+        verify(categoryDAO, times(1)).readAll(0, 1);
         CategoryDTO categoryDTO = categoryDTOs.get(0);
         assertEquals(expectedCategory.getId(), categoryDTO.getId());
         assertEquals(expectedCategory.getName(), categoryDTO.getName());

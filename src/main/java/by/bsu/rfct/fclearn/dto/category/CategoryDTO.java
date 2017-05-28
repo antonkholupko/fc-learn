@@ -11,7 +11,7 @@ import java.util.Objects;
 public class CategoryDTO extends AbstractDTO<Long> {
 
     @NotBlank(message = "{validation.category.name.empty}")
-    @Length(min=1, max=45, message = "{validation.category.name.length}")
+    @Length(min = 1, max = 45, message = "{validation.category.name.length}")
     private String name;
     private String image;
     private Long topicAmount;

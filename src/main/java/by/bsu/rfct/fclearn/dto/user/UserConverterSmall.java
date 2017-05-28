@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component("userConverterSmall")
-public class UserConverterSmall implements Converter<User, UserDTO>{
+public class UserConverterSmall implements Converter<User, UserDTO> {
 
     @Override
     public UserDTO convert(User user) {

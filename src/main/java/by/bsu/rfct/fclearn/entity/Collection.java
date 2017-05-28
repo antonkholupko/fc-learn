@@ -3,11 +3,7 @@ package by.bsu.rfct.fclearn.entity;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Collection extends AbstractEntity<Long>{
-
-    public enum Status {
-        PRIVATE, REQ, PUBLIC
-    }
+public class Collection extends AbstractEntity<Long> {
 
     private Long authorId;
     private Long topicId;
@@ -83,7 +79,7 @@ public class Collection extends AbstractEntity<Long>{
         this.status = status;
     }
 
-    public void setStatusString (String statusString) {
+    public void setStatusString(String statusString) {
         this.status = Status.valueOf(statusString.toUpperCase().trim());
     }
 
@@ -97,13 +93,13 @@ public class Collection extends AbstractEntity<Long>{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)){
+        if (!super.equals(o)) {
             return false;
         }
         Collection that = (Collection) o;
@@ -121,5 +117,9 @@ public class Collection extends AbstractEntity<Long>{
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), authorId, topicId, name, description, created, modified, image, status, rating);
+    }
+
+    public enum Status {
+        PRIVATE, REQ, PUBLIC
     }
 }

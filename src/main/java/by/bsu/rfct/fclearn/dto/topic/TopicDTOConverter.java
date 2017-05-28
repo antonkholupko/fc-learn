@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component("topicDTO")
-public class TopicDTOConverter implements Converter<TopicDTO, Topic>{
+public class TopicDTOConverter implements Converter<TopicDTO, Topic> {
 
     @Override
     public Topic convert(TopicDTO topicDTO) {

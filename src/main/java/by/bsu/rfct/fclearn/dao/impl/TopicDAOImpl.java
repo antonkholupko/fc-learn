@@ -128,10 +128,10 @@ public class TopicDAOImpl implements TopicDAO {
     public Boolean checkIfTopicExistsInCategory(Long topicId, Long categoryId) {
         LOG.debug("TopicDAO - check if topic exists in category topicId={}, categoryId={}", topicId, categoryId);
         try {
-            jdbcTemplate.queryForObject(QUERY_SELECT_FROM_TOPIC_CATEGORIES, new Object[] {topicId, categoryId},
+            jdbcTemplate.queryForObject(QUERY_SELECT_FROM_TOPIC_CATEGORIES, new Object[]{topicId, categoryId},
                     new BeanPropertyRowMapper<>(Topic.class));
             return true;
-        } catch (EmptyResultDataAccessException exc){
+        } catch (EmptyResultDataAccessException exc) {
             return false;
         }
 

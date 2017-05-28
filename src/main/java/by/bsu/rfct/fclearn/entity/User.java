@@ -4,10 +4,6 @@ import java.util.Objects;
 
 public class User extends AbstractEntity<Long> {
 
-    public enum Status{
-        ADMIN, ACTIVE, BANED
-    }
-
     private String login;
     private String email;
     private String password;
@@ -60,13 +56,13 @@ public class User extends AbstractEntity<Long> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)){
+        if (!super.equals(o)) {
             return false;
         }
         User user = (User) o;
@@ -80,5 +76,9 @@ public class User extends AbstractEntity<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), login, email, password, photo, status);
+    }
+
+    public enum Status {
+        ADMIN, ACTIVE, BANED
     }
 }

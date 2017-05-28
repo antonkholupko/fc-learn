@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component("categoryConverterSmall")
-public class CategoryConverterSmall implements Converter<Category, CategoryDTO>{
+public class CategoryConverterSmall implements Converter<Category, CategoryDTO> {
 
     @Override
     public CategoryDTO convert(Category category) {

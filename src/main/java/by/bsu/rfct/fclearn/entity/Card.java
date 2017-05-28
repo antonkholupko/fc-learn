@@ -2,17 +2,13 @@ package by.bsu.rfct.fclearn.entity;
 
 import java.util.Objects;
 
-public class Card extends AbstractEntity<Long>{
+public class Card extends AbstractEntity<Long> {
 
     private Long collectionId;
     private String question;
     private String answer;
     private String questionImage;
     private String answerImage;
-
-    public enum Status {
-        NEW, LOW, MEDIUM, HIGH
-    }
 
     public Long getCollectionId() {
         return collectionId;
@@ -56,13 +52,13 @@ public class Card extends AbstractEntity<Long>{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)){
+        if (!super.equals(o)) {
             return false;
         }
         Card card = (Card) o;
@@ -76,5 +72,9 @@ public class Card extends AbstractEntity<Long>{
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), collectionId, question, answer, questionImage, answerImage);
+    }
+
+    public enum Status {
+        NEW, LOW, MEDIUM, HIGH
     }
 }

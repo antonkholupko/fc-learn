@@ -3,17 +3,18 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CollectionDAO;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
-import by.bsu.rfct.fclearn.entity.User;
-import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.dto.user.UserConverter;
 import by.bsu.rfct.fclearn.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.dto.user.UserDTOConverter;
+import by.bsu.rfct.fclearn.entity.User;
+import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.exception.CannotLoginUserException;
 import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,6 +25,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private UserDAO userDAO;
     private UserConverter userConverter;
@@ -31,8 +33,10 @@ public class UserServiceImpl implements UserService {
     private CollectionDAO collectionDAO;
     private UserDTOConverter userDTOConverter;
 
-    public UserServiceImpl(UserDAO userDAO, UserConverter userConverter, UserConverterSmall userConverterSmall,
-                           CollectionDAO collectionDAO, UserDTOConverter userDTOConverter) {
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserDAO userDAO, UserConverter userConverter,
+                           UserConverterSmall userConverterSmall, CollectionDAO collectionDAO,
+                           UserDTOConverter userDTOConverter) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userDAO = userDAO;
         this.userConverter = userConverter;
         this.userConverterSmall = userConverterSmall;
@@ -43,8 +47,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long create(UserDTO dto) {
         LOG.debug("UserService - create user login={}", dto.getLogin());
-        if(!userDAO.checkIfExist(userDTOConverter.convert(dto))) {
-            dto.setPassword(ServiceUtils.getHashedPassword(dto.getPassword()));
+        if (!userDAO.checkIfExist(userDTOConverter.convert(dto))) {
+            //dto.setPassword(ServiceUtils.getHashedPassword(dto.getPassword()));
+            dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
             return userDAO.create(userDTOConverter.convert(dto));
         } else {
             throw new EntityExistsException("Such user exists");
@@ -96,7 +101,7 @@ public class UserServiceImpl implements UserService {
             userDTO.setPassword(ServiceUtils.getHashedPassword(userDTO.getPassword()));
             User user = userDAO.readUserByLoginAndEmailAndPassword(userDTO.getLogin(), userDTO.getEmail(),
                     userDTO.getPassword());
-            if(User.Status.BANED == user.getStatus()) {
+            if (User.Status.BANED == user.getStatus()) {
                 throw new CannotLoginUserException("User is baned");
             }
             return user.getId();
@@ -108,7 +113,7 @@ public class UserServiceImpl implements UserService {
                 throw new CannotLoginUserException("User is baned");
             }
             return user.getId();
-        } else if (!StringUtils.isEmpty(userDTO.getLogin()) && !StringUtils.isEmpty(userDTO.getPassword())){
+        } else if (!StringUtils.isEmpty(userDTO.getLogin()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             LOG.debug("UserService - login user login={}", userDTO.getLogin());
             userDTO.setPassword(ServiceUtils.getHashedPassword(userDTO.getPassword()));
             User user = userDAO.readUserByLoginAndPassword(userDTO.getLogin(), userDTO.getPassword());

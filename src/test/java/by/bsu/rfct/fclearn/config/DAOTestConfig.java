@@ -25,6 +25,11 @@ public class DAOTestConfig {
     private String dbPassword;
 
     @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(driverName);
@@ -32,10 +37,5 @@ public class DAOTestConfig {
         dataSource.setUsername(login);
         dataSource.setPassword(dbPassword);
         return dataSource;
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
     }
 }

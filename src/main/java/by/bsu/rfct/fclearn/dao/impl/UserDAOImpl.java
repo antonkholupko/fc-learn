@@ -48,6 +48,8 @@ public class UserDAOImpl implements UserDAO {
             "WHERE email=? AND password=?;";
     private static final String QUERY_SELECT_BY_LOGIN_EMAIL_PASSWORD = "SELECT id, status AS statusString FROM users " +
             "WHERE login=? AND email=? AND password=?;";
+    private static final String QUERY_SELECT_BY_LOGIN = "SELECT id, login, email, password, photo,status AS statusString " +
+            "FROM users WHERE login=?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -172,6 +174,13 @@ public class UserDAOImpl implements UserDAO {
         } catch (EmptyResultDataAccessException exc) {
             throw new CannotLoginUserException("No such user in database");
         }
+    }
+
+    @Override
+    public User readByUsername(String login) {
+        LOG.debug("UserDAO - read user by login");
+        return jdbcTemplate.queryForObject(QUERY_SELECT_BY_LOGIN, new Object[]{login},
+                new BeanPropertyRowMapper<>(User.class));
     }
 
     private Boolean checkIfExistsByLogin(User entity) {

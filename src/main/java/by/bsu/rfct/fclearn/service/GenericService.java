@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @param <T> DTO instance type
  * @param <K> id type
-*/
+ */
 public interface GenericService<T extends AbstractDTO<K>, K> {
 
     /**

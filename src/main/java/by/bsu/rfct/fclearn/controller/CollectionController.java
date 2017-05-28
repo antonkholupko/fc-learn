@@ -1,10 +1,10 @@
 package by.bsu.rfct.fclearn.controller;
 
-import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
-import by.bsu.rfct.fclearn.service.CollectionService;
+import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.dto.collection.CollectionDTO;
+import by.bsu.rfct.fclearn.service.CollectionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/categories/{categoryId:[\\d]+}/topics/{topicId:[\\d]+}/collections")
 public class CollectionController {
 
     private static final String COLLECTION_PATH = "%s/collections/%s";
@@ -31,10 +32,10 @@ public class CollectionController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("categories/topics/{topicId:[\\d]+}/collections")
+    @GetMapping
     public ResponseEntity findCollectionsByTopicId(@PathVariable("topicId") Long topicId,
-            @RequestParam(name="page", defaultValue= ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
-            @RequestParam(name="size", defaultValue=ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
+                                                   @RequestParam(name = "page", defaultValue = ControllerUtils.DEFAULT_PAGE_NUMBER) int pageNumber,
+                                                   @RequestParam(name = "size", defaultValue = ControllerUtils.DEFAULT_PAGE_SIZE) int pageSize) {
 
         pageNumber = ControllerUtils.validatePageNumber(pageNumber);
         pageSize = ControllerUtils.validatePageSize(pageSize);
@@ -49,30 +50,33 @@ public class CollectionController {
         return new ResponseEntity<>(collectionDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("categories/topics/collections/{id:[\\d]+}")
+    @GetMapping("/{id:[\\d]+}")
     public ResponseEntity findCollectionById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(collectionService.read(id), HttpStatus.OK);
     }
 
-    @PostMapping("/collections")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createCollection(@RequestBody @Valid CollectionDTO collectionDTO, @RequestHeader String host) {
+    public ResponseEntity createCollection(@PathVariable("topicId") Long topicId, @RequestBody @Valid CollectionDTO collectionDTO,
+                                           @RequestHeader String host) {
+        collectionDTO.setTopicId(topicId);
         Long createdCollectionId = collectionService.create(collectionDTO);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.LOCATION, String.format(COLLECTION_PATH, host, createdCollectionId));
         return new ResponseEntity<>(String.format(messageCreated, createdCollectionId), headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("/collections/{id:[\\d]+}")
-    public ResponseEntity updateCollection(@PathVariable("id") Long id, @RequestBody @Valid CollectionDTO collectionDTO) {
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity updateCollection(@PathVariable("topicId") Long topicId, @PathVariable("id") Long id,
+                                           @RequestBody @Valid CollectionDTO collectionDTO) {
+        collectionDTO.setTopicId(topicId);
         collectionDTO.setId(id);
         return new ResponseEntity<>(collectionService.update(collectionDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping("/collections/{id:[\\d]+}")
+    @DeleteMapping("/{id:[\\d]+}")
     public ResponseEntity deleteCollection(@PathVariable("id") Long id) {
         collectionService.delete(id);
         return new ResponseEntity<>(new MessageDTO(HttpStatus.OK.value(), deleteMessage), HttpStatus.OK);
     }
-
 }

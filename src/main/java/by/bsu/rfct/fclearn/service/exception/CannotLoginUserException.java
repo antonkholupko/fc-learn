@@ -1,6 +1,6 @@
 package by.bsu.rfct.fclearn.service.exception;
 
-public class CannotLoginUserException extends RuntimeException{
+public class CannotLoginUserException extends RuntimeException {
 
     public CannotLoginUserException() {
     }

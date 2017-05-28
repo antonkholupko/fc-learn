@@ -4,7 +4,7 @@ import by.bsu.rfct.fclearn.entity.Card;
 
 import java.util.List;
 
-public interface CardDAO extends GenericDAO<Card, Long>{
+public interface CardDAO extends GenericDAO<Card, Long> {
 
     Long countCardAmountInCollection(Long collectionId);
 

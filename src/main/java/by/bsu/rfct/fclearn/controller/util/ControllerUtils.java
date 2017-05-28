@@ -2,9 +2,9 @@ package by.bsu.rfct.fclearn.controller.util;
 
 public class ControllerUtils {
 
-    private final static int MAX_PAGE_SIZE = 100;
     public final static String DEFAULT_PAGE_NUMBER = "1";
     public final static String DEFAULT_PAGE_SIZE = "10";
+    private final static int MAX_PAGE_SIZE = 100;
 
     private ControllerUtils() {
     }

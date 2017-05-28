@@ -1,11 +1,11 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
-import by.bsu.rfct.fclearn.entity.Category;
-import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.dto.category.CategoryConverter;
 import by.bsu.rfct.fclearn.dto.category.CategoryDTO;
 import by.bsu.rfct.fclearn.dto.category.CategoryDTOConverter;
+import by.bsu.rfct.fclearn.entity.Category;
+import by.bsu.rfct.fclearn.service.CategoryService;
 import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
@@ -87,7 +87,6 @@ public class CategoryServiceImpl implements CategoryService {
         LOG.debug("CategoryService - count topic amount");
         return categoryDAO.countTopicAmount(categoryId);
     }
-
 
 
 }

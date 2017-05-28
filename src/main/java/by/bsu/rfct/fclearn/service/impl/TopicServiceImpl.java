@@ -2,11 +2,11 @@ package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CategoryDAO;
 import by.bsu.rfct.fclearn.dao.TopicDAO;
-import by.bsu.rfct.fclearn.entity.Topic;
-import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.dto.topic.TopicConverter;
 import by.bsu.rfct.fclearn.dto.topic.TopicDTO;
 import by.bsu.rfct.fclearn.dto.topic.TopicDTOConverter;
+import by.bsu.rfct.fclearn.entity.Topic;
+import by.bsu.rfct.fclearn.service.TopicService;
 import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("topicService")
-public class TopicServiceImpl implements TopicService{
+public class TopicServiceImpl implements TopicService {
 
     private static final Logger LOG = LogManager.getLogger(TopicServiceImpl.class);
 

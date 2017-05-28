@@ -1,17 +1,17 @@
 package by.bsu.rfct.fclearn.service.impl;
 
 import by.bsu.rfct.fclearn.dao.CollectionDAO;
-import by.bsu.rfct.fclearn.entity.Collection;
-import by.bsu.rfct.fclearn.entity.User;
-import by.bsu.rfct.fclearn.service.CardService;
-import by.bsu.rfct.fclearn.service.CollectionService;
-import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.dto.collection.CollectionConverter;
 import by.bsu.rfct.fclearn.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.dto.collection.CollectionDTOConverter;
 import by.bsu.rfct.fclearn.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.dto.user.UserDTO;
 import by.bsu.rfct.fclearn.dto.user.UserDTOConverter;
+import by.bsu.rfct.fclearn.entity.Collection;
+import by.bsu.rfct.fclearn.entity.User;
+import by.bsu.rfct.fclearn.service.CardService;
+import by.bsu.rfct.fclearn.service.CollectionService;
+import by.bsu.rfct.fclearn.service.UserService;
 import by.bsu.rfct.fclearn.service.exception.EntityExistsException;
 import by.bsu.rfct.fclearn.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;

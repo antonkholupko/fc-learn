@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component("collectionDTOConverter")
-public class CollectionDTOConverter implements Converter<CollectionDTO, Collection>{
+public class CollectionDTOConverter implements Converter<CollectionDTO, Collection> {
 
     @Override
     public Collection convert(CollectionDTO collectionDTO) {
