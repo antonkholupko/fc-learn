@@ -14,7 +14,9 @@ public class TopicConverter implements Converter<Topic, TopicDTO> {
             topicDTO.setId(topic.getId());
             topicDTO.setName(topic.getName());
             topicDTO.setImage(topic.getImage());
-            topicDTO.setStatus(topic.getStatus().toString());
+            if (topic.getStatus()!=null) {
+                topicDTO.setStatus(topic.getStatus().toString());
+            }
         }
         return topicDTO;
     }

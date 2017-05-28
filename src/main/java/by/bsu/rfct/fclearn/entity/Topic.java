@@ -33,7 +33,9 @@ public class Topic extends AbstractEntity<Long> {
     }
 
     public void setStatusString(String statusString) {
-        this.status = Status.valueOf(statusString.toUpperCase().trim());
+        if (statusString != null) {
+            this.status = Status.valueOf(statusString.toUpperCase().trim());
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package by.bsu.rfct.fclearn.entity;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Card extends AbstractEntity<Long> {
@@ -9,6 +10,7 @@ public class Card extends AbstractEntity<Long> {
     private String answer;
     private String questionImage;
     private String answerImage;
+    private LocalDateTime lastViewed;
 
     public Long getCollectionId() {
         return collectionId;
@@ -48,6 +50,14 @@ public class Card extends AbstractEntity<Long> {
 
     public void setAnswerImage(String answerImage) {
         this.answerImage = answerImage;
+    }
+
+    public LocalDateTime getLastViewed() {
+        return lastViewed;
+    }
+
+    public void setLastViewed(LocalDateTime lastViewed) {
+        this.lastViewed = lastViewed;
     }
 
     @Override

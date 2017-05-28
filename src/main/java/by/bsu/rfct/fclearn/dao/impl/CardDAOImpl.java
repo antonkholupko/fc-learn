@@ -2,6 +2,7 @@ package by.bsu.rfct.fclearn.dao.impl;
 
 import by.bsu.rfct.fclearn.dao.CardDAO;
 import by.bsu.rfct.fclearn.entity.Card;
+import by.bsu.rfct.fclearn.entity.CardStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository("cardDAO")
@@ -36,6 +39,9 @@ public class CardDAOImpl implements CardDAO {
     private static final String QUERY_COUNT_CARDS_IN_COLLECTION = "SELECT count(id) FROM cards WHERE collection_id=?;";
     private static final String QUERY_SELECT_CARDS_BY_COLLECTION_ID = "SELECT id, collection_id, question, answer, " +
             "question_image, answer_image FROM cards WHERE collection_id=? LIMIT ?,?;";
+    private static final String QUERY_SELECT_CARD_FOR_TRAINING = "SELECT id, collection_id, question, answer, " +
+            "question_image, answer_image FROM cards INNER JOIN user_cards ON cards_id=id " +
+            "WHERE users_id=? AND card_status=? AND collection_id=? ORDER BY last_viwed LIMIT 1;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -118,5 +124,22 @@ public class CardDAOImpl implements CardDAO {
         LOG.debug("CardDAO - read all cards by collection id={}", collectionId);
         return jdbcTemplate.query(QUERY_SELECT_CARDS_BY_COLLECTION_ID, new Object[]{collectionId, startLimitFrom,
                 amountOnPage}, new BeanPropertyRowMapper<>(Card.class));
+    }
+
+    @Override
+    public Card getNextCardForUserTraining(Long userId, Long collectionId, CardStatus cardStatus) {
+        LOG.debug("CardDAO - read next card for user '{}' training by, collection id={}", userId, collectionId);
+        try {
+            Card card = jdbcTemplate.queryForObject(QUERY_SELECT_CARD_FOR_TRAINING,
+                    new Object[]{userId, cardStatus.toString().toLowerCase(), collectionId},
+                    new BeanPropertyRowMapper<>(Card.class));
+
+            jdbcTemplate.update("UPDATE user_cards SET last_viwed=? WHERE cards_id=? AND users_id=?;",
+                    Timestamp.valueOf(LocalDateTime.now()), card.getId(), userId);
+
+            return card;
+        } catch (RuntimeException ex) {
+            return null;
+        }
     }
 }
