@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories/{categoryId:[\\d]+}/topics/{topicId:[\\d]+}/collections/{collectionId:[\\d]+}/cards")
+@RequestMapping("/collections/{collectionId:[\\d]+}/cards")
 public class CardController {
 
     private static final String CARD_PATH = "%s/cards/%s";

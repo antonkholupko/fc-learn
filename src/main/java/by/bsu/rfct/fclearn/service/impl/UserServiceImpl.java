@@ -125,4 +125,9 @@ public class UserServiceImpl implements UserService {
             throw new CannotLoginUserException("User doesn't have enough data to login");
         }
     }
+
+    @Override
+    public UserDTO getByName(String name) {
+        return userConverter.convert(userDAO.readByUsername(name));
+    }
 }

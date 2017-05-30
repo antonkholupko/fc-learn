@@ -45,6 +45,7 @@ public class WebApplicationConfiguration extends WebMvcConfigurerAdapter {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
+                .allowCredentials(true)
                 .exposedHeaders(PaginationHttpHeaders.CURRENT_PAGE, PaginationHttpHeaders.PER_PAGE,
                         PaginationHttpHeaders.TOTAL_ENTRIES, PaginationHttpHeaders.TOTAL_PAGES);
     }

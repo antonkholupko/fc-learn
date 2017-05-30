@@ -6,4 +6,6 @@ public interface UserService extends GenericService<UserDTO, Long> {
 
     Long loginUser(UserDTO userDTO);
 
+    UserDTO getByName(String name);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -34,14 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.addFilterBefore(new CorsFilter(), SecurityContextPersistenceFilter.class)
+                .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().permitAll();
-               /* .antMatchers("/registration").permitAll()
+                .antMatchers("/registration").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
-                .and()
-                .logout().permitAll()*/;
+                .and().formLogin().permitAll().defaultSuccessUrl("/success", true)
+                .and().logout().permitAll();
     }
 }

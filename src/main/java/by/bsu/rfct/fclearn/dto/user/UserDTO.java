@@ -22,9 +22,10 @@ public class UserDTO extends AbstractDTO<Long> {
 
     private String photo;
 
-    @NotBlank(message = "{validation.user.status.empty}")
     private String Status;
     private Long collectionsAuthorAmount;
+
+    private String sessionId;
 
     public UserDTO() {
 
@@ -80,6 +81,14 @@ public class UserDTO extends AbstractDTO<Long> {
 
     public void setCollectionsAuthorAmount(Long collectionsAuthorAmount) {
         this.collectionsAuthorAmount = collectionsAuthorAmount;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     @Override

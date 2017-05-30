@@ -4,6 +4,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
+
 public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
@@ -26,5 +28,10 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
         final DispatcherServlet dispatcherServlet = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
         return dispatcherServlet;
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new CorsFilter()};
     }
 }

@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -49,9 +52,16 @@ public class UserController {
         return new ResponseEntity<>(userDTOs, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/{id:[\\d]+}")
+   /* @GetMapping("/{id:[\\d]+}")
     public ResponseEntity findUserById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.read(id), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/{name}")
+    public ResponseEntity findUserByName(@PathVariable("name") String name) {
+        UserDTO userDTO = userService.getByName(name);
+        userDTO.setSessionId(RequestContextHolder.currentRequestAttributes().getSessionId());
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PostMapping
