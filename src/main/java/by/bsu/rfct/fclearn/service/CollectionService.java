@@ -10,4 +10,6 @@ public interface CollectionService extends GenericService<CollectionDTO, Long> {
 
     Long countByAuthorId(Long authorId);
 
+    List<CollectionDTO> getCollectionsByUserId(Long userId);
+
 }

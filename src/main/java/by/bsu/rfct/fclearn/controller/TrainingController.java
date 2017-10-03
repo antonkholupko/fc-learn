@@ -3,13 +3,9 @@ package by.bsu.rfct.fclearn.controller;
 import by.bsu.rfct.fclearn.service.TrainingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users/{userId:[\\d]+}/collections/{collectionId:[\\d]+}/training")
 public class TrainingController {
 
     private TrainingService trainingService;
@@ -18,8 +14,22 @@ public class TrainingController {
         this.trainingService = trainingService;
     }
 
-    @GetMapping("/card")
+    @GetMapping("/users/{userId:[\\d]+}/collections/{collectionId:[\\d]+}/training/card")
     public ResponseEntity getNextTrainingCard(@PathVariable("userId") Long userId, @PathVariable("collectionId") Long collectionId) {
         return new ResponseEntity<>(trainingService.getNextCard(userId, collectionId), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId:[\\d]+}/cards/{cardId:[\\d]+}/known")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity knownCard(@PathVariable("userId") Long userId, @PathVariable("cardId") Long cardId) {
+        trainingService.knownCard(userId, cardId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/users/{userId:[\\d]+}/cards/{cardId:[\\d]+}/unknown")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity unknownCard(@PathVariable("userId") Long userId, @PathVariable("cardId") Long cardId) {
+        trainingService.unknownCard(userId, cardId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

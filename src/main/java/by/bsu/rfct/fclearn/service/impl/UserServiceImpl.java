@@ -3,6 +3,7 @@ package by.bsu.rfct.fclearn.service.impl;
 import by.bsu.rfct.fclearn.dao.CollectionDAO;
 import by.bsu.rfct.fclearn.dao.UserDAO;
 import by.bsu.rfct.fclearn.dao.impl.UserDAOImpl;
+import by.bsu.rfct.fclearn.dto.collection.CollectionDTO;
 import by.bsu.rfct.fclearn.dto.user.UserConverter;
 import by.bsu.rfct.fclearn.dto.user.UserConverterSmall;
 import by.bsu.rfct.fclearn.dto.user.UserDTO;
@@ -129,5 +130,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getByName(String name) {
         return userConverter.convert(userDAO.readByUsername(name));
+    }
+
+    @Override
+    public void addCollection(Long userId, Long collectionId) {
+        userDAO.addCollection(userId, collectionId);
     }
 }

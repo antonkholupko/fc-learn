@@ -66,13 +66,13 @@ public class ApplicationConfig {
         cardStatusQueue.add(CardStatus.NEW);
         cardStatusQueue.add(CardStatus.MEDIUM);
         cardStatusQueue.add(CardStatus.HIGH);
+        cardStatusQueue.add(CardStatus.LOW);
         cardStatusQueue.add(CardStatus.NEW);
         cardStatusQueue.add(CardStatus.MEDIUM);
         cardStatusQueue.add(CardStatus.HIGH);
         cardStatusQueue.add(CardStatus.NEW);
         cardStatusQueue.add(CardStatus.HIGH);
         cardStatusQueue.add(CardStatus.NEW);
-        cardStatusQueue.add(CardStatus.LOW);
         cardStatusQueue.add(CardStatus.NEW);
         cardStatusQueue.add(CardStatus.MEDIUM);
         cardStatusQueue.add(CardStatus.NEW);

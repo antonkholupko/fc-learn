@@ -10,4 +10,6 @@ public interface CollectionDAO extends GenericDAO<Collection, Long> {
 
     Long countByAuthorId(Long authorId);
 
+    List<Collection> getCollectionsByUserId(Long userId);
+
 }

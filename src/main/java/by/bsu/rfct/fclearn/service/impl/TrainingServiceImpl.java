@@ -10,9 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -38,21 +36,28 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public CardDTO getNextCard(Long userId, Long collectionId) {
-
         startTraining(userId, collectionId);
 
         Queue<CardStatus> cardStatusQueue = userCollectionBasketMap.get(userId).get(collectionId);
-        CardStatus cardStatus = cardStatusQueue.remove();
-        cardStatusQueue.add(cardStatus);
-        Card card = cardDAO.getNextCardForUserTraining(userId, collectionId, cardStatus);
 
-        while (card == null) {
-            cardStatus = cardStatusQueue.poll();
+        Card card;
+        do {
+            CardStatus cardStatus = cardStatusQueue.poll();
             cardStatusQueue.add(cardStatus);
             card = cardDAO.getNextCardForUserTraining(userId, collectionId, cardStatus);
-        }
+        } while (card == null);
 
         return cardConverter.convert(card);
+    }
+
+    @Override
+    public void knownCard(Long userId, Long cardId) {
+        cardDAO.knownCard(userId, cardId);
+    }
+
+    @Override
+    public void unknownCard(Long userId, Long cardId) {
+        cardDAO.unknownCard(userId, cardId);
     }
 
     private void startTraining(Long userId, Long collectionId) {

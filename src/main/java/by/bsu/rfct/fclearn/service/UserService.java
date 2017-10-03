@@ -8,4 +8,6 @@ public interface UserService extends GenericService<UserDTO, Long> {
 
     UserDTO getByName(String name);
 
+    void addCollection(Long userId, Long collectionId);
+
 }

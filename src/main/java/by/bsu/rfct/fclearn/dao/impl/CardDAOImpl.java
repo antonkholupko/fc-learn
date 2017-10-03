@@ -6,14 +6,18 @@ import by.bsu.rfct.fclearn.entity.CardStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -141,5 +145,25 @@ public class CardDAOImpl implements CardDAO {
         } catch (RuntimeException ex) {
             return null;
         }
+    }
+
+    @Override
+    public void knownCard(Long userId, Long cardId) {
+        String status = jdbcTemplate.queryForObject("SELECT card_status FROM user_cards WHERE users_id = ? AND cards_id = ?;",
+                String.class, userId, cardId);
+        CardStatus cardStatus = CardStatus.valueOf(status.toUpperCase()).getLess();
+
+        jdbcTemplate.update("UPDATE user_cards SET card_status=? WHERE cards_id=? AND users_id=?;",
+                cardStatus.toString().toLowerCase(), cardId, userId);
+    }
+
+    @Override
+    public void unknownCard(Long userId, Long cardId) {
+        String status = jdbcTemplate.queryForObject("SELECT card_status FROM user_cards WHERE users_id = ? AND cards_id = ?;",
+                String.class, userId, cardId);
+        CardStatus cardStatus = CardStatus.valueOf(status.toUpperCase()).getMore();
+
+        jdbcTemplate.update("UPDATE user_cards SET card_status=? WHERE cards_id=? AND users_id=?;",
+                cardStatus.toString().toLowerCase(), cardId, userId);
     }
 }

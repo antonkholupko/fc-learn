@@ -38,6 +38,9 @@ public class CollectionDAOImpl implements CollectionDAO {
     private static final String QUERY_SELECT_ALL_BY_TOPIC_ID = "SELECT id, author_id, topic_id, name, description, " +
             "created, modified, image, status AS statusString, rating FROM collections WHERE topic_id=? LIMIT ?,?;";
     private static final String QUERY_COUNT_BY_AUTHOR_ID = "SELECT count(id) FROM collections WHERE author_id=?";
+    private static final String QUERY_SELECT_COLLECTIONS_BY_USER_ID = "SELECT id, author_id, topic_id, name, description, " +
+            "created, modified, image, status AS statusString, collections.rating FROM collections " +
+            "INNER JOIN user_collections ON collection_id = id WHERE user_id=?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -133,5 +136,11 @@ public class CollectionDAOImpl implements CollectionDAO {
     public Long countByAuthorId(Long authorId) {
         LOG.debug("CollectionDAO - count by author id");
         return jdbcTemplate.queryForObject(QUERY_COUNT_BY_AUTHOR_ID, new Object[]{authorId}, Long.class);
+    }
+
+    @Override
+    public List<Collection> getCollectionsByUserId(Long userId) {
+        return jdbcTemplate.query(QUERY_SELECT_COLLECTIONS_BY_USER_ID, new Object[]{userId},
+                new BeanPropertyRowMapper<>(Collection.class));
     }
 }

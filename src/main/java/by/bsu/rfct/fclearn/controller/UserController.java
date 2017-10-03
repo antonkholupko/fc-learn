@@ -4,6 +4,7 @@ import by.bsu.rfct.fclearn.controller.util.ControllerUtils;
 import by.bsu.rfct.fclearn.controller.util.PaginationHttpHeaders;
 import by.bsu.rfct.fclearn.dto.MessageDTO;
 import by.bsu.rfct.fclearn.dto.user.UserDTO;
+import by.bsu.rfct.fclearn.service.CollectionService;
 import by.bsu.rfct.fclearn.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -30,9 +31,11 @@ public class UserController {
     private String deleteMessage;
 
     private UserService userService;
+    private CollectionService collectionService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CollectionService collectionService) {
         this.userService = userService;
+        this.collectionService = collectionService;
     }
 
     @GetMapping
@@ -88,6 +91,19 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(new UserDTO(userService.loginUser(userDTO)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId:[\\d]+}/collections/{collectionId:[\\d]+}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity addCollection(@PathVariable("userId") Long userId, @PathVariable("collectionId") Long collectionId) {
+        userService.addCollection(userId, collectionId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{userId:[\\d]+}/collections")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity getCollections(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(collectionService.getCollectionsByUserId(userId), HttpStatus.OK);
     }
 
 }

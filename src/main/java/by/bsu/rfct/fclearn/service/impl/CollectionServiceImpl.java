@@ -104,20 +104,30 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public List<CollectionDTO> readAllByTopicId(Long topicId, Integer pageNumber, Integer amountOnPage) {
         LOG.debug("CollectionService - read all by topic id={}", topicId);
-        List<CollectionDTO> collectionDTOs = new ArrayList<>();
         List<Collection> collections = collectionDAO.readAllByTopicId(topicId,
                 ServiceUtils.countStartLimitFrom(pageNumber, amountOnPage), amountOnPage);
-        for (Collection collection : collections) {
-            CollectionDTO collectionDTO = collectionConverter.convert(collection);
-            collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(collection.getId()));
-            collectionDTOs.add(collectionDTO);
-        }
-        return collectionDTOs;
+        return collectionListCreator(collections);
     }
 
     @Override
     public Long countByAuthorId(Long authorId) {
         LOG.debug("CollectionService - count by author id");
         return collectionDAO.countByAuthorId(authorId);
+    }
+
+    @Override
+    public List<CollectionDTO> getCollectionsByUserId(Long userId) {
+        List<Collection> collections = collectionDAO.getCollectionsByUserId(userId);
+        return collectionListCreator(collections);
+    }
+
+    private List <CollectionDTO> collectionListCreator(List<Collection> collections) {
+        List<CollectionDTO> collectionDTOs = new ArrayList<>();
+        for (Collection collection : collections) {
+            CollectionDTO collectionDTO = collectionConverter.convert(collection);
+            collectionDTO.setCardsAmount(cardService.countCardAmountInCollection(collection.getId()));
+            collectionDTOs.add(collectionDTO);
+        }
+        return collectionDTOs;
     }
 }

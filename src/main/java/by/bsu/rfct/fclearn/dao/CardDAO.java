@@ -12,4 +12,9 @@ public interface CardDAO extends GenericDAO<Card, Long> {
     List<Card> readAllCardsByCollectionId(Long collectionId, Integer startLimitFrom, Integer amountOnPage);
 
     Card getNextCardForUserTraining(Long userId, Long collectionId, CardStatus cardStatus);
+
+    void knownCard(Long userId, Long cardId);
+
+    void unknownCard(Long userId, Long cardId);
+
 }

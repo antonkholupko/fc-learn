@@ -183,6 +183,8 @@ public class UserDAOImpl implements UserDAO {
                 new BeanPropertyRowMapper<>(User.class));
     }
 
+
+
     private Boolean checkIfExistsByLogin(User entity) {
         try {
             if (!StringUtils.isEmpty(entity.getLogin())) {
